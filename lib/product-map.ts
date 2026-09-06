@@ -161,6 +161,41 @@ export const INDUSTRIES: IndustryScenario[] = [
 
 export const publicIndustries = (): IndustryScenario[] => INDUSTRIES.filter((i) => i.status === 'confirmed').sort((a, b) => a.order - b.order);
 
+/** Pain → solution pairs. Each solution names only modules that exist in MODULES (auditRefs there). */
+export type SceneKind = 'inbox' | 'calls' | 'contract' | 'invoice' | 'field' | 'support';
+export type Pain = { id: string; scene: SceneKind; domainId: string; pain: Localized; solution: Localized; modules: string[] };
+export const PAINS: Pain[] = [
+  { id: 'lost-messages', scene: 'inbox', domainId: 'omni', pain: l('Заявки теряются в WhatsApp, Instagram и Telegram у разных сотрудников', 'Müraciətlər müxtəlif əməkdaşların WhatsApp, Instagram və Telegram-ında itir'), solution: l('Один Inbox на все каналы: кто отвечает, за сколько, что не отвечено. Правила ответов и рабочие часы.', 'Bütün kanallar üçün bir Inbox: kim cavab verir, nə qədər vaxta, nə cavabsız qalıb. Cavab qaydaları və iş saatları.'), modules: ['inbox', 'channels'] },
+  { id: 'forgotten-calls', scene: 'calls', domainId: 'sales', pain: l('Менеджер обещал перезвонить и забыл, лид ушёл к конкуренту', 'Menecer geri zəng edəcəyini söylədi və unutdu, lid rəqibə getdi'), solution: l('Очереди звонков по выбранным лидам, задачи из разговоров с датой по умолчанию, история и аналитика звонков.', 'Seçilmiş lidlər üzrə zəng növbələri, söhbətdən yaranan tapşırıqlar, zəng tarixçəsi və analitikası.'), modules: ['leads', 'voip-journal', 'call-insights'] },
+  { id: 'slow-contracts', scene: 'contract', domainId: 'contracts', pain: l('Договор неделями ходит по согласованиям, версии путаются', 'Müqavilə həftələrlə təsdiqdə gəzir, versiyalar qarışır'), solution: l('Шаблоны с пунктами, цепочка согласования, версии, электронная подпись и напоминания о продлении.', 'Bəndli şablonlar, təsdiq zənciri, versiyalar, elektron imza və uzadılma xatırlatmaları.'), modules: ['contract-registry', 'contract-templates', 'contract-lifecycle'] },
+  { id: 'unpaid-invoices', scene: 'invoice', domainId: 'finance', pain: l('Счета выставлены, а кто и сколько должен, видно только в Excel', 'Fakturalar kəsilib, amma kim nə qədər borcludur, yalnız Excel-də görünür'), solution: l('Счета с оплатами и напоминаниями, повторяющиеся счета, подписки и модель рентабельности по клиентам.', 'Ödəniş və xatırlatmalı fakturalar, təkrarlanan fakturalar, abunəliklər və müştərilər üzrə gəlirlilik modeli.'), modules: ['invoices', 'profitability'] },
+  { id: 'field-blind', scene: 'field', domainId: 'field', pain: l('Полевые агенты в дороге, а что они реально сделали, неизвестно', 'Sahə agentləri yoldadır, real nə etdikləri isə bilinmir'), solution: l('Маршруты по дням, визиты с GPS, фотоотчёты с модерацией, живая карта и рейтинг KPI.', 'Günlük marşrutlar, GPS-li vizitlər, moderasiyalı fotohesabatlar, canlı xəritə və KPI reytinqi.'), modules: ['field-routes', 'field-control', 'kpi-arena'] },
+  { id: 'support-drowning', scene: 'support', domainId: 'support', pain: l('Поддержка тонет в обращениях, сроки ответа никто не контролирует', 'Dəstək müraciətlərdə batır, cavab müddətlərinə heç kim nəzarət etmir'), solution: l('Тикеты с SLA и эскалацией, маршрутизация по навыкам, макросы, база знаний и клиентский портал.', 'SLA və eskalasiyalı tiketlər, bacarıq üzrə yönləndirmə, makrolar, bilik bazası və müştəri portalı.'), modules: ['service-desk', 'sla-routing', 'knowledge-portal'] },
+];
+
+/** AI delegation levels as shown in Settings → AI Avtomatlaşdırma (M19-S21). */
+export const AI_LEVELS: { id: string; title: Localized; badge: Localized; text: Localized }[] = [
+  { id: 'analyze', title: l('AI анализирует', 'AI analiz edir'), badge: l('Только чтение', 'Yalnız oxu'), text: l('Утренняя сводка, поиск аномалий, оценка лидов. Ничего не меняет.', 'Səhər icmalı, anomaliyaların tapılması, lidlərin qiymətləndirilməsi. Heç nə dəyişmir.') },
+  { id: 'suggest', title: l('AI предлагает', 'AI təklif edir'), badge: l('Проверка', 'Yoxla'), text: l('Готовит напоминания и ответы. Без подтверждения сотрудника ничего не отправляется.', 'Xatırlatmalar və cavablar hazırlayır. Əməkdaşın təsdiqi olmadan heç nə göndərilmir.') },
+  { id: 'autopilot', title: l('AI действует сам', 'AI özü edir'), badge: l('Автопилот', 'Avtopilot'), text: l('Отправляет сообщения и создаёт задачи автоматически. Включается по сценариям и в рамках дневного бюджета.', 'Mesajları göndərir və tapşırıqları avtomatik yaradır. Ssenarilər üzrə və gündəlik büdcə çərçivəsində işə salınır.') },
+];
+
+/** The 14 autopilot scenarios listed on the same screen. Names only; none is claimed as enabled by default. */
+export const AUTOPILOT_SCENARIOS: Localized[] = [
+  l('Предупреждение о кредитном лимите', 'Kredit limiti xəbərdarlığı'), l('Эскалация негативного тона', 'Neqativ ton eskalasiyası'), l('Эскалация горячего лида', 'Qaynar lidin eskalasiyası'), l('Автоклассификация тикетов', 'Avto-bilet təsnifatı'), l('Автозакрытие по базе знаний', 'Bilik bazası ilə avto-bağlama'), l('Продвижение стадии сделки', 'Sövdə mərhələsinin irəliləməsi'), l('Резюме встречи', 'Görüş xülasəsi'), l('Вирусное предупреждение', 'Viral xəbərdarlıq'), l('AI-ответ в соцсетях', 'AI sosial cavab'), l('Предложение о продлении', 'Yenilənmə təklifi'), l('Объединение дубликатов', 'Dublikatların birləşdirilməsi'), l('Автоответ по SLA', 'SLA avto-cavab'), l('Follow-up по застрявшим сделкам', 'Durğun sövdələr üçün follow-up'), l('Напоминание об оплате', 'Ödəniş xatırlatması'),
+];
+
+/** Channels, integrations and security facts seen in Kanallar (M06-S07) and Parametrlər (M19). Text chips only. */
+export const TRUST: { id: string; title: Localized; items: Localized[] }[] = [
+  { id: 'channels', title: l('Каналы общения', 'Ünsiyyət kanalları'), items: ['WhatsApp Business', 'Facebook Messenger', 'Instagram', 'Telegram', 'VK', 'TikTok'].map((x) => l(x, x)).concat([l('Веб-чат', 'Veb-çat'), l('Email', 'E-poçt'), l('SMS', 'SMS')]) },
+  { id: 'telephony', title: l('Телефония', 'Telefoniya'), items: ['Twilio', '3CX', 'Asterisk', 'SIP', 'WhatsApp Calling'].map((x) => l(x, x)) },
+  { id: 'integrations', title: l('Интеграции', 'İnteqrasiyalar'), items: [l('Вебхуки', 'Vebhuklar'), l('Zapier', 'Zapier'), l('Slack', 'Slack'), l('Microsoft Teams', 'Microsoft Teams'), l('Google Calendar', 'Google Calendar'), l('DocuSign', 'DocuSign'), l('SMTP', 'SMTP'), l('Web-трекинг', 'Veb-izləmə')] },
+  { id: 'security', title: l('Безопасность и контроль', 'Təhlükəsizlik və nəzarət'), items: [l('2FA', '2FA'), l('Роли и права на поля', 'Rollar və sahə hüquqları'), l('Журнал аудита', 'Audit jurnalı'), l('API-ключи', 'API açarları'), l('AZ · RU · EN', 'AZ · RU · EN')] },
+];
+
+/** Numbers derived from the data above, never typed by hand. */
+export const siteNumbers = () => ({ domains: publicDomains().length, modules: publicModules().length, channels: TRUST[0].items.length, autopilot: AUTOPILOT_SCENARIOS.length, industries: publicIndustries().length });
+
 export const publicModules = (domainId?: string): ProductModule[] =>
   MODULES.filter((m) => m.status === 'confirmed' && m.visibility === 'public' && (!domainId || m.domainId === domainId)).sort((a, b) => a.order - b.order);
 
