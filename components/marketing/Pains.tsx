@@ -16,7 +16,7 @@ const SCENE: Record<Lang, Record<string, string>> = {
 };
 
 /** Small CSS-only scenes. Copy inside is illustrative, values are not real CRM data. */
-function Scene({ kind, lang }: { kind: SceneKind; lang: Lang }) {
+export function Scene({ kind, lang }: { kind: SceneKind; lang: Lang }) {
   const w = SCENE[lang];
   switch (kind) {
     case 'inbox':

@@ -6,7 +6,7 @@
     <xhtml:link rel="alternate" hreflang="ru" href="https://leaddrivecrm.org/ru"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://leaddrivecrm.org/en"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://leaddrivecrm.org/"/>
-    <changefreq>weekly</changefreq><priority>1.0</priority>
+    <lastmod>2026-09-06</lastmod><changefreq>weekly</changefreq><priority>1.0</priority>
   </url>
   <url>
     <loc>https://leaddrivecrm.org/ru</loc>
@@ -14,7 +14,7 @@
     <xhtml:link rel="alternate" hreflang="ru" href="https://leaddrivecrm.org/ru"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://leaddrivecrm.org/en"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://leaddrivecrm.org/"/>
-    <changefreq>weekly</changefreq><priority>0.9</priority>
+    <lastmod>2026-09-06</lastmod><changefreq>weekly</changefreq><priority>0.9</priority>
   </url>
   <url>
     <loc>https://leaddrivecrm.org/en</loc>
@@ -22,6 +22,318 @@
     <xhtml:link rel="alternate" hreflang="ru" href="https://leaddrivecrm.org/ru"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://leaddrivecrm.org/en"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://leaddrivecrm.org/"/>
-    <changefreq>weekly</changefreq><priority>0.9</priority>
+    <lastmod>2026-09-06</lastmod><changefreq>weekly</changefreq><priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://leaddrivecrm.org/solutions/whatsapp-crm</loc>
+    <xhtml:link rel="alternate" hreflang="az" href="https://leaddrivecrm.org/solutions/whatsapp-crm"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://leaddrivecrm.org/ru/solutions/whatsapp-crm"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://leaddrivecrm.org/en/solutions/whatsapp-crm"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://leaddrivecrm.org/solutions/whatsapp-crm"/>
+    <lastmod>2026-09-06</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://leaddrivecrm.org/ru/solutions/whatsapp-crm</loc>
+    <xhtml:link rel="alternate" hreflang="az" href="https://leaddrivecrm.org/solutions/whatsapp-crm"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://leaddrivecrm.org/ru/solutions/whatsapp-crm"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://leaddrivecrm.org/en/solutions/whatsapp-crm"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://leaddrivecrm.org/solutions/whatsapp-crm"/>
+    <lastmod>2026-09-06</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://leaddrivecrm.org/en/solutions/whatsapp-crm</loc>
+    <xhtml:link rel="alternate" hreflang="az" href="https://leaddrivecrm.org/solutions/whatsapp-crm"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://leaddrivecrm.org/ru/solutions/whatsapp-crm"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://leaddrivecrm.org/en/solutions/whatsapp-crm"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://leaddrivecrm.org/solutions/whatsapp-crm"/>
+    <lastmod>2026-09-06</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://leaddrivecrm.org/solutions/sales-crm</loc>
+    <xhtml:link rel="alternate" hreflang="az" href="https://leaddrivecrm.org/solutions/sales-crm"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://leaddrivecrm.org/ru/solutions/sales-crm"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://leaddrivecrm.org/en/solutions/sales-crm"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://leaddrivecrm.org/solutions/sales-crm"/>
+    <lastmod>2026-09-06</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://leaddrivecrm.org/ru/solutions/sales-crm</loc>
+    <xhtml:link rel="alternate" hreflang="az" href="https://leaddrivecrm.org/solutions/sales-crm"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://leaddrivecrm.org/ru/solutions/sales-crm"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://leaddrivecrm.org/en/solutions/sales-crm"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://leaddrivecrm.org/solutions/sales-crm"/>
+    <lastmod>2026-09-06</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://leaddrivecrm.org/en/solutions/sales-crm</loc>
+    <xhtml:link rel="alternate" hreflang="az" href="https://leaddrivecrm.org/solutions/sales-crm"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://leaddrivecrm.org/ru/solutions/sales-crm"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://leaddrivecrm.org/en/solutions/sales-crm"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://leaddrivecrm.org/solutions/sales-crm"/>
+    <lastmod>2026-09-06</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://leaddrivecrm.org/solutions/support-helpdesk-crm</loc>
+    <xhtml:link rel="alternate" hreflang="az" href="https://leaddrivecrm.org/solutions/support-helpdesk-crm"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://leaddrivecrm.org/ru/solutions/support-helpdesk-crm"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://leaddrivecrm.org/en/solutions/support-helpdesk-crm"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://leaddrivecrm.org/solutions/support-helpdesk-crm"/>
+    <lastmod>2026-09-06</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://leaddrivecrm.org/ru/solutions/support-helpdesk-crm</loc>
+    <xhtml:link rel="alternate" hreflang="az" href="https://leaddrivecrm.org/solutions/support-helpdesk-crm"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://leaddrivecrm.org/ru/solutions/support-helpdesk-crm"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://leaddrivecrm.org/en/solutions/support-helpdesk-crm"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://leaddrivecrm.org/solutions/support-helpdesk-crm"/>
+    <lastmod>2026-09-06</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://leaddrivecrm.org/en/solutions/support-helpdesk-crm</loc>
+    <xhtml:link rel="alternate" hreflang="az" href="https://leaddrivecrm.org/solutions/support-helpdesk-crm"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://leaddrivecrm.org/ru/solutions/support-helpdesk-crm"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://leaddrivecrm.org/en/solutions/support-helpdesk-crm"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://leaddrivecrm.org/solutions/support-helpdesk-crm"/>
+    <lastmod>2026-09-06</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://leaddrivecrm.org/solutions/field-sales-crm</loc>
+    <xhtml:link rel="alternate" hreflang="az" href="https://leaddrivecrm.org/solutions/field-sales-crm"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://leaddrivecrm.org/ru/solutions/field-sales-crm"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://leaddrivecrm.org/en/solutions/field-sales-crm"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://leaddrivecrm.org/solutions/field-sales-crm"/>
+    <lastmod>2026-09-06</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://leaddrivecrm.org/ru/solutions/field-sales-crm</loc>
+    <xhtml:link rel="alternate" hreflang="az" href="https://leaddrivecrm.org/solutions/field-sales-crm"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://leaddrivecrm.org/ru/solutions/field-sales-crm"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://leaddrivecrm.org/en/solutions/field-sales-crm"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://leaddrivecrm.org/solutions/field-sales-crm"/>
+    <lastmod>2026-09-06</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://leaddrivecrm.org/en/solutions/field-sales-crm</loc>
+    <xhtml:link rel="alternate" hreflang="az" href="https://leaddrivecrm.org/solutions/field-sales-crm"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://leaddrivecrm.org/ru/solutions/field-sales-crm"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://leaddrivecrm.org/en/solutions/field-sales-crm"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://leaddrivecrm.org/solutions/field-sales-crm"/>
+    <lastmod>2026-09-06</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://leaddrivecrm.org/solutions/contract-management</loc>
+    <xhtml:link rel="alternate" hreflang="az" href="https://leaddrivecrm.org/solutions/contract-management"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://leaddrivecrm.org/ru/solutions/contract-management"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://leaddrivecrm.org/en/solutions/contract-management"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://leaddrivecrm.org/solutions/contract-management"/>
+    <lastmod>2026-09-06</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://leaddrivecrm.org/ru/solutions/contract-management</loc>
+    <xhtml:link rel="alternate" hreflang="az" href="https://leaddrivecrm.org/solutions/contract-management"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://leaddrivecrm.org/ru/solutions/contract-management"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://leaddrivecrm.org/en/solutions/contract-management"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://leaddrivecrm.org/solutions/contract-management"/>
+    <lastmod>2026-09-06</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://leaddrivecrm.org/en/solutions/contract-management</loc>
+    <xhtml:link rel="alternate" hreflang="az" href="https://leaddrivecrm.org/solutions/contract-management"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://leaddrivecrm.org/ru/solutions/contract-management"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://leaddrivecrm.org/en/solutions/contract-management"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://leaddrivecrm.org/solutions/contract-management"/>
+    <lastmod>2026-09-06</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://leaddrivecrm.org/solutions/invoicing-finance</loc>
+    <xhtml:link rel="alternate" hreflang="az" href="https://leaddrivecrm.org/solutions/invoicing-finance"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://leaddrivecrm.org/ru/solutions/invoicing-finance"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://leaddrivecrm.org/en/solutions/invoicing-finance"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://leaddrivecrm.org/solutions/invoicing-finance"/>
+    <lastmod>2026-09-06</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://leaddrivecrm.org/ru/solutions/invoicing-finance</loc>
+    <xhtml:link rel="alternate" hreflang="az" href="https://leaddrivecrm.org/solutions/invoicing-finance"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://leaddrivecrm.org/ru/solutions/invoicing-finance"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://leaddrivecrm.org/en/solutions/invoicing-finance"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://leaddrivecrm.org/solutions/invoicing-finance"/>
+    <lastmod>2026-09-06</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://leaddrivecrm.org/en/solutions/invoicing-finance</loc>
+    <xhtml:link rel="alternate" hreflang="az" href="https://leaddrivecrm.org/solutions/invoicing-finance"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://leaddrivecrm.org/ru/solutions/invoicing-finance"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://leaddrivecrm.org/en/solutions/invoicing-finance"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://leaddrivecrm.org/solutions/invoicing-finance"/>
+    <lastmod>2026-09-06</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://leaddrivecrm.org/solutions/marketing-automation</loc>
+    <xhtml:link rel="alternate" hreflang="az" href="https://leaddrivecrm.org/solutions/marketing-automation"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://leaddrivecrm.org/ru/solutions/marketing-automation"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://leaddrivecrm.org/en/solutions/marketing-automation"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://leaddrivecrm.org/solutions/marketing-automation"/>
+    <lastmod>2026-09-06</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://leaddrivecrm.org/ru/solutions/marketing-automation</loc>
+    <xhtml:link rel="alternate" hreflang="az" href="https://leaddrivecrm.org/solutions/marketing-automation"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://leaddrivecrm.org/ru/solutions/marketing-automation"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://leaddrivecrm.org/en/solutions/marketing-automation"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://leaddrivecrm.org/solutions/marketing-automation"/>
+    <lastmod>2026-09-06</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://leaddrivecrm.org/en/solutions/marketing-automation</loc>
+    <xhtml:link rel="alternate" hreflang="az" href="https://leaddrivecrm.org/solutions/marketing-automation"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://leaddrivecrm.org/ru/solutions/marketing-automation"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://leaddrivecrm.org/en/solutions/marketing-automation"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://leaddrivecrm.org/solutions/marketing-automation"/>
+    <lastmod>2026-09-06</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://leaddrivecrm.org/solutions/ai-crm</loc>
+    <xhtml:link rel="alternate" hreflang="az" href="https://leaddrivecrm.org/solutions/ai-crm"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://leaddrivecrm.org/ru/solutions/ai-crm"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://leaddrivecrm.org/en/solutions/ai-crm"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://leaddrivecrm.org/solutions/ai-crm"/>
+    <lastmod>2026-09-06</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://leaddrivecrm.org/ru/solutions/ai-crm</loc>
+    <xhtml:link rel="alternate" hreflang="az" href="https://leaddrivecrm.org/solutions/ai-crm"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://leaddrivecrm.org/ru/solutions/ai-crm"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://leaddrivecrm.org/en/solutions/ai-crm"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://leaddrivecrm.org/solutions/ai-crm"/>
+    <lastmod>2026-09-06</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://leaddrivecrm.org/en/solutions/ai-crm</loc>
+    <xhtml:link rel="alternate" hreflang="az" href="https://leaddrivecrm.org/solutions/ai-crm"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://leaddrivecrm.org/ru/solutions/ai-crm"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://leaddrivecrm.org/en/solutions/ai-crm"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://leaddrivecrm.org/solutions/ai-crm"/>
+    <lastmod>2026-09-06</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://leaddrivecrm.org/solutions/crm-for-clinics</loc>
+    <xhtml:link rel="alternate" hreflang="az" href="https://leaddrivecrm.org/solutions/crm-for-clinics"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://leaddrivecrm.org/ru/solutions/crm-for-clinics"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://leaddrivecrm.org/en/solutions/crm-for-clinics"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://leaddrivecrm.org/solutions/crm-for-clinics"/>
+    <lastmod>2026-09-06</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://leaddrivecrm.org/ru/solutions/crm-for-clinics</loc>
+    <xhtml:link rel="alternate" hreflang="az" href="https://leaddrivecrm.org/solutions/crm-for-clinics"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://leaddrivecrm.org/ru/solutions/crm-for-clinics"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://leaddrivecrm.org/en/solutions/crm-for-clinics"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://leaddrivecrm.org/solutions/crm-for-clinics"/>
+    <lastmod>2026-09-06</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://leaddrivecrm.org/en/solutions/crm-for-clinics</loc>
+    <xhtml:link rel="alternate" hreflang="az" href="https://leaddrivecrm.org/solutions/crm-for-clinics"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://leaddrivecrm.org/ru/solutions/crm-for-clinics"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://leaddrivecrm.org/en/solutions/crm-for-clinics"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://leaddrivecrm.org/solutions/crm-for-clinics"/>
+    <lastmod>2026-09-06</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://leaddrivecrm.org/solutions/crm-for-insurance</loc>
+    <xhtml:link rel="alternate" hreflang="az" href="https://leaddrivecrm.org/solutions/crm-for-insurance"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://leaddrivecrm.org/ru/solutions/crm-for-insurance"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://leaddrivecrm.org/en/solutions/crm-for-insurance"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://leaddrivecrm.org/solutions/crm-for-insurance"/>
+    <lastmod>2026-09-06</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://leaddrivecrm.org/ru/solutions/crm-for-insurance</loc>
+    <xhtml:link rel="alternate" hreflang="az" href="https://leaddrivecrm.org/solutions/crm-for-insurance"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://leaddrivecrm.org/ru/solutions/crm-for-insurance"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://leaddrivecrm.org/en/solutions/crm-for-insurance"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://leaddrivecrm.org/solutions/crm-for-insurance"/>
+    <lastmod>2026-09-06</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://leaddrivecrm.org/en/solutions/crm-for-insurance</loc>
+    <xhtml:link rel="alternate" hreflang="az" href="https://leaddrivecrm.org/solutions/crm-for-insurance"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://leaddrivecrm.org/ru/solutions/crm-for-insurance"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://leaddrivecrm.org/en/solutions/crm-for-insurance"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://leaddrivecrm.org/solutions/crm-for-insurance"/>
+    <lastmod>2026-09-06</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://leaddrivecrm.org/solutions/crm-for-public-sector</loc>
+    <xhtml:link rel="alternate" hreflang="az" href="https://leaddrivecrm.org/solutions/crm-for-public-sector"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://leaddrivecrm.org/ru/solutions/crm-for-public-sector"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://leaddrivecrm.org/en/solutions/crm-for-public-sector"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://leaddrivecrm.org/solutions/crm-for-public-sector"/>
+    <lastmod>2026-09-06</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://leaddrivecrm.org/ru/solutions/crm-for-public-sector</loc>
+    <xhtml:link rel="alternate" hreflang="az" href="https://leaddrivecrm.org/solutions/crm-for-public-sector"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://leaddrivecrm.org/ru/solutions/crm-for-public-sector"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://leaddrivecrm.org/en/solutions/crm-for-public-sector"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://leaddrivecrm.org/solutions/crm-for-public-sector"/>
+    <lastmod>2026-09-06</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://leaddrivecrm.org/en/solutions/crm-for-public-sector</loc>
+    <xhtml:link rel="alternate" hreflang="az" href="https://leaddrivecrm.org/solutions/crm-for-public-sector"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://leaddrivecrm.org/ru/solutions/crm-for-public-sector"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://leaddrivecrm.org/en/solutions/crm-for-public-sector"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://leaddrivecrm.org/solutions/crm-for-public-sector"/>
+    <lastmod>2026-09-06</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://leaddrivecrm.org/solutions/crm-for-media</loc>
+    <xhtml:link rel="alternate" hreflang="az" href="https://leaddrivecrm.org/solutions/crm-for-media"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://leaddrivecrm.org/ru/solutions/crm-for-media"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://leaddrivecrm.org/en/solutions/crm-for-media"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://leaddrivecrm.org/solutions/crm-for-media"/>
+    <lastmod>2026-09-06</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://leaddrivecrm.org/ru/solutions/crm-for-media</loc>
+    <xhtml:link rel="alternate" hreflang="az" href="https://leaddrivecrm.org/solutions/crm-for-media"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://leaddrivecrm.org/ru/solutions/crm-for-media"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://leaddrivecrm.org/en/solutions/crm-for-media"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://leaddrivecrm.org/solutions/crm-for-media"/>
+    <lastmod>2026-09-06</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://leaddrivecrm.org/en/solutions/crm-for-media</loc>
+    <xhtml:link rel="alternate" hreflang="az" href="https://leaddrivecrm.org/solutions/crm-for-media"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://leaddrivecrm.org/ru/solutions/crm-for-media"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://leaddrivecrm.org/en/solutions/crm-for-media"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://leaddrivecrm.org/solutions/crm-for-media"/>
+    <lastmod>2026-09-06</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://leaddrivecrm.org/solutions/crm-for-utilities</loc>
+    <xhtml:link rel="alternate" hreflang="az" href="https://leaddrivecrm.org/solutions/crm-for-utilities"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://leaddrivecrm.org/ru/solutions/crm-for-utilities"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://leaddrivecrm.org/en/solutions/crm-for-utilities"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://leaddrivecrm.org/solutions/crm-for-utilities"/>
+    <lastmod>2026-09-06</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://leaddrivecrm.org/ru/solutions/crm-for-utilities</loc>
+    <xhtml:link rel="alternate" hreflang="az" href="https://leaddrivecrm.org/solutions/crm-for-utilities"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://leaddrivecrm.org/ru/solutions/crm-for-utilities"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://leaddrivecrm.org/en/solutions/crm-for-utilities"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://leaddrivecrm.org/solutions/crm-for-utilities"/>
+    <lastmod>2026-09-06</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://leaddrivecrm.org/en/solutions/crm-for-utilities</loc>
+    <xhtml:link rel="alternate" hreflang="az" href="https://leaddrivecrm.org/solutions/crm-for-utilities"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://leaddrivecrm.org/ru/solutions/crm-for-utilities"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://leaddrivecrm.org/en/solutions/crm-for-utilities"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://leaddrivecrm.org/solutions/crm-for-utilities"/>
+    <lastmod>2026-09-06</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
   </url>
 </urlset>
