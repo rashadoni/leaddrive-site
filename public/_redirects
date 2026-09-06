@@ -1,3 +1,6 @@
+# www → apex (canonical host)
+https://www.leaddrivecrm.org/* https://leaddrivecrm.org/:splat 301
+https://new.leaddrivecrm.org/* https://leaddrivecrm.org/:splat 301
 # Old marketing pages of the previous site → new home
 /home / 301
 /demo / 301
