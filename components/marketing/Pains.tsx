@@ -2,11 +2,14 @@
 
 import { ArrowRight, Camera, Check, Clock3, MapPin, Phone, ShieldCheck } from 'lucide-react';
 import { MODULES, PAINS, siteNumbers, type Lang, type SceneKind } from '@/lib/product-map';
+import { solutionPath } from '@/lib/solutions';
+
+const SOLUTION_BY_DOMAIN: Record<string, string> = { omni: 'whatsapp-crm', sales: 'sales-crm', contracts: 'contract-management', finance: 'invoicing-finance', field: 'field-sales-crm', support: 'support-helpdesk-crm' };
 
 const COPY = {
-  ru: { eyebrow: 'ЧТО МЕНЯЕТСЯ С LEADDRIVE', t1: 'Шесть привычных', t2: 'потерь. И как их закрыть.', intro: 'Каждая карточка — реальный экран CRM, а не обещание. Нажмите на модуль, чтобы увидеть его в карте продукта.', pain: 'Боль', solution: 'Решение', n: { domains: 'направлений', modules: 'модулей', channels: 'каналов', autopilot: 'AI-сценариев', industries: 'отраслей' } },
-  az: { eyebrow: 'LEADDRIVE İLƏ NƏ DƏYİŞİR', t1: 'Altı tanış itki.', t2: 'Və onları necə bağlamaq.', intro: 'Hər kart vəd deyil, CRM-in real ekranıdır. Modulu məhsul xəritəsində görmək üçün ona toxunun.', pain: 'Ağrı', solution: 'Həll', n: { domains: 'istiqamət', modules: 'modul', channels: 'kanal', autopilot: 'AI ssenarisi', industries: 'sahə' } },
-  en: { eyebrow: 'WHAT CHANGES WITH LEADDRIVE', t1: 'Six familiar losses.', t2: 'And how to close them.', intro: 'Every card is a real CRM screen, not a promise. Tap a module to see it on the product map.', pain: 'Pain', solution: 'Solution', n: { domains: 'areas', modules: 'modules', channels: 'channels', autopilot: 'AI scenarios', industries: 'industries' } },
+  ru: { eyebrow: 'ЧТО МЕНЯЕТСЯ С LEADDRIVE', t1: 'Шесть привычных', t2: 'потерь. И как их закрыть.', intro: 'Каждая карточка — реальный экран CRM, а не обещание. Нажмите на модуль, чтобы увидеть его в карте продукта.', pain: 'Боль', solution: 'Решение', more: 'Подробнее о решении', n: { domains: 'направлений', modules: 'модулей', channels: 'каналов', autopilot: 'AI-сценариев', industries: 'отраслей' } },
+  az: { eyebrow: 'LEADDRIVE İLƏ NƏ DƏYİŞİR', t1: 'Altı tanış itki.', t2: 'Və onları necə bağlamaq.', intro: 'Hər kart vəd deyil, CRM-in real ekranıdır. Modulu məhsul xəritəsində görmək üçün ona toxunun.', pain: 'Ağrı', solution: 'Həll', more: 'Həll haqqında ətraflı', n: { domains: 'istiqamət', modules: 'modul', channels: 'kanal', autopilot: 'AI ssenarisi', industries: 'sahə' } },
+  en: { eyebrow: 'WHAT CHANGES WITH LEADDRIVE', t1: 'Six familiar losses.', t2: 'And how to close them.', intro: 'Every card is a real CRM screen, not a promise. Tap a module to see it on the product map.', pain: 'Pain', solution: 'Solution', more: 'More about the solution', n: { domains: 'areas', modules: 'modules', channels: 'channels', autopilot: 'AI scenarios', industries: 'industries' } },
 } as const;
 
 const SCENE: Record<Lang, Record<string, string>> = {
@@ -104,6 +107,7 @@ export function Pains({ lang }: { lang: Lang }) {
                   <div className="pain-chips">
                     {mods.map((m) => (<a key={m.id} href={`#map-${p.domainId}`}>{m.title[lang]}</a>))}
                   </div>
+                  {SOLUTION_BY_DOMAIN[p.domainId] && <a className="pain-more" href={solutionPath(lang, SOLUTION_BY_DOMAIN[p.domainId])}>{c.more}<ArrowRight size={14} /></a>}
                 </div>
               </article>
             );

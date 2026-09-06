@@ -29,6 +29,8 @@ const META: Record<Lang, { title: string; description: string; keywords: string[
   },
 };
 
+export const pageTitle = (lang: Lang): string => META[lang].title;
+
 export function pageMetadata(lang: Lang): Metadata {
   const m = META[lang];
   const others = (['az', 'ru', 'en'] as Lang[]).filter((x) => x !== lang);

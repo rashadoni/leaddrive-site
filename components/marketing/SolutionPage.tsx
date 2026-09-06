@@ -6,13 +6,15 @@ import { Cta, DEMO, Footer, Header, TEXT } from '@/app/home';
 import { DOMAINS, INDUSTRIES, MODULES, type Lang, type SceneKind } from '@/lib/product-map';
 import { PATHS, SITE_URL } from '@/lib/seo';
 import { SOLUTIONS, SOLUTION_LABEL, solutionPath, type Solution } from '@/lib/solutions';
+import { SOLUTION_STEPS, STEPS_LABEL } from '@/lib/solution-steps';
+import { hubPath } from '@/lib/site-paths';
 import { ICONS } from './ProductMap';
 import { Scene } from './Pains';
 
 const COPY = {
-  ru: { home: 'Главная', pains: 'Что болит сегодня', painsSub: 'Три ситуации, с которыми к нам приходят чаще всего.', modules: 'Какие модули это закрывают', modulesSub: 'Экраны CRM, которые вы увидите на демо.', map: 'Смотреть на карте продукта', faq: 'Вопросы по этому решению', more: 'Другие решения', demo: 'Показать на демо', industry: 'Отраслевой раздел' },
-  az: { home: 'Ana səhifə', pains: 'Bu gün nə ağrıdır', painsSub: 'Bizə ən çox müraciət olunan üç vəziyyət.', modules: 'Bunu hansı modullar bağlayır', modulesSub: 'Demoda görəcəyiniz CRM ekranları.', map: 'Məhsul xəritəsində bax', faq: 'Bu həll üzrə suallar', more: 'Digər həllər', demo: 'Demoda göstərək', industry: 'Sahə bölməsi' },
-  en: { home: 'Home', pains: 'What hurts today', painsSub: 'The three situations people most often come to us with.', modules: 'Which modules close it', modulesSub: 'CRM screens you will see on the demo.', map: 'See on the product map', faq: 'Questions about this solution', more: 'Other solutions', demo: 'Show on a demo', industry: 'Industry section' },
+  ru: { home: 'Главная', pains: 'Что болит сегодня', painsSub: 'Три ситуации, с которыми к нам приходят чаще всего.', modules: 'Какие модули это закрывают', modulesSub: 'Экраны CRM, которые вы увидите на демо.', map: 'Смотреть на карте продукта', faq: 'Вопросы по этому решению', more: 'Другие решения', demo: 'Показать на демо', industry: 'Отраслевой раздел', all: 'Все решения' },
+  az: { home: 'Ana səhifə', pains: 'Bu gün nə ağrıdır', painsSub: 'Bizə ən çox müraciət olunan üç vəziyyət.', modules: 'Bunu hansı modullar bağlayır', modulesSub: 'Demoda görəcəyiniz CRM ekranları.', map: 'Məhsul xəritəsində bax', faq: 'Bu həll üzrə suallar', more: 'Digər həllər', demo: 'Demoda göstərək', industry: 'Sahə bölməsi', all: 'Bütün həllər' },
+  en: { home: 'Home', pains: 'What hurts today', painsSub: 'The three situations people most often come to us with.', modules: 'Which modules close it', modulesSub: 'CRM screens you will see on the demo.', map: 'See on the product map', faq: 'Questions about this solution', more: 'Other solutions', demo: 'Show on a demo', industry: 'Industry section', all: 'All solutions' },
 } as const;
 
 const SCENE_BY_DOMAIN: Record<string, SceneKind> = { omni: 'inbox', sales: 'calls', contracts: 'contract', finance: 'invoice', field: 'field', support: 'support' };
@@ -24,7 +26,7 @@ export function solutionJsonLd(s: Solution, lang: Lang) {
   const url = SITE_URL + solutionPath(lang, s.slug);
   return [
     { '@context': 'https://schema.org', '@type': 'WebPage', name: c.title, description: c.description, url, inLanguage: lang, isPartOf: { '@type': 'WebSite', name: 'LeadDrive CRM', url: SITE_URL }, about: { '@type': 'SoftwareApplication', name: 'LeadDrive CRM', applicationCategory: 'BusinessApplication', operatingSystem: 'Web', url: SITE_URL + PATHS[lang] } },
-    { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'LeadDrive CRM', item: SITE_URL + PATHS[lang] }, { '@type': 'ListItem', position: 2, name: SOLUTION_LABEL[lang], item: SITE_URL + PATHS[lang] + '#solutions' }, { '@type': 'ListItem', position: 3, name: shortTitle(s, lang), item: url }] },
+    { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'LeadDrive CRM', item: SITE_URL + PATHS[lang] }, { '@type': 'ListItem', position: 2, name: SOLUTION_LABEL[lang], item: SITE_URL + hubPath(lang) }, { '@type': 'ListItem', position: 3, name: shortTitle(s, lang), item: url }] },
     { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: c.faq.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) },
   ];
 }
@@ -48,7 +50,7 @@ export function SolutionPage({ solution: s, lang }: { solution: Solution; lang: 
         <section className="sol-hero">
           <div className="wrap sol-hero-grid">
             <div>
-              <nav className="sol-crumbs" aria-label="Breadcrumb"><a href={base}>{w.home}</a><span>/</span><a href={`${base}#solutions`}>{SOLUTION_LABEL[lang]}</a>{domain && <><span>/</span><a href={`${base}#map-${domain.id}`}>{domain.title[lang]}</a></>}</nav>
+              <nav className="sol-crumbs" aria-label="Breadcrumb"><a href={base}>{w.home}</a><span>/</span><a href={hubPath(lang)}>{SOLUTION_LABEL[lang]}</a>{domain && <><span>/</span><a href={`${base}#map-${domain.id}`}>{domain.title[lang]}</a></>}</nav>
               <h1>{c.h1}<br /><em>{c.h2}</em></h1>
               <p className="sol-intro">{c.intro}</p>
               <div className="sol-actions"><Cta>{w.demo}</Cta><a className="text-link" href={`${base}#product-map`}>{w.map}<ArrowUpRight size={20} /></a></div>
@@ -86,13 +88,19 @@ export function SolutionPage({ solution: s, lang }: { solution: Solution; lang: 
           </div>
         </section>
 
+        {SOLUTION_STEPS[s.slug] && (
+          <section className="sol-steps wrap">
+            <div className="section-heading"><div><span className="eyebrow">{STEPS_LABEL[lang].eyebrow}</span><h2>{STEPS_LABEL[lang].title}</h2></div></div>
+            <ol className="sol-step-list">{SOLUTION_STEPS[s.slug][lang].map(([title, text], i) => (<li key={title}><span>{i + 1}</span><div><h3>{title}</h3><p>{text}</p></div></li>))}</ol>
+          </section>
+        )}
         <section className="faq wrap">
           <h2>{w.faq}</h2>
           <Accordion className="faq-list" multiple={false}>{c.faq.map(([q, a], i) => (<AccordionItem value={i} key={q}><AccordionTrigger>{q}</AccordionTrigger><AccordionContent>{a}</AccordionContent></AccordionItem>))}</Accordion>
         </section>
 
         <section className="sol-more wrap">
-          <span className="eyebrow">{w.more}</span>
+          <span className="eyebrow">{w.more}</span> <a className="sol-more-all" href={hubPath(lang)}>{w.all}<ArrowRight size={14} /></a>
           <nav>{others.map((o) => (<a key={o.slug} href={solutionPath(lang, o.slug)}>{shortTitle(o, lang)}<ArrowUpRight size={15} /></a>))}</nav>
           <p><a className="text-link" href={DEMO} target="_blank" rel="noopener">{t.demo}<ArrowUpRight size={20} /></a></p>
         </section>
