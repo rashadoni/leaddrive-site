@@ -14,7 +14,10 @@ import { publicDomains } from '@/lib/product-map';
 import { NavigationMenu, NavigationMenuList, NavigationMenuItem, NavigationMenuTrigger, NavigationMenuContent, NavigationMenuLink } from '@/components/ui/navigation-menu';
 
 type Lang = 'ru' | 'az';
-const DEMO = 'https://leaddrivecrm.org/demo';
+// WhatsApp number for the demo CTA (digits only, with country code). Empty → fall back to the demo page.
+const WA_NUMBER = '';
+const WA_TEXT = 'Salam! LeadDrive CRM demosuna baxmaq istəyirəm. / Здравствуйте! Хочу посмотреть демо LeadDrive CRM.';
+const DEMO = WA_NUMBER ? `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(WA_TEXT)}` : 'https://leaddrivecrm.org/demo';
 const TEXT = {
   ru: {
     product:'Продукт', ai:'AI и Da Vinci', team:'Для команды', plans:'Тарифы', about:'О компании', demo:'Посмотреть демо', login:'Войти', skip:'К содержимому',
@@ -56,7 +59,7 @@ const TEXT = {
 type Copy = typeof TEXT.ru;
 const ICONS = [BriefcaseBusiness, Users, Target, FileText, Gift];
 function Brand({light=false}:{light?:boolean}) { return <span className={`brand ${light?'brand-light':''}`}><Image unoptimized src="/favicon.svg" width="32" height="32" alt=""/><b>LeadDrive</b><span>CRM</span></span> }
-function Cta({children,light=false}:{children:React.ReactNode,light?:boolean}) { return <a href={DEMO} className={`cta ${light?'cta-light':''}`}>{children}<span><ArrowUpRight size={19}/></span></a> }
+function Cta({children,light=false}:{children:React.ReactNode,light?:boolean}) { return <a href={DEMO} target="_blank" rel="noopener" className={`cta ${light?'cta-light':''}`}>{children}<span><ArrowUpRight size={19}/></span></a> }
 function Avatar({name='ЛМ',tone='peach'}:{name?:string,tone?:string}) { return <span className={`avatar ${tone}`}>{name}</span> }
 function Header({t,lang,setLang,onModuleSelect}:{t:Copy,lang:Lang,setLang:(l:Lang)=>void,onModuleSelect:(id:string)=>void}) {
  const[mobile,setMobile]=useState(false);const[nav,setNav]=useState<string|null>(null);
