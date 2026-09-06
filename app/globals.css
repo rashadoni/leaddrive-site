@@ -73,3 +73,8 @@ footer{background:#14181f;color:#fff}.footer-main .eyebrow{color:#ffb391}.footer
 @media(max-width:1180px){.pain-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.trust-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:960px){.pains,.automation,.trust{padding:72px 0 80px}.numbers{grid-template-columns:repeat(3,1fr);row-gap:18px}.numbers li{padding-left:16px}.numbers li:nth-child(4){padding-left:0;border-left:0}.levels{grid-template-columns:1fr}}
 @media(max-width:680px){.pains,.automation,.trust{padding:56px 0 64px}.pain-grid{grid-template-columns:1fr}.numbers{grid-template-columns:repeat(2,1fr)}.numbers li:nth-child(3){padding-left:0;border-left:0}.numbers li:nth-child(4){padding-left:16px;border-left:1px solid #ffffff22}.trust-grid{grid-template-columns:1fr}.level h3{font-size:21px}}
+/* footer domains: two even rows of six instead of a ragged wrap */
+.footer-domains{align-items:flex-start}.footer-domains>span{padding-top:4px}.footer-domains nav{display:grid;grid-template-columns:repeat(6,auto);justify-content:start;column-gap:28px;row-gap:12px;flex:1}
+@media(max-width:1180px){.footer-domains nav{grid-template-columns:repeat(4,auto)}}
+@media(max-width:960px){.footer-domains nav{grid-template-columns:repeat(3,auto)}}
+@media(max-width:680px){.footer-domains nav{grid-template-columns:repeat(2,auto);column-gap:18px}}
