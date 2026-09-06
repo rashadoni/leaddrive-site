@@ -15,7 +15,7 @@ import { NavigationMenu, NavigationMenuList, NavigationMenuItem, NavigationMenuT
 
 type Lang = 'ru' | 'az';
 // WhatsApp number for the demo CTA (digits only, with country code). Empty → fall back to the demo page.
-const WA_NUMBER = '';
+const WA_NUMBER = '994512060838';
 const WA_TEXT = 'Salam! LeadDrive CRM demosuna baxmaq istəyirəm. / Здравствуйте! Хочу посмотреть демо LeadDrive CRM.';
 const DEMO = WA_NUMBER ? `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(WA_TEXT)}` : 'https://leaddrivecrm.org/demo';
 const TEXT = {
