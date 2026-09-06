@@ -8,22 +8,22 @@ export const PATHS: Record<Lang, string> = { az: '/', ru: '/ru', en: '/en' };
 const META: Record<Lang, { title: string; description: string; keywords: string[]; locale: string; ogImage: string }> = {
   az: {
     title: 'LeadDrive CRM — Azərbaycan üçün CRM sistemi: satış, WhatsApp, AI',
-    description: 'LeadDrive — Azərbaycan şirkətləri üçün CRM: WhatsApp, Instagram və Telegram bir Inbox-da, satış hunisi, müqavilələr, fakturalar, dəstək və AI köməkçiləri. Demo — WhatsApp ilə.',
-    keywords: ['CRM', 'CRM sistemi', 'CRM Azərbaycan', 'CRM Bakı', 'CRM proqramı', 'WhatsApp CRM', 'satış idarəetməsi', 'müştəri bazası', 'AI CRM', 'LeadDrive'],
+    description: 'LeadDrive — Azərbaycan şirkətləri üçün CRM həlli: WhatsApp, Instagram və Telegram bir Inbox-da, satış hunisi, müqavilələr, fakturalar, dəstək və AI köməkçiləri. Demo — WhatsApp ilə.',
+    keywords: ['CRM', 'CRM həlli', 'CRM sistemi', 'CRM Azərbaycan', 'CRM Bakı', 'CRM proqramı', 'WhatsApp CRM', 'satış idarəetməsi', 'müştəri bazası', 'AI CRM', 'LeadDrive'],
     locale: 'az_AZ',
     ogImage: '/og-az.png',
   },
   ru: {
     title: 'LeadDrive CRM — CRM-система для Азербайджана: продажи, WhatsApp, AI',
-    description: 'LeadDrive — CRM для компаний в Азербайджане: WhatsApp, Instagram и Telegram в одном Inbox, воронка продаж, договоры, счета, поддержка и AI-помощники. Демо — в WhatsApp.',
-    keywords: ['CRM', 'CRM система', 'CRM Азербайджан', 'CRM Баку', 'WhatsApp CRM', 'управление продажами', 'клиентская база', 'AI CRM', 'LeadDrive'],
+    description: 'LeadDrive — CRM-решение для компаний в Азербайджане: WhatsApp, Instagram и Telegram в одном Inbox, воронка продаж, договоры, счета, поддержка и AI-помощники. Демо — в WhatsApp.',
+    keywords: ['CRM', 'CRM решение', 'CRM система', 'CRM Азербайджан', 'CRM Баку', 'WhatsApp CRM', 'управление продажами', 'клиентская база', 'AI CRM', 'LeadDrive'],
     locale: 'ru_RU',
     ogImage: '/og-ru.png',
   },
   en: {
     title: 'LeadDrive CRM — CRM software for Azerbaijan: sales, WhatsApp, AI',
-    description: 'LeadDrive is a CRM for companies in Azerbaijan: WhatsApp, Instagram and Telegram in one inbox, sales pipeline, contracts, invoices, support and AI assistants. Book a demo on WhatsApp.',
-    keywords: ['CRM', 'CRM software', 'CRM Azerbaijan', 'CRM Baku', 'WhatsApp CRM', 'sales management', 'customer database', 'AI CRM', 'LeadDrive'],
+    description: 'LeadDrive is a CRM solution for companies in Azerbaijan: WhatsApp, Instagram and Telegram in one inbox, sales pipeline, contracts, invoices, support and AI assistants. Book a demo on WhatsApp.',
+    keywords: ['CRM', 'CRM solution', 'CRM software', 'CRM Azerbaijan', 'CRM Baku', 'WhatsApp CRM', 'sales management', 'customer database', 'AI CRM', 'LeadDrive'],
     locale: 'en_US',
     ogImage: '/og-en.png',
   },
