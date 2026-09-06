@@ -6,6 +6,7 @@ import { AI_LEVELS, AUTOPILOT_SCENARIOS, type Lang } from '@/lib/product-map';
 const COPY = {
   ru: { eyebrow: 'AI ПОД ВАШИМ КОНТРОЛЕМ', t1: 'Сколько доверить AI,', t2: 'решаете вы.', intro: 'Три уровня делегирования настраиваются в CRM. Автопилот включается по отдельным сценариям и работает в пределах дневного бюджета.', scen: 'Сценарии автопилота', budget: 'Дневной бюджет и лимиты ответов задаются в настройках. При превышении диалог передаётся человеку.' },
   az: { eyebrow: 'AI SİZİN NƏZARƏTİNİZDƏ', t1: 'AI-yə nə qədər etibar etmək —', t2: 'siz qərar verirsiniz.', intro: 'Üç həvalə səviyyəsi CRM-də tənzimlənir. Avtopilot ayrı-ayrı ssenarilər üzrə işə salınır və gündəlik büdcə çərçivəsində işləyir.', scen: 'Avtopilot ssenariləri', budget: 'Gündəlik büdcə və cavab limitləri parametrlərdə təyin olunur. Limit aşıldıqda dialoq insana ötürülür.' },
+  en: { eyebrow: 'AI UNDER YOUR CONTROL', t1: 'How much to trust the AI', t2: 'is your call.', intro: 'Three delegation levels are configured in the CRM. Autopilot is enabled per scenario and runs within a daily budget.', scen: 'Autopilot scenarios', budget: 'The daily budget and reply limits are set in the settings. When exceeded, the conversation is handed to a person.' },
 } as const;
 
 const ICONS = [Eye, UserCheck, Sparkles];

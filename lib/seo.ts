@@ -1,8 +1,9 @@
 import type { Metadata } from 'next';
 
-export type Lang = 'ru' | 'az';
+import type { Lang } from './product-map';
+export type { Lang };
 export const SITE_URL = 'https://leaddrivecrm.org';
-export const PATHS: Record<Lang, string> = { az: '/', ru: '/ru' };
+export const PATHS: Record<Lang, string> = { az: '/', ru: '/ru', en: '/en' };
 
 const META: Record<Lang, { title: string; description: string; keywords: string[]; locale: string; ogImage: string }> = {
   az: {
@@ -19,18 +20,25 @@ const META: Record<Lang, { title: string; description: string; keywords: string[
     locale: 'ru_RU',
     ogImage: '/og-ru.png',
   },
+  en: {
+    title: 'LeadDrive CRM — CRM software for Azerbaijan: sales, WhatsApp, AI',
+    description: 'LeadDrive is a CRM for companies in Azerbaijan: WhatsApp, Instagram and Telegram in one inbox, sales pipeline, contracts, invoices, support and AI assistants. Book a demo on WhatsApp.',
+    keywords: ['CRM', 'CRM software', 'CRM Azerbaijan', 'CRM Baku', 'WhatsApp CRM', 'sales management', 'customer database', 'AI CRM', 'LeadDrive'],
+    locale: 'en_US',
+    ogImage: '/og-en.png',
+  },
 };
 
 export function pageMetadata(lang: Lang): Metadata {
   const m = META[lang];
-  const other: Lang = lang === 'az' ? 'ru' : 'az';
+  const others = (['az', 'ru', 'en'] as Lang[]).filter((x) => x !== lang);
   return {
     metadataBase: new URL(SITE_URL),
     title: m.title,
     description: m.description,
     keywords: m.keywords,
-    alternates: { canonical: PATHS[lang], languages: { az: PATHS.az, ru: PATHS.ru, 'x-default': PATHS.az } },
-    openGraph: { type: 'website', url: PATHS[lang], siteName: 'LeadDrive CRM', title: m.title, description: m.description, locale: m.locale, alternateLocale: [META[other].locale], images: [{ url: m.ogImage, width: 1200, height: 630, alt: 'LeadDrive CRM' }] },
+    alternates: { canonical: PATHS[lang], languages: { az: PATHS.az, ru: PATHS.ru, en: PATHS.en, 'x-default': PATHS.az } },
+    openGraph: { type: 'website', url: PATHS[lang], siteName: 'LeadDrive CRM', title: m.title, description: m.description, locale: m.locale, alternateLocale: others.map((x) => META[x].locale), images: [{ url: m.ogImage, width: 1200, height: 630, alt: 'LeadDrive CRM' }] },
     twitter: { card: 'summary_large_image', title: m.title, description: m.description, images: [m.ogImage] },
     robots: { index: true, follow: true, googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1 } },
     icons: { icon: '/favicon.svg' },

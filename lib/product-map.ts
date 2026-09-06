@@ -2,7 +2,8 @@
 // are marked `confirmed` + `public`; everything else stays out of the rendered page.
 // Audit registry: realtime-voice-chat/outputs/leaddrive-product-audit/section-register.json
 
-export type Lang = 'ru' | 'az';
+export type Lang = 'ru' | 'az' | 'en';
+export const LANGS: Lang[] = ['az', 'ru', 'en'];
 export type Localized = Record<Lang, string>;
 export type ModuleStatus = 'confirmed' | 'unverified';
 export type ModuleVisibility = 'public' | 'hidden';
@@ -42,7 +43,9 @@ export type ProductModule = {
   auditRefs: string[];
 };
 
-const l = (ru: string, az: string): Localized => ({ ru, az });
+import { EXTRA } from './i18n-extra';
+/** RU/AZ inline; EN comes from the dictionary keyed by the Russian text (fallback: Russian). */
+const l = (ru: string, az: string): Localized => ({ ru, az, en: EXTRA[ru]?.[1] ?? ru });
 
 export const DOMAINS: ProductDomain[] = [
   { id: 'core', order: 1, icon: 'layers', title: l('Основа CRM', 'CRM əsası'), summary: l('Компании, люди, задачи и проекты в одном рабочем контуре. То, к чему подключаются остальные модули.', 'Şirkətlər, insanlar, tapşırıqlar və layihələr bir iş konturunda. Qalan modullar buna qoşulur.') },
