@@ -201,3 +201,4 @@ footer{background:#0a231a;color:#fff}.footer-main .eyebrow{color:#ffb391}.footer
 @keyframes task-done{to{background:#2f7a4a}}@keyframes task-check{to{opacity:1}}
 @media(prefers-reduced-motion:reduce){.cap-art *{animation:none!important}.risk-line{stroke-dashoffset:0}.risk-dot{opacity:1}.cap-score i{transform:none}.cap-tasks i{background:#2f7a4a}.cap-tasks i svg{opacity:1}}
 @media(max-width:680px){.ai-caps{grid-template-columns:1fr}}
+.cap-social{gap:5px}.cap-social i{flex:0 0 22px;width:22px;height:22px;aspect-ratio:1}.s-tt{background:#111}.s-fb{background:#1877f2}.s-fb span{font:900 14px/1 Manrope,sans-serif;color:#fff;margin-top:-1px}

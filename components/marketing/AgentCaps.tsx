@@ -1,13 +1,13 @@
 'use client';
 
-import { Bell, Check, MessageCircle, Send } from 'lucide-react';
+import { Bell, Check, MessageCircle, Music2 } from 'lucide-react';
 import type { Lang } from '@/lib/product-map';
 
 export type CapKind = 'social' | 'risk' | 'score' | 'call' | 'remind' | 'tasks';
 
 export const CAPS: Record<Lang, { kind: CapKind; title: string; sub: string }[]> = {
   az: [
-    { kind: 'social', title: 'Müştərilərlə sosial şəbəkələrdə yazışır', sub: 'WhatsApp, Instagram, Telegram, Messenger' },
+    { kind: 'social', title: 'Müştərilərlə sosial şəbəkələrdə yazışır', sub: 'WhatsApp, Instagram, TikTok, Facebook' },
     { kind: 'risk', title: 'Sövdələşmə risklərini təhlil edir', sub: 'Da Vinci siqnalları' },
     { kind: 'score', title: 'Lidləri qiymətləndirir, qaynarları eskalasiya edir', sub: 'Inbox → lid → menecer' },
     { kind: 'call', title: 'Zəngi dinləyib xülasə yazır', sub: 'mövzular, əhval, tapşırıqlar' },
@@ -15,7 +15,7 @@ export const CAPS: Record<Lang, { kind: CapKind; title: string; sub: string }[]>
     { kind: 'tasks', title: 'Tapşırıq yaradır və görüşə hazırlayır', sub: 'təqvim, xülasə' },
   ],
   ru: [
-    { kind: 'social', title: 'Общается с клиентами в соцсетях', sub: 'WhatsApp, Instagram, Telegram, Messenger' },
+    { kind: 'social', title: 'Общается с клиентами в соцсетях', sub: 'WhatsApp, Instagram, TikTok, Facebook' },
     { kind: 'risk', title: 'Анализирует риски по сделкам', sub: 'сигналы Da Vinci' },
     { kind: 'score', title: 'Оценивает лиды, эскалирует горячие', sub: 'Inbox → лид → менеджер' },
     { kind: 'call', title: 'Слушает звонок и пишет резюме', sub: 'темы, настроение, задачи' },
@@ -23,7 +23,7 @@ export const CAPS: Record<Lang, { kind: CapKind; title: string; sub: string }[]>
     { kind: 'tasks', title: 'Создаёт задачи и готовит к встрече', sub: 'календарь, резюме' },
   ],
   en: [
-    { kind: 'social', title: 'Talks to customers on social channels', sub: 'WhatsApp, Instagram, Telegram, Messenger' },
+    { kind: 'social', title: 'Talks to customers on social channels', sub: 'WhatsApp, Instagram, TikTok, Facebook' },
     { kind: 'risk', title: 'Analyses deal risks', sub: 'Da Vinci signals' },
     { kind: 'score', title: 'Scores leads, escalates the hot ones', sub: 'inbox → lead → manager' },
     { kind: 'call', title: 'Listens to the call and writes a summary', sub: 'topics, mood, tasks' },
@@ -40,8 +40,8 @@ export function CapArt({ kind }: { kind: CapKind }) {
         <span className="cap-art cap-social" aria-hidden="true">
           <i className="s-wa"><MessageCircle size={13} /></i>
           <i className="s-ig"><b /></i>
-          <i className="s-tg"><Send size={12} /></i>
-          <i className="s-fb"><MessageCircle size={13} /></i>
+          <i className="s-tt"><Music2 size={12} /></i>
+          <i className="s-fb"><span>f</span></i>
         </span>
       );
     case 'risk':
