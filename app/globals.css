@@ -216,3 +216,4 @@ main h2.typewriter em,.core-section h2.typewriter em,.ai-section h2.typewriter e
 .pains h2.typewriter,.pains h2.typewriter em{color:#fff!important}
 .team-copy h2.typewriter,.team-copy h2.typewriter em{color:#f9f8e9!important}
 footer h2.typewriter em{color:var(--orange)!important}
+.topbar{background:linear-gradient(90deg,#0a231a,#14402f 55%,#1f5a43)}
