@@ -9,6 +9,7 @@ import { SOLUTIONS, SOLUTION_LABEL, solutionPath, type Solution } from '@/lib/so
 import { SOLUTION_STEPS, STEPS_LABEL } from '@/lib/solution-steps';
 import { hubPath } from '@/lib/site-paths';
 import { ICONS } from './ProductMap';
+import { SHOTS, SOLUTION_SHOT } from '@/lib/shots';
 import { Scene } from './Pains';
 
 const COPY = {
@@ -40,6 +41,7 @@ export function SolutionPage({ solution: s, lang }: { solution: Solution; lang: 
   const industry = s.industryId ? INDUSTRIES.find((i) => i.id === s.industryId) : undefined;
   const mods = s.moduleIds.map((id) => MODULES.find((m) => m.id === id)).filter((m): m is NonNullable<typeof m> => !!m && m.status === 'confirmed');
   const scene = SCENE_BY_DOMAIN[s.domainId];
+  const shot = SOLUTION_SHOT[s.slug] ? SHOTS[SOLUTION_SHOT[s.slug]] : undefined;
   const others = SOLUTIONS.filter((x) => x.slug !== s.slug);
   const go = (l: Lang) => { window.location.href = solutionPath(l, s.slug); };
   return (
@@ -47,7 +49,7 @@ export function SolutionPage({ solution: s, lang }: { solution: Solution; lang: 
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(solutionJsonLd(s, lang)) }} />
       <Header t={t} lang={lang} setLang={go} onModuleSelect={() => { window.location.href = `${base}#possibilities`; }} base={base} langHref={(l) => solutionPath(l, s.slug)} />
       <main>
-        <section className="sol-hero">
+        <section className={`sol-hero ${shot ? 'has-shot' : ''}`}>
           <div className="wrap sol-hero-grid">
             <div>
               <nav className="sol-crumbs" aria-label="Breadcrumb"><a href={base}>{w.home}</a><span>/</span><a href={hubPath(lang)}>{SOLUTION_LABEL[lang]}</a>{domain && <><span>/</span><a href={`${base}#map-${domain.id}`}>{domain.title[lang]}</a></>}</nav>
@@ -55,8 +57,10 @@ export function SolutionPage({ solution: s, lang }: { solution: Solution; lang: 
               <p className="sol-intro">{c.intro}</p>
               <div className="sol-actions"><Cta>{w.demo}</Cta><a className="text-link" href={`${base}#product-map`}>{w.map}<ArrowUpRight size={20} /></a></div>
             </div>
-            <div className="sol-visual" aria-hidden="true">
-              {scene ? <Scene kind={scene} lang={lang} /> : (
+            <div className={`sol-visual ${shot ? 'sol-visual-shot' : ''}`}>
+              {shot ? (
+                <figure className="sol-shot"><div className="shot-frame"><span className="shot-dots" aria-hidden="true"><i /><i /><i /></span><img src={shot.src} width={shot.w} height={shot.h} alt={shot.caption[lang]} fetchPriority="high" decoding="async" /></div><figcaption>{shot.caption[lang]}</figcaption></figure>
+              ) : scene ? <Scene kind={scene} lang={lang} /> : (
                 <div className="mini mini-support"><div className="mini-head">LeadDrive<em>AI</em></div>{mods.slice(0, 3).map((m) => (<div className="mini-line" key={m.id}><span className="ok" />{m.title[lang]}</div>))}</div>
               )}
               {industry && <span className="sol-industry">{w.industry}: {industry.title[lang]}</span>}

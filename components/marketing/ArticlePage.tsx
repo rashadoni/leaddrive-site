@@ -9,6 +9,7 @@ import { SITE_URL } from '@/lib/seo';
 import { blogPath, forAllLangs, homePath } from '@/lib/site-paths';
 import { SOLUTIONS, solutionPath } from '@/lib/solutions';
 import { Shell } from './Shell';
+import { ARTICLE_SHOT, SHOTS } from '@/lib/shots';
 import { shortTitle } from './SolutionPage';
 
 const MONTHS: Record<Lang, string[]> = {
@@ -25,8 +26,9 @@ export function ArticlePage({ article: a, lang }: { article: Article; lang: Lang
   const paths = forAllLangs((l) => blogPath(l, a.slug));
   const related = a.solutions.map((s) => SOLUTIONS.find((x) => x.slug === s)).filter((s): s is NonNullable<typeof s> => !!s);
   const others = ARTICLES.filter((x) => x.slug !== a.slug).slice(0, 6);
+  const shot = ARTICLE_SHOT[a.slug] ? SHOTS[ARTICLE_SHOT[a.slug]] : undefined;
   const jsonLd = [
-    { '@context': 'https://schema.org', '@type': 'Article', headline: c.h1, description: c.description, url: SITE_URL + paths[lang], inLanguage: lang, datePublished: a.date, dateModified: a.date, author: { '@type': 'Organization', name: 'LeadDrive', url: SITE_URL }, publisher: { '@type': 'Organization', name: 'LeadDrive', logo: { '@type': 'ImageObject', url: SITE_URL + '/favicon.svg' } }, image: SITE_URL + `/og-${lang}.png`, mainEntityOfPage: SITE_URL + paths[lang] },
+    { '@context': 'https://schema.org', '@type': 'Article', headline: c.h1, description: c.description, url: SITE_URL + paths[lang], inLanguage: lang, datePublished: a.date, dateModified: a.date, author: { '@type': 'Organization', name: 'LeadDrive', url: SITE_URL }, publisher: { '@type': 'Organization', name: 'LeadDrive', logo: { '@type': 'ImageObject', url: SITE_URL + '/favicon.svg' } }, image: shot ? SITE_URL + shot.src : SITE_URL + `/og-${lang}.png`, mainEntityOfPage: SITE_URL + paths[lang] },
     breadcrumbLd([{ name: 'LeadDrive CRM', path: homePath(lang) }, { name: b.label, path: blogPath(lang) }, { name: c.h1, path: paths[lang] }]),
   ];
   return (
@@ -38,6 +40,7 @@ export function ArticlePage({ article: a, lang }: { article: Article; lang: Lang
           <p className="article-intro">{c.intro}</p>
           <p className="article-meta"><time dateTime={a.date}>{b.published}: {fmt(a.date, lang)}</time> · LeadDrive</p>
         </header>
+        {shot && <figure className="article-shot"><div className="shot-frame"><span className="shot-dots" aria-hidden="true"><i /><i /><i /></span><img src={shot.src} width={shot.w} height={shot.h} alt={shot.caption[lang]} loading="lazy" decoding="async" /></div><figcaption>{shot.caption[lang]}</figcaption></figure>}
         <div className="article-grid">
           <div className="article-body">
             {c.sections.map((s) => (

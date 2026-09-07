@@ -240,3 +240,8 @@ footer h2.typewriter em{color:var(--orange)!important}
 @media(max-width:1180px){.hero-shot{padding-inline:35px}}
 @media(max-width:960px){.screens{padding-top:70px}.screens-grid{grid-template-columns:1fr}}
 @media(max-width:680px){.hero-shot{padding-inline:21px;margin-top:26px}.shot-frame{border-radius:12px}.screens{padding-top:56px}}
+/* v9.1: real screens on solution pages and articles */
+.sol-hero.has-shot .sol-hero-grid{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:40px}
+.sol-visual-shot{background:transparent;box-shadow:none;border:0;overflow:visible}.sol-shot{margin:0}.sol-shot figcaption{margin-top:10px;font-size:13px;color:#7c8274}
+.article-shot{margin:0 0 36px;max-width:1000px}.article-shot figcaption{margin-top:10px;font-size:13px;color:#7c8274}
+@media(max-width:960px){.sol-hero.has-shot .sol-hero-grid{grid-template-columns:1fr}}
