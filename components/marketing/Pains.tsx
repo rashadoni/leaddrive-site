@@ -7,9 +7,9 @@ import { solutionPath } from '@/lib/solutions';
 const SOLUTION_BY_DOMAIN: Record<string, string> = { omni: 'whatsapp-crm', sales: 'sales-crm', contracts: 'contract-management', finance: 'invoicing-finance', field: 'field-sales-crm', support: 'support-helpdesk-crm' };
 
 const COPY = {
-  ru: { eyebrow: 'ЧТО МЕНЯЕТСЯ С LEADDRIVE', t1: 'Шесть привычных', t2: 'потерь. И как их закрыть.', intro: 'Каждая карточка — реальный экран CRM, а не обещание. Нажмите на модуль, чтобы увидеть его в карте продукта.', pain: 'Боль', solution: 'Решение', more: 'Подробнее о решении', n: { domains: 'направлений', modules: 'модулей', channels: 'каналов', autopilot: 'AI-сценариев', industries: 'отраслей' } },
-  az: { eyebrow: 'LEADDRIVE İLƏ NƏ DƏYİŞİR', t1: 'Altı tanış itki.', t2: 'Və onları necə bağlamaq.', intro: 'Hər kart vəd deyil, CRM-in real ekranıdır. Modulu məhsul xəritəsində görmək üçün ona toxunun.', pain: 'Ağrı', solution: 'Həll', more: 'Həll haqqında ətraflı', n: { domains: 'istiqamət', modules: 'modul', channels: 'kanal', autopilot: 'AI ssenarisi', industries: 'sahə' } },
-  en: { eyebrow: 'WHAT CHANGES WITH LEADDRIVE', t1: 'Six familiar losses.', t2: 'And how to close them.', intro: 'Every card is a real CRM screen, not a promise. Tap a module to see it on the product map.', pain: 'Pain', solution: 'Solution', more: 'More about the solution', n: { domains: 'areas', modules: 'modules', channels: 'channels', autopilot: 'AI scenarios', industries: 'industries' } },
+  ru: { eyebrow: 'ЧТО МЕНЯЕТСЯ С LEADDRIVE', t1: 'Шесть привычных', t2: 'потерь. И как их закрыть.', intro: 'Каждая карточка — реальный экран CRM, а не обещание. Нажмите на модуль, чтобы увидеть его в карте продукта.', pain: 'Боль', solution: 'Решение', more: 'Подробнее о решении', n: { domains: 'направлений', modules: 'модулей', sections: 'разделов', channels: 'каналов', autopilot: 'AI-сценариев', industries: 'отраслей' } },
+  az: { eyebrow: 'LEADDRIVE İLƏ NƏ DƏYİŞİR', t1: 'Altı tanış itki.', t2: 'Və onları necə bağlamaq.', intro: 'Hər kart vəd deyil, CRM-in real ekranıdır. Modulu məhsul xəritəsində görmək üçün ona toxunun.', pain: 'Ağrı', solution: 'Həll', more: 'Həll haqqında ətraflı', n: { domains: 'istiqamət', modules: 'modul', sections: 'bölmə', channels: 'kanal', autopilot: 'AI ssenarisi', industries: 'sahə' } },
+  en: { eyebrow: 'WHAT CHANGES WITH LEADDRIVE', t1: 'Six familiar losses.', t2: 'And how to close them.', intro: 'Every card is a real CRM screen, not a promise. Tap a module to see it on the product map.', pain: 'Pain', solution: 'Solution', more: 'More about the solution', n: { domains: 'areas', modules: 'modules', sections: 'sections', channels: 'channels', autopilot: 'AI scenarios', industries: 'industries' } },
 } as const;
 
 const SCENE: Record<Lang, Record<string, string>> = {
@@ -79,7 +79,7 @@ export function Scene({ kind, lang }: { kind: SceneKind; lang: Lang }) {
 export function Pains({ lang }: { lang: Lang }) {
   const c = COPY[lang];
   const n = siteNumbers();
-  const numbers: [number, string][] = [[n.domains, c.n.domains], [n.modules, c.n.modules], [n.channels, c.n.channels], [n.autopilot, c.n.autopilot], [n.industries, c.n.industries]];
+  const numbers: [string, string][] = [[String(n.modules), c.n.modules], [`${n.sections}+`, c.n.sections], [String(n.channels), c.n.channels], [String(n.autopilot), c.n.autopilot], [String(n.industries), c.n.industries]];
   return (
     <section className="pains" id="pains">
       <div className="wrap">

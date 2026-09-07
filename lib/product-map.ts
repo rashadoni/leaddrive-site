@@ -197,7 +197,11 @@ export const TRUST: { id: string; title: Localized; items: Localized[] }[] = [
 ];
 
 /** Numbers derived from the data above, never typed by hand. */
-export const siteNumbers = () => ({ domains: publicDomains().length, modules: publicModules().length, channels: TRUST[0].items.length, autopilot: AUTOPILOT_SCENARIOS.length, industries: publicIndustries().length });
+/** Audit figures (realtime-voice-chat/outputs/leaddrive-product-audit/section-register.json, module-register.json):
+ *  19 top-level modules in the CRM navigation; 486 sections registered, 433 opened and confirmed on 6–7 Sep 2026. */
+export const CRM_MODULES = 19;
+export const CRM_SECTIONS_CONFIRMED = 433;
+export const siteNumbers = () => ({ domains: publicDomains().length, modules: CRM_MODULES, sections: CRM_SECTIONS_CONFIRMED, screens: publicModules().length, channels: TRUST[0].items.length, autopilot: AUTOPILOT_SCENARIOS.length, industries: publicIndustries().length });
 
 export const publicModules = (domainId?: string): ProductModule[] =>
   MODULES.filter((m) => m.status === 'confirmed' && m.visibility === 'public' && (!domainId || m.domainId === domainId)).sort((a, b) => a.order - b.order);

@@ -8,7 +8,7 @@ import { solutionPath } from '@/lib/solutions';
 type Panel = { id: string; img?: string; tone: 'photo' | 'orange' | 'green'; title: Record<Lang, string>; chips: Record<Lang, string[]>; href: (lang: Lang) => string };
 
 const PANELS: Panel[] = [
-  { id: 'platform', tone: 'orange', title: { ru: 'Одна платформа:', az: 'Bir platforma:', en: 'One platform:' }, chips: { ru: ['12 направлений', '60 модулей'], az: ['12 istiqamət', '60 modul'], en: ['12 areas', '60 modules'] }, href: () => '#product-map' },
+  { id: 'platform', tone: 'orange', title: { ru: 'Одна платформа:', az: 'Bir platforma:', en: 'One platform:' }, chips: { ru: ['19 модулей', '430+ разделов'], az: ['19 modul', '430+ bölmə'], en: ['19 modules', '430+ sections'] }, href: () => '#product-map' },
   { id: 'cycle', img: '/team-work.webp', tone: 'photo', title: { ru: 'Продажи, поддержка, поле', az: 'Satış, dəstək, sahə', en: 'Sales, support, field' }, chips: { ru: ['одна карточка клиента'], az: ['bir müştəri kartı'], en: ['one customer card'] }, href: (l) => hubPath(l) },
   { id: 'local', tone: 'green', title: { ru: 'На азербайджанском', az: 'Azərbaycan dilində', en: 'In Azerbaijani' }, chips: { ru: ['поддержка и внедрение'], az: ['dəstək və tətbiq'], en: ['support and rollout'] }, href: () => '#start' },
   { id: 'industries', img: '/client-meeting.webp', tone: 'photo', title: { ru: 'Отрасли', az: 'Sahələr', en: 'Industries' }, chips: { ru: ['5 готовых разделов'], az: ['5 hazır bölmə'], en: ['5 ready sections'] }, href: () => '#industries' },
