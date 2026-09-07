@@ -10,9 +10,9 @@ type Panel = { id: string; img?: string; tone: 'photo' | 'orange' | 'green'; tit
 const PANELS: Panel[] = [
   { id: 'platform', tone: 'orange', title: { ru: 'Одна платформа:', az: 'Bir platforma:', en: 'One platform:' }, chips: { ru: ['12 направлений', '60 модулей'], az: ['12 istiqamət', '60 modul'], en: ['12 areas', '60 modules'] }, href: () => '#product-map' },
   { id: 'cycle', img: '/team-work.webp', tone: 'photo', title: { ru: 'Продажи, поддержка, поле', az: 'Satış, dəstək, sahə', en: 'Sales, support, field' }, chips: { ru: ['одна карточка клиента'], az: ['bir müştəri kartı'], en: ['one customer card'] }, href: (l) => hubPath(l) },
-  { id: 'people', img: '/presenter-office.webp', tone: 'photo', title: { ru: 'Люди и AI', az: 'İnsanlar və AI', en: 'People and AI' }, chips: { ru: ['работают вместе'], az: ['birlikdə işləyir'], en: ['working together'] }, href: (l) => solutionPath(l, 'ai-crm') },
-  { id: 'industries', img: '/client-meeting.webp', tone: 'photo', title: { ru: 'Отрасли', az: 'Sahələr', en: 'Industries' }, chips: { ru: ['5 готовых разделов'], az: ['5 hazır bölmə'], en: ['5 ready sections'] }, href: () => '#industries' },
   { id: 'local', tone: 'green', title: { ru: 'На азербайджанском', az: 'Azərbaycan dilində', en: 'In Azerbaijani' }, chips: { ru: ['поддержка и внедрение'], az: ['dəstək və tətbiq'], en: ['support and rollout'] }, href: () => '#start' },
+  { id: 'industries', img: '/client-meeting.webp', tone: 'photo', title: { ru: 'Отрасли', az: 'Sahələr', en: 'Industries' }, chips: { ru: ['5 готовых разделов'], az: ['5 hazır bölmə'], en: ['5 ready sections'] }, href: () => '#industries' },
+  { id: 'people', img: '/presenter-office.webp', tone: 'photo', title: { ru: 'Люди и AI', az: 'İnsanlar və AI', en: 'People and AI' }, chips: { ru: ['работают вместе'], az: ['birlikdə işləyir'], en: ['working together'] }, href: (l) => solutionPath(l, 'ai-crm') },
 ];
 
 const LABEL: Record<Lang, string> = { ru: 'Что даёт LeadDrive', az: 'LeadDrive nə verir', en: 'What LeadDrive gives' };
