@@ -1,5 +1,7 @@
 'use client';
 
+import { TypedH2 } from './Typewriter';
+
 import { useEffect, useState } from 'react';
 import { ArrowUpRight, Bell, BriefcaseBusiness, CalendarDays, ChartNoAxesColumn, Check, FileText, Funnel, Gift, HeartPulse, Landmark, Layers, Lock, MessageCircle, Newspaper, Package, Plug, Quote, Radio, Route, Settings, ShieldCheck, Sparkles, SquareKanban, Target, Timer, Umbrella, Users, Workflow, Zap } from 'lucide-react';
 import { publicDomains, publicModules, type IconKey, type Lang } from '@/lib/product-map';
@@ -42,7 +44,7 @@ export function ProductMap({ lang, copy, demoHref }: { lang: Lang; copy: Product
       <div className="section-heading">
         <div>
           <span className="eyebrow">{copy.eyebrow}</span>
-          <h2>{copy.title1}<br /><em>{copy.title2}</em></h2>
+          <TypedH2 a={copy.title1} b={copy.title2} />
         </div>
         <p>{copy.intro}</p>
       </div>

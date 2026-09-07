@@ -1,5 +1,7 @@
 'use client';
 
+import { TypedH2 } from './Typewriter';
+
 import { Check } from 'lucide-react';
 import { ICONS } from '@/components/marketing/ProductMap';
 import { publicIndustries, type Lang } from '@/lib/product-map';
@@ -19,7 +21,7 @@ export function Industries({ lang, copy }: { lang: Lang; copy: IndustriesCopy })
         <div className="section-heading">
           <div>
             <span className="eyebrow">{copy.eyebrow}</span>
-            <h2>{copy.title1}<br /><em>{copy.title2}</em></h2>
+            <TypedH2 a={copy.title1} b={copy.title2} />
           </div>
           <p>{copy.intro}</p>
         </div>

@@ -206,3 +206,8 @@ footer{background:#0a231a;color:#fff}.footer-main .eyebrow{color:#ffb391}.footer
 .ai-presenter-grid{grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr)}
 .ai-presenter-media{min-height:880px;margin-left:-140px}.ai-presenter-media video{height:880px}
 @media(max-width:1180px){.ai-presenter-media{min-height:720px;margin-left:-100px}.ai-presenter-media video{height:720px}}
+/* v8.5: all section headings black, typed on scroll (footer and dark sections keep their light text) */
+.section-heading h2,.section-heading h2 em,.insight-copy h2,.insight-copy h2 em,.faq>h2,.ai-presenter-copy h2,.ai-presenter-copy h2 em,.ai-heading h2,.ai-heading h2 em,.start .section-heading h2{color:#181818;font-style:normal}
+.pains .section-heading h2,.pains .section-heading h2 em{color:#fff}
+.team-copy h2,.team-copy h2 em{color:#f9f8e9}
+h2.typewriter{min-height:2.3em}

@@ -1,5 +1,7 @@
 'use client';
 
+import { TypedH2 } from './Typewriter';
+
 import { ArrowRight, Camera, Check, Clock3, MapPin, Phone, ShieldCheck } from 'lucide-react';
 import { MODULES, PAINS, siteNumbers, type Lang, type SceneKind } from '@/lib/product-map';
 import { solutionPath } from '@/lib/solutions';
@@ -86,7 +88,7 @@ export function Pains({ lang }: { lang: Lang }) {
         <div className="section-heading">
           <div>
             <span className="eyebrow">{c.eyebrow}</span>
-            <h2>{c.t1}<br /><em>{c.t2}</em></h2>
+            <TypedH2 a={c.t1} b={c.t2} />
           </div>
           <p>{c.intro}</p>
         </div>

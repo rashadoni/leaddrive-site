@@ -1,5 +1,7 @@
 'use client';
 
+import { TypedH2 } from './Typewriter';
+
 import { Eye, Sparkles, UserCheck } from 'lucide-react';
 import { AI_LEVELS, AUTOPILOT_SCENARIOS, type Lang } from '@/lib/product-map';
 
@@ -19,7 +21,7 @@ export function Automation({ lang }: { lang: Lang }) {
         <div className="section-heading">
           <div>
             <span className="eyebrow">{c.eyebrow}</span>
-            <h2>{c.t1}<br /><em>{c.t2}</em></h2>
+            <TypedH2 a={c.t1} b={c.t2} />
           </div>
           <p>{c.intro}</p>
         </div>
