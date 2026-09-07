@@ -1,6 +1,5 @@
 'use client';
 
-import { Plus } from 'lucide-react';
 import type { Lang } from '@/lib/product-map';
 import { hubPath } from '@/lib/site-paths';
 import { solutionPath } from '@/lib/solutions';
@@ -28,7 +27,6 @@ export function Panels({ lang }: { lang: Lang }) {
             <strong>{p.title[lang]}</strong>
             {p.chips[lang].map((ch) => <span className="panel-chip" key={ch}>{ch}</span>)}
           </span>
-          <span className="panel-plus"><Plus size={18} /></span>
         </a>
       ))}
     </section>
