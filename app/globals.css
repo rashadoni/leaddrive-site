@@ -217,3 +217,12 @@ main h2.typewriter em,.core-section h2.typewriter em,.ai-section h2.typewriter e
 .team-copy h2.typewriter,.team-copy h2.typewriter em{color:#f9f8e9!important}
 footer h2.typewriter em{color:var(--orange)!important}
 .topbar{background:linear-gradient(90deg,#0a231a,#14402f 55%,#1f5a43)}
+/* v8.7: no warm/peach section backgrounds; neutral surfaces only */
+.hero{background:#fff}.sol-hero,.hub-hero{background:#fff}
+.ai-scene{background:#eef0f4}.ai-scene:before{background:linear-gradient(transparent,#eef0f4)}
+.feature-tabs>[data-slot=tabs-content]{background:#f7f7f2}.level-suggest{background:#f7f7f2}.chat-demo{background:#f4f5f7}.chat-demo>header{background:#fff}.chat-context{background:#f4f5f7}
+.sol-visual{border-color:#e6e8ec}
+/* footer link grids aligned in equal columns */
+.footer-domains nav{grid-template-columns:repeat(4,minmax(0,1fr));column-gap:24px;row-gap:12px;width:100%}
+@media(max-width:960px){.footer-domains nav{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:680px){.footer-domains nav{grid-template-columns:1fr}}
