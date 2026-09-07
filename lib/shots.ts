@@ -21,6 +21,7 @@ export const SHOTS: Record<string, Shot> = {
   dashboard: { src: '/screens/dashboard.webp', w: 1470, h: 686, caption: { az: 'Real ekran: idarə paneli', ru: 'Реальный экран: панель управления', en: 'Real screen: dashboard' } },
 };
 
-export const SOLUTION_SHOT: Record<string, string> = { 'whatsapp-crm': 'inbox', 'sales-crm': 'deals', 'support-helpdesk-crm': 'agent', 'field-sales-crm': 'routes', 'contract-management': 'contract', 'invoicing-finance': 'invoices', 'marketing-automation': 'campaign', 'ai-crm': 'advisor', 'crm-for-clinics': 'dashboard', 'crm-for-insurance': 'sla', 'crm-for-public-sector': 'kb', 'crm-for-media': 'campaign', 'crm-for-utilities': 'map' };
+/** Industry pages keep the illustrated scene: there are no audited screens of the industry modules yet. */
+export const SOLUTION_SHOT: Record<string, string> = { 'whatsapp-crm': 'inbox', 'sales-crm': 'deals', 'support-helpdesk-crm': 'agent', 'field-sales-crm': 'routes', 'contract-management': 'contract', 'invoicing-finance': 'invoices', 'marketing-automation': 'campaign', 'ai-crm': 'advisor' };
 
 export const ARTICLE_SHOT: Record<string, string> = { 'what-is-crm': 'dashboard', 'how-to-choose-crm-azerbaijan': 'inbox', 'whatsapp-business-api-crm': 'inbox', 'what-is-sla': 'sla', 'sales-funnel-conversion': 'leads', 'field-sales-control': 'routes', 'crm-implementation-steps': 'deals', 'ai-in-crm': 'advisor', 'why-leads-get-lost': 'leads', 'contract-approval-speed': 'contract', 'receivables-reminders': 'invoices', 'nps-customer-feedback': 'campaign' };
