@@ -211,3 +211,8 @@ footer{background:#0a231a;color:#fff}.footer-main .eyebrow{color:#ffb391}.footer
 .pains .section-heading h2,.pains .section-heading h2 em{color:#fff}
 .team-copy h2,.team-copy h2 em{color:#f9f8e9}
 h2.typewriter{min-height:2.3em}
+/* v8.6: second heading line black everywhere on light sections (beats older section-specific rules) */
+main h2.typewriter em,.core-section h2.typewriter em,.ai-section h2.typewriter em,.insight-copy h2.typewriter em,.start h2.typewriter,.faq>h2.typewriter{color:#181818!important}
+.pains h2.typewriter,.pains h2.typewriter em{color:#fff!important}
+.team-copy h2.typewriter,.team-copy h2.typewriter em{color:#f9f8e9!important}
+footer h2.typewriter em{color:var(--orange)!important}
