@@ -26,9 +26,10 @@ export function AiPresenter({ lang, demoHref }: { lang: Lang; demoHref: string }
     io.observe(el);
     return () => io.disconnect();
   }, []);
-  useEffect(() => { if (seen && video.current) video.current.play().catch(() => {}); }, [seen]);
   const title = useTypewriter([c.h1, c.h2], { active: seen, speed: 55, startDelay: 300 });
-  const prompt = useTypewriter([c.prompt], { active: title.done, speed: 22, startDelay: 400 });
+  const prompt = useTypewriter([c.prompt], { active: title.done, speed: 22, startDelay: 300 });
+  // The presenter starts moving when the prompt starts typing, so her gesture lands as the scenario appears.
+  useEffect(() => { if (title.done && video.current) video.current.play().catch(() => {}); }, [title.done]);
   const stepsOn = prompt.done;
   return (
     <section className={`ai-presenter ${seen ? 'is-seen' : ''} ${stepsOn ? 'is-done' : ''}`} id="ai-agent" ref={ref}>
@@ -51,7 +52,7 @@ export function AiPresenter({ lang, demoHref }: { lang: Lang; demoHref: string }
           <a className="cta" href={demoHref} target="_blank" rel="noopener">{c.cta}<span><ArrowRight size={18} /></span></a>
         </div>
         <div className="ai-presenter-media" aria-hidden="true">
-          {hasVideo && <video ref={video} muted playsInline preload="none" onError={() => setHasVideo(false)}><source src="/presenter.mp4" type="video/mp4" /></video>}
+          {hasVideo && <video ref={video} muted playsInline preload="auto" onError={() => setHasVideo(false)}><source src="/presenter.mp4" type="video/mp4" /></video>}
         </div>
       </div>
     </section>
