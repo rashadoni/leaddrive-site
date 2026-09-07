@@ -245,3 +245,4 @@ footer h2.typewriter em{color:var(--orange)!important}
 .sol-visual-shot{background:transparent;box-shadow:none;border:0;overflow:visible}.sol-shot{margin:0}.sol-shot figcaption{margin-top:10px;font-size:13px;color:#7c8274}
 .article-shot{margin:0 0 36px;max-width:1000px}.article-shot figcaption{margin-top:10px;font-size:13px;color:#7c8274}
 @media(max-width:960px){.sol-hero.has-shot .sol-hero-grid{grid-template-columns:1fr}}
+.hero h1{font-size:clamp(40px,3.85vw,56px);text-wrap:balance}
