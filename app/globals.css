@@ -172,3 +172,12 @@ footer{background:#0a231a;color:#fff}.footer-main .eyebrow{color:#ffb391}.footer
 @media(max-width:1180px){.ai-presenter-grid{min-height:640px}.ai-presenter-media{min-height:640px;margin-left:-20px}.ai-presenter-media video{height:640px}}
 @media(max-width:960px){.ai-presenter-grid{min-height:0}.ai-presenter-media{min-height:0;height:460px;margin:0;justify-content:center}.ai-presenter-media video{height:460px;object-position:center bottom}}
 @media(max-width:680px){.ai-presenter-media{height:340px}.ai-presenter-media video{height:340px}}
+/* v8.2: presenter overlaps toward the scenario cards */
+.ai-presenter-grid{grid-template-columns:minmax(0,1fr) minmax(0,.9fr);gap:0}
+.ai-presenter-media{min-height:800px;margin-left:-200px;z-index:1;pointer-events:none}.ai-presenter-media video{height:800px;object-position:left bottom}
+.ai-presenter-copy{position:relative;z-index:0}
+@media(max-width:1180px){.ai-presenter-media{min-height:680px;margin-left:-120px}.ai-presenter-media video{height:680px}}
+@media(max-width:960px){.ai-presenter-media{min-height:0;height:480px;margin:0}.ai-presenter-media video{height:480px;object-position:center bottom}}
+@media(max-width:680px){.ai-presenter-media{height:360px}.ai-presenter-media video{height:360px}}
+/* blend the whole media layer (it has its own stacking context) rather than the video inside it */
+.ai-presenter-media{mix-blend-mode:darken;isolation:auto}.ai-presenter-media video{mix-blend-mode:normal}
