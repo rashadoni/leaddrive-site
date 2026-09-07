@@ -226,3 +226,4 @@ footer h2.typewriter em{color:var(--orange)!important}
 .footer-domains nav{grid-template-columns:repeat(4,minmax(0,1fr));column-gap:24px;row-gap:12px;width:100%}
 @media(max-width:960px){.footer-domains nav{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:680px){.footer-domains nav{grid-template-columns:1fr}}
+.sol-hero h1,.sol-hero h1 em,.hub-hero h1 em{color:#181818}
