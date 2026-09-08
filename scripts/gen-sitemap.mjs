@@ -18,6 +18,7 @@ for (const lang of L) push('/solutions', lang, '0.9', 'weekly');
 for (const slug of solutions) for (const lang of L) push(`/solutions/${slug}`, lang, '0.8', 'monthly');
 for (const slug of comparisons) for (const lang of L) push(`/compare/${slug}`, lang, '0.8', 'monthly');
 for (const lang of L) push('/blog', lang, '0.8', 'weekly');
+for (const lang of L) push('/terms', lang, '0.5', 'monthly');
 for (const slug of articles) for (const lang of L) push(`/blog/${slug}`, lang, '0.7', 'monthly');
 const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n${urls.join('\n')}\n</urlset>\n`;
 writeFileSync(new URL('../public/sitemap.xml', import.meta.url), xml);
