@@ -23,7 +23,7 @@ export const HERO_SHOT: Record<Lang, string> = { az: 'Real ekran: LeadDrive-ın 
 export function HeroShot({ lang }: { lang: Lang }) {
   return (
     <figure className="hero-shot" id="product">
-      <div className="shot-frame"><span className="shot-dots" aria-hidden="true"><i /><i /><i /></span><img src="/screens/home.webp" width={1568} height={784} alt={HERO_SHOT[lang]} fetchPriority="high" decoding="async" /></div>
+      <div className="shot-frame"><span className="shot-dots" aria-hidden="true"><i /><i /><i /></span><img src="/screens/home.webp" width={1470} height={679} alt={HERO_SHOT[lang]} fetchPriority="high" decoding="async" /></div>
       <figcaption>{HERO_SHOT[lang]}</figcaption>
     </figure>
   );
