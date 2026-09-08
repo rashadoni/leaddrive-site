@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { ArrowUpRight, CheckCircle2, X } from 'lucide-react';
 import type { Lang } from '@/lib/product-map';
 import { DEMO_ENDPOINT, DEMO_FORM } from '@/lib/demo-form-copy';
+import { langPrefix } from '@/lib/site-paths';
 
 const WA = 'https://wa.me/994512060838';
 type State = 'idle' | 'sending' | 'ok' | 'error';
@@ -46,10 +47,11 @@ export function DemoModal({ lang }: { lang: Lang }) {
     if (!v('name')) errs.name = c.required;
     if (!v('phone')) errs.phone = c.required;
     if (!v('email')) errs.email = c.required; else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v('email'))) errs.email = c.badEmail;
+    if (f.get('consent') !== 'on') errs.consent = c.consentRequired;
     setErrors(errs);
     if (Object.keys(errs).length) return;
     setState('sending');
-    const message = [v('message'), '', `— ${c.size}: ${v('size') || '—'}`, `— ${c.interest}: ${v('interest') || '—'}`, `— Dil / язык: ${lang}`, `— Səhifə: ${window.location.href}`].join('\n');
+    const message = [v('message'), '', `— Dil / язык: ${lang}`, `— Səhifə: ${window.location.href}`, `— Razılıq / согласие: ${new Date().toISOString()}`].join('\n');
     try {
       const r = await fetch(DEMO_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name: v('name'), email: v('email'), phone: v('phone'), company: v('company'), message, website: v('website'), source: 'web_form', org_slug: 'leaddrive' }) });
       setState(r.ok ? 'ok' : 'error');
@@ -72,18 +74,16 @@ export function DemoModal({ lang }: { lang: Lang }) {
               <label><span>{c.company}</span><input name="company" autoComplete="organization" /></label>
               <label className={errors.email ? 'is-err' : ''}><span>{c.email} *</span><input name="email" type="email" autoComplete="email" inputMode="email" />{errors.email && <em>{errors.email}</em>}</label>
               <label className={errors.phone ? 'is-err' : ''}><span>{c.phone} *</span><input name="phone" type="tel" autoComplete="tel" inputMode="tel" placeholder="+994 …" />{errors.phone && <em>{errors.phone}</em>}</label>
-              <label><span>{c.size}</span><select name="size" defaultValue="" aria-label={c.size}><option value="">—</option>{c.sizes.map((s) => <option key={s}>{s}</option>)}</select></label>
-              <label><span>{c.interest}</span><select name="interest" defaultValue="" aria-label={c.interest}><option value="">—</option>{c.interests.map((s) => <option key={s}>{s}</option>)}</select></label>
               <label className="modal-full"><span>{c.message}</span><textarea name="message" rows={3} placeholder={c.messagePh} /></label>
               <input name="website" tabIndex={-1} autoComplete="off" className="hp" aria-hidden="true" />
             </div>
+            <label className={`modal-consent-row ${errors.consent ? 'is-err' : ''}`}><input type="checkbox" name="consent" /><span>{c.consentLabel} <a href={`${langPrefix(lang)}/privacy`} target="_blank" rel="noopener">{c.consentLink}</a>. *</span>{errors.consent && <em>{errors.consent}</em>}</label>
             {state === 'error' && <p className="modal-err"><strong>{c.errTitle}</strong> {c.errText}</p>}
             <div className="modal-actions">
               <button type="submit" className="cta" disabled={state === 'sending'}>{state === 'sending' ? c.sending : c.submit}<span><ArrowUpRight size={18} /></span></button>
               <span className="modal-or">{c.or}</span>
               <a className="text-link" href={WA} target="_blank" rel="noopener" data-wa-direct>{c.whatsapp}<ArrowUpRight size={16} /></a>
             </div>
-            <p className="modal-consent">{c.consent}</p>
           </form>
         )}
       </dialog>
