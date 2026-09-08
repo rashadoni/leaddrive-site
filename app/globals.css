@@ -246,3 +246,6 @@ footer h2.typewriter em{color:var(--orange)!important}
 .article-shot{margin:0 0 36px;max-width:1000px}.article-shot figcaption{margin-top:10px;font-size:13px;color:#7c8274}
 @media(max-width:960px){.sol-hero.has-shot .sol-hero-grid{grid-template-columns:1fr}}
 .hero h1{font-size:clamp(40px,3.85vw,56px);text-wrap:balance}
+/* v9.2: hero screenshot narrower, calmer frame (Creatio-like proportions) */
+.hero-shot{max-width:1080px;margin-top:34px}.hero-shot .shot-frame{border-radius:14px;box-shadow:0 18px 44px #27392d1c;border:1px solid #e3e6e2}
+@media(max-width:1180px){.hero-shot{max-width:900px}}
