@@ -3,6 +3,7 @@
 import { Footer, Header, TEXT } from '@/app/home';
 import type { Lang } from '@/lib/product-map';
 import { PATHS } from '@/lib/seo';
+import { DemoModal } from './DemoModal';
 
 /** Header + footer for secondary pages. `paths` gives the same page in each language for the switcher. */
 export function Shell({ lang, paths, jsonLd, children }: { lang: Lang; paths: Record<Lang, string>; jsonLd?: object[]; children: React.ReactNode }) {
@@ -14,6 +15,7 @@ export function Shell({ lang, paths, jsonLd, children }: { lang: Lang; paths: Re
       <Header t={t} lang={lang} setLang={(l) => { window.location.href = paths[l]; }} onModuleSelect={() => { window.location.href = `${base}#possibilities`; }} base={base} langHref={(l) => paths[l]} />
       <main>{children}</main>
       <Footer t={t} lang={lang} base={base} />
+      <DemoModal lang={lang} />
     </div>
   );
 }

@@ -55,6 +55,9 @@ https://leaddrivecrm.org/en/compare/crm-vs-excel
 https://leaddrivecrm.org/blog
 https://leaddrivecrm.org/ru/blog
 https://leaddrivecrm.org/en/blog
+https://leaddrivecrm.org/terms
+https://leaddrivecrm.org/ru/terms
+https://leaddrivecrm.org/en/terms
 https://leaddrivecrm.org/blog/what-is-crm
 https://leaddrivecrm.org/ru/blog/what-is-crm
 https://leaddrivecrm.org/en/blog/what-is-crm

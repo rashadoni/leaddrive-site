@@ -457,6 +457,30 @@
     <lastmod>2026-09-08</lastmod><changefreq>weekly</changefreq><priority>0.8</priority>
   </url>
   <url>
+    <loc>https://leaddrivecrm.org/terms</loc>
+    <xhtml:link rel="alternate" hreflang="az" href="https://leaddrivecrm.org/terms"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://leaddrivecrm.org/ru/terms"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://leaddrivecrm.org/en/terms"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://leaddrivecrm.org/terms"/>
+    <lastmod>2026-09-08</lastmod><changefreq>monthly</changefreq><priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://leaddrivecrm.org/ru/terms</loc>
+    <xhtml:link rel="alternate" hreflang="az" href="https://leaddrivecrm.org/terms"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://leaddrivecrm.org/ru/terms"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://leaddrivecrm.org/en/terms"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://leaddrivecrm.org/terms"/>
+    <lastmod>2026-09-08</lastmod><changefreq>monthly</changefreq><priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://leaddrivecrm.org/en/terms</loc>
+    <xhtml:link rel="alternate" hreflang="az" href="https://leaddrivecrm.org/terms"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://leaddrivecrm.org/ru/terms"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://leaddrivecrm.org/en/terms"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://leaddrivecrm.org/terms"/>
+    <lastmod>2026-09-08</lastmod><changefreq>monthly</changefreq><priority>0.5</priority>
+  </url>
+  <url>
     <loc>https://leaddrivecrm.org/blog/what-is-crm</loc>
     <xhtml:link rel="alternate" hreflang="az" href="https://leaddrivecrm.org/blog/what-is-crm"/>
     <xhtml:link rel="alternate" hreflang="ru" href="https://leaddrivecrm.org/ru/blog/what-is-crm"/>
