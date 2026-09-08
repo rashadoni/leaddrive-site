@@ -18,12 +18,12 @@ const COPY = {
   en: { eyebrow: 'REAL SCREENS', t1: 'This is not a mockup.', t2: 'This is the CRM itself.', intro: 'The images below are taken from working LeadDrive screens. No retouching; only customer names and numbers are hidden.', more: 'Solution page' },
 } as const;
 
-export const HERO_SHOT: Record<Lang, string> = { az: 'Real ekran: satış hunisi və sövdələşmələr', ru: 'Реальный экран: воронка и сделки', en: 'Real screen: pipeline and deals' };
+export const HERO_SHOT: Record<Lang, string> = { az: 'Real ekran: LeadDrive-ın idarə paneli və Da Vinci iş icmalı', ru: 'Реальный экран: главная панель LeadDrive и сводка Da Vinci', en: 'Real screen: the LeadDrive dashboard and the Da Vinci briefing' };
 
 export function HeroShot({ lang }: { lang: Lang }) {
   return (
     <figure className="hero-shot" id="product">
-      <div className="shot-frame"><span className="shot-dots" aria-hidden="true"><i /><i /><i /></span><img src="/screens/deals.webp" width={1470} height={614} alt={HERO_SHOT[lang]} fetchPriority="high" decoding="async" /></div>
+      <div className="shot-frame"><span className="shot-dots" aria-hidden="true"><i /><i /><i /></span><img src="/screens/home.webp" width={1568} height={784} alt={HERO_SHOT[lang]} fetchPriority="high" decoding="async" /></div>
       <figcaption>{HERO_SHOT[lang]}</figcaption>
     </figure>
   );
