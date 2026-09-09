@@ -1,0 +1,37 @@
+name: CI
+
+# The build gate lives here on purpose. The owner's rules put session work on
+# the dev server and forbid dependency installs and production builds there,
+# which leaves no machine that may legitimately run `vinext build`. A public
+# repository gets free GitHub-hosted Linux, so the build runs where nobody's
+# laptop is involved and a broken commit is caught before wrangler deploy.
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+      - run: npm ci
+      - name: Lint
+        run: npm run lint
+      - name: Build
+        run: npm run build
+      - name: Verify build output exists
+        run: test -d dist || { echo "::error::build produced no dist/"; exit 1; }
