@@ -36,4 +36,10 @@ next-env.d.ts
 /.wrangler/
 /outputs/
 /work/
+
+# build artefacts
 tsconfig.tsbuildinfo
+node_modules/
+dist/
+.wrangler/
+public/build-stamp.json

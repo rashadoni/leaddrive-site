@@ -1,0 +1,73 @@
+name: CI
+
+# The build gate lives here on purpose. The owner's rules put session work on
+# the dev server and forbid dependency installs and production builds there,
+# which leaves no machine that may legitimately run `vinext build`. A public
+# repository gets free GitHub-hosted Linux, so the build runs where nobody's
+# laptop is involved and a broken commit is caught before wrangler deploy.
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.head_ref || github.ref }}
+  # Pull requests only. Cancelling a push-to-main run can interrupt wrangler
+  # between uploading the script and publishing its routes, which leaves the
+  # new code live on none of the hostnames and no red check to say so.
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  build:
+    name: build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          # 22, not 20: vinext imports `glob` from node:fs/promises, which
+          # only exists from Node 22. On 20 the build dies at import time with
+          # "does not provide an export named 'glob'".
+          node-version: "22"
+          cache: npm
+      - run: npm ci
+      # Advisory, not a gate. oxlint reports 19 pre-existing violations on main,
+      # almost all in vendored shadcn components (role="group", role="link" and
+      # friends). A check that is red before anyone touches it teaches people to
+      # ignore it. The build below is the real gate: it is what breaks
+      # `wrangler deploy`. Make lint blocking once the backlog is cleared.
+      - name: Lint (advisory)
+        continue-on-error: true
+        run: npm run lint
+      - name: Build
+        run: npm run build
+      - name: Verify build output exists
+        run: test -d dist || { echo "::error::build produced no dist/"; exit 1; }
+
+      # Runs on every pull request, not just on deploy, so a vinext upgrade that
+      # changes the generated config turns a PR red instead of quietly breaking
+      # a production deploy.
+      - name: Check the deploy config can be generated
+        run: node scripts/cf-deploy-config.mjs
+
+# Выкатка живёт НЕ здесь. С 9 сентября 2026 сайт собирает и публикует
+# Cloudflare Workers Builds: репозиторий подключён к воркеру leaddrive-site,
+# продовая ветка main, команда сборки `npm run build && node
+# scripts/cf-deploy-config.mjs`, команда выкатки — тот же `wrangler deploy
+# --config dist/server/wrangler.deploy.json`, что стоял здесь.
+#
+# Почему убрали отсюда: этой джобе нужен секрет CLOUDFLARE_API_TOKEN, а его в
+# репозитории нет и завести его может только владелец. Джоба падала на первой
+# же строке — `CLOUDFLARE_API_TOKEN secret is not set` — и красила main, ничего
+# при этом не выкатывая. У Cloudflare токен свой, он живёт на их стороне и через
+# GitHub не проходит.
+#
+# Что здесь потеряно и стоит вернуть отдельно: проверка, что все три адреса
+# отдают именно этот коммит. Cloudflare сообщает об успехе `wrangler deploy`,
+# а это подтверждает доставку ИМЕНИ, а не байтов — на подмене обоев мы на этом
+# уже обожглись. Вернуть как отдельную джобу, которая ждёт метку сборки на
+# leaddrivecrm.org, www и new, когда в сборку добавят штамп коммита.
