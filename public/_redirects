@@ -1,0 +1,14 @@
+# Old marketing pages of the previous site → new home
+/home / 301
+/demo / 301
+/plans /#start 301
+/pricing /#start 301
+/features / 301
+/about /#team 301
+/contact / 301
+/legal / 301
+/legal/* / 301
+/landing / 301
+/landing/* / 301
+/marketing / 301
+/marketing/* / 301
