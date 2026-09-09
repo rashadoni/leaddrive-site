@@ -48,6 +48,15 @@ jobs:
       - name: Verify build output exists
         run: test -d dist || { echo "::error::build produced no dist/"; exit 1; }
 
+      # Если public/ когда-нибудь перестанет копироваться в бандл, проверка
+      # живого сайта ниже начнёт получать 404 на здоровом сайте и читаться как
+      # авария. Ловим это здесь, на PR, а не после выкатки.
+      - name: Verify the build stamp reached the client bundle
+        run: |
+          test -f dist/client/build-stamp.json || {
+            echo "::error::public/ не попал в dist/client — проверка выкатки работать не сможет"; exit 1; }
+          cat dist/client/build-stamp.json
+
       # Runs on every pull request, not just on deploy, so a vinext upgrade that
       # changes the generated config turns a PR red instead of quietly breaking
       # a production deploy.
@@ -71,3 +80,52 @@ jobs:
 # а это подтверждает доставку ИМЕНИ, а не байтов — на подмене обоев мы на этом
 # уже обожглись. Вернуть как отдельную джобу, которая ждёт метку сборки на
 # leaddrivecrm.org, www и new, когда в сборку добавят штамп коммита.
+
+  # Cloudflare Workers Builds сообщает об успехе сам, но его «wrangler deploy
+  # прошёл» подтверждает доставку ИМЕНИ воркера, а не байтов на трёх адресах.
+  # Здесь проверяется содержимое: пока все три хоста не отдадут штамп именно
+  # этого коммита, выкатка не считается состоявшейся.
+  #
+  # Джоба намеренно НЕ обязательная: она может отчитаться только на push в
+  # main, а обязательная проверка должна уметь отчитаться на каждом PR — иначе
+  # любой PR вне её путей навсегда повиснет в ожидании.
+  verify-live:
+    name: verify-live
+    needs: build
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Wait until all three hostnames serve this commit
+        run: |
+          set -u
+          hosts="leaddrivecrm.org www.leaddrivecrm.org new.leaddrivecrm.org"
+          # Сборка у Cloudflare стартует от того же пуша и занимает около трёх
+          # минут; ждём с запасом, но не бесконечно.
+          deadline=$(( $(date +%s) + 900 ))
+          pending="$hosts"
+          attempt=0
+          while [ -n "$pending" ] && [ "$(date +%s)" -lt "$deadline" ]; do
+            attempt=$((attempt + 1))
+            still=""
+            for host in $pending; do
+              body=$(curl -fsS --max-time 20 -H 'Cache-Control: no-cache' \
+                "https://$host/build-stamp.json?cb=${GITHUB_RUN_ID}-${attempt}" || true)
+              case "$body" in
+                *"$GITHUB_SHA"*) echo "  ok    $host отдаёт $GITHUB_SHA" ;;
+                *) still="$still $host" ;;
+              esac
+            done
+            pending=$(echo "$still" | xargs || true)
+            [ -n "$pending" ] && { echo "  ждём:$pending"; sleep 30; }
+          done
+          if [ -n "$pending" ]; then
+            echo "::error::не дождались коммита $GITHUB_SHA на:$pending"
+            for host in $pending; do
+              echo "--- $host ---"
+              curl -sS --max-time 20 "https://$host/build-stamp.json?cb=final" || true
+              echo
+            done
+            exit 1
+          fi
+          echo "все три адреса отдают $GITHUB_SHA"
