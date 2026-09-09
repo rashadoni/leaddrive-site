@@ -42,3 +42,4 @@ tsconfig.tsbuildinfo
 node_modules/
 dist/
 .wrangler/
+public/build-stamp.json
