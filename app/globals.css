@@ -28,24 +28,3 @@
 @media(max-width:960px){.ai-scene-content{width:49%}.ai-scene-content h3{font-size:26px}.ai-description{font-size:14px}.hero-intro p{font-size:16px}.product-tabs>[data-slot=tabs-list]{gap:14px}.deal-columns{gap:8px}}
 @media(max-width:680px){.ai-scene{min-height:0}.ai-scene-content{width:100%;padding-bottom:96px}.ai-description{font-size:16px}.story-steps{gap:8px;margin-left:4px}.story-steps>button{font-size:12px;flex-direction:column;gap:5px}.story-controls{padding:14px 12px}.story-control-label{display:none}.hero-intro p{font-size:16px}.deal-card h4{font-size:12px}.deal-card p,.deal-action{font-size:12px}.board-next>span{font-size:12px}.column-heading{align-items:start}.column-heading>small{display:none}.secondary-deal{font-size:12px}.deal-owner .avatar{font-size:12px;width:26px;height:26px}.product-tabs>[data-slot=tabs-list]{gap:12px}.product-tabs>[data-slot=tabs-list]>button{font-size:12px}.window-bar{padding-inline:12px}.example-tag{font-size:12px;max-width:140px;line-height:1.3;text-align:right}.product-caption{font-size:12px}.feature-visual .compact .deal-card h4,.feature-visual .compact .deal-card p,.feature-visual .compact .deal-action,.feature-visual .compact .column-heading{font-size:12px}.feature-visual .compact .board-next>span{display:none}.segment-card{padding:14px 11px;gap:7px}.segment-card h3{font-size:14px}.segment-card>strong{font-size:24px}.journey-steps{flex-wrap:wrap;gap:14px}.journey-steps>span{width:calc(50% - 7px);font-size:12px}.reward-card strong{font-size:14px}.reward-card>span{width:34px;height:34px}.team-copy p,.feature-copy>p,.insight-copy p,.start-description,.footer-main p{font-size:16px}.channels p,.start-steps p{font-size:14px}.feature-tabs>[data-slot=tabs-list]>button{font-size:14px}.product-caption>a{font-size:12px}}
 @media(max-width:440px){.product-tabs>[data-slot=tabs-list]>button>svg{display:none}.product-tabs>[data-slot=tabs-list]{gap:10px;padding-inline:12px}.header .brand>span{display:none}.language{min-width:36px;min-height:40px}.menu-toggle{min-height:40px}.feature-visual .board-filter{display:none}}
-
-/* Живые обои в герое: тот же ролик, что пользователь видит на дашборде после
-   входа, поэтому сайт и приложение читаются одним продуктом.
-   Блок остаётся тёмным сам по себе. Видео может не загрузиться, быть отключено
-   экономией трафика или ещё качаться — во всех этих случаях под светлым текстом
-   должен оставаться тёмный фон, а не прежний персиковый, на котором белые буквы
-   исчезают. Цвет задаёт секция, а не ролик.
-   z-index -2/-1 внутри `isolation:isolate`: по порядку отрисовки отрицательные
-   слои ложатся поверх фона секции, но под её содержимым, поэтому детям не нужно
-   расставлять z-index поштучно. Скругление низа доедает уже имеющийся
-   `overflow:clip`. */
-.hero{background:#101c2b;position:relative;isolation:isolate}
-.hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2;pointer-events:none}
-.hero-scrim{position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(180deg,rgba(16,28,43,.78) 0%,rgba(16,28,43,.5) 42%,rgba(16,28,43,.88) 100%)}
-.hero .eyebrow{color:rgba(255,255,255,.72)}
-.hero h1{color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.45),0 8px 32px rgba(0,0,0,.35)}
-.hero h1 em{color:#ff8a4c}
-.hero-intro p{color:rgba(255,255,255,.78)}
-.product-caption{color:rgba(255,255,255,.7)}
-.product-caption strong,.product-caption>a{color:#fff}
-@media (prefers-reduced-motion:reduce){.hero-video{display:none}}
