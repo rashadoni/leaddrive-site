@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 import './globals.css';
 export const metadata: Metadata = {
-  title: 'LeadDrive — управляйте продажами, делегируйте рутину AI',
-  description: 'Обращения, сделки, звонки и задачи — в одной CRM. Узнайте, как LeadDrive помогает команде работать с клиентами.',
+  title: 'LeadDrive — клиенты, продажи и AI в одной CRM',
+  description: 'Клиентская база, сделки, общение, маркетинг и AI-помощники в одном рабочем пространстве LeadDrive.',
   robots: { index: false, follow: false },
 };
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
