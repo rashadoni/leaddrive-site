@@ -70,3 +70,12 @@
 @keyframes dash-blink{50%{opacity:0}}
 @keyframes dash-line{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){.dash-video{display:none}.dash-caret{animation:none}.dash-brief li{opacity:1;animation:none}}
+
+/* Десять пунктов меню вместо пяти: колонка чуть шире, строки плотнее.
+   Ширина подобрана под самый длинный пункт («Клиентская поддержка»), чтобы
+   он умещался в строку — многоточие в витрине продукта читается как дефект
+   вёрстки, а не как сокращение. */
+.dash-shot{grid-template-columns:21% 1fr}
+.dash-side{gap:1.2cqw;padding:2cqw 1.3cqw}
+.dash-side nav{gap:.28cqw}
+.dash-side nav span{padding:.58cqw .7cqw;font-size:.92cqw;gap:.65cqw}
