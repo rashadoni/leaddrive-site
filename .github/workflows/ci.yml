@@ -54,91 +54,20 @@ jobs:
       - name: Check the deploy config can be generated
         run: node scripts/cf-deploy-config.mjs
 
-  deploy:
-    # Deliberately NOT a required status check. Required checks must be able to
-    # report on every pull request; this job only ever runs on main, so adding it
-    # to the required list would block every PR forever waiting for a run that
-    # cannot happen.
-    name: deploy
-    needs: build
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    runs-on: ubuntu-24.04
-    timeout-minutes: 20
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: "22"
-          cache: npm
-      - run: npm ci
-
-      # A unique marker per run. Without it "the site returns 200" proves only
-      # that the OLD code is still up; Cloudflare answers from cache even with
-      # max-age=0, so a cache-busting query alone is not proof either.
-      - name: Stamp this build
-        run: |
-          printf '{"sha":"%s","run":"%s"}\n' "$GITHUB_SHA" "$GITHUB_RUN_ID" > public/build-stamp.json
-          cat public/build-stamp.json
-
-      - name: Build
-        run: npm run build
-
-      # If public/ ever stops being copied into the asset directory, the
-      # post-deploy check below would 404 on a perfectly healthy site and read as
-      # an outage. Catch that here, before anything is published.
-      - name: Verify the stamp survived the build
-        run: |
-          test -f dist/client/build-stamp.json || {
-            echo "::error::public/ was not copied into dist/client — post-deploy verification cannot work"; exit 1; }
-          grep -q "$GITHUB_SHA" dist/client/build-stamp.json || {
-            echo "::error::dist/client/build-stamp.json does not carry this commit"; exit 1; }
-
-      - name: Generate the deploy config
-        run: node scripts/cf-deploy-config.mjs
-
-      # The token is set on this step alone. npm ci above executes lifecycle
-      # scripts from a large beta dependency tree in a public repository; a
-      # workflow- or job-level secret would be in scope for every one of them.
-      - name: Deploy to Cloudflare
-        env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
-          WRANGLER_OUTPUT_FILE_PATH: ${{ runner.temp }}/wrangler-out.ndjson
-        run: |
-          test -n "$CLOUDFLARE_API_TOKEN" || { echo "::error::CLOUDFLARE_API_TOKEN secret is not set"; exit 1; }
-          test -n "$CLOUDFLARE_ACCOUNT_ID" || { echo "::error::CLOUDFLARE_ACCOUNT_ID variable is not set"; exit 1; }
-          npx wrangler deploy \
-            --config dist/server/wrangler.deploy.json \
-            --experimental-autoconfig=false \
-            --message "$GITHUB_SHA via run $GITHUB_RUN_ID"
-
-      # Diagnostics only. The live check below is the actual gate: a unique stamp
-      # served from all three hostnames proves more than wrangler's own report of
-      # what it thinks it published.
-      - name: Show what wrangler reported
-        if: always()
-        run: cat "${{ runner.temp }}/wrangler-out.ndjson" 2>/dev/null || echo "(no wrangler output file)"
-
-      - name: Verify the live site serves this build
-        run: |
-          set -u
-          fail=0
-          for host in leaddrivecrm.org www.leaddrivecrm.org new.leaddrivecrm.org; do
-            ok=0
-            for attempt in 1 2 3 4 5; do
-              body=$(curl -fsS --max-time 20 \
-                -H 'Cache-Control: no-cache' \
-                "https://$host/build-stamp.json?cb=${GITHUB_RUN_ID}-${attempt}" || true)
-              case "$body" in
-                *"$GITHUB_SHA"*) ok=1; break ;;
-              esac
-              sleep $((attempt * 5))
-            done
-            if [ "$ok" = 1 ]; then
-              echo "  ok    $host serves $GITHUB_SHA"
-            else
-              echo "::error::$host is not serving $GITHUB_SHA (last body: ${body:-<empty>})"
-              fail=1
-            fi
-          done
-          exit $fail
+# Выкатка живёт НЕ здесь. С 9 сентября 2026 сайт собирает и публикует
+# Cloudflare Workers Builds: репозиторий подключён к воркеру leaddrive-site,
+# продовая ветка main, команда сборки `npm run build && node
+# scripts/cf-deploy-config.mjs`, команда выкатки — тот же `wrangler deploy
+# --config dist/server/wrangler.deploy.json`, что стоял здесь.
+#
+# Почему убрали отсюда: этой джобе нужен секрет CLOUDFLARE_API_TOKEN, а его в
+# репозитории нет и завести его может только владелец. Джоба падала на первой
+# же строке — `CLOUDFLARE_API_TOKEN secret is not set` — и красила main, ничего
+# при этом не выкатывая. У Cloudflare токен свой, он живёт на их стороне и через
+# GitHub не проходит.
+#
+# Что здесь потеряно и стоит вернуть отдельно: проверка, что все три адреса
+# отдают именно этот коммит. Cloudflare сообщает об успехе `wrangler deploy`,
+# а это подтверждает доставку ИМЕНИ, а не байтов — на подмене обоев мы на этом
+# уже обожглись. Вернуть как отдельную джобу, которая ждёт метку сборки на
+# leaddrivecrm.org, www и new, когда в сборку добавят штамп коммита.
