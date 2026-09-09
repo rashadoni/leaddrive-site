@@ -52,16 +52,19 @@
    читается как «продукт возник», а это другое обещание.
    Размытие снимается вместе с прозрачностью и масштабом одним ключевым
    кадром: три свойства, меняющиеся врозь, дали бы три разных движения.
-   Прозрачность добирается до единицы к 55%, чтобы вторая половина уходила
-   на резкость, а не на проявление — иначе конец анимации не виден.
-   Подпись идёт следом с задержкой 200мс: одно движение, а не два.
+   Прозрачность добирается до единицы к 45%, чтобы больше половины времени
+   уходило на резкость, а не на проявление — иначе конец анимации не виден.
+   Длительность 1.9с выбрана владельцем на глаз после 1.1с: на коротком
+   проявлении глаз не успевает заметить, что кадр именно собирается, и
+   движение читается как обычное затухание.
+   Подпись идёт следом с задержкой 250мс: одно движение, а не два.
    Глобальное правило prefers-reduced-motion гасит анимацию через
    `animation:none!important`, и элемент остаётся в своём обычном виде —
    opacity тут намеренно НЕ задана в базовом правиле, иначе кадр
    у таких пользователей остался бы невидимым навсегда. */
-@keyframes dash-in{from{opacity:0;transform:scale(.93);filter:blur(16px)}55%{opacity:1}to{opacity:1;transform:none;filter:blur(0)}}
-.dash-shot{animation:dash-in 1.1s cubic-bezier(.22,.61,.36,1) .15s both}
-.product-caption{animation:dash-in 1.1s cubic-bezier(.22,.61,.36,1) .35s both}
+@keyframes dash-in{from{opacity:0;transform:scale(.93);filter:blur(18px)}45%{opacity:1}to{opacity:1;transform:none;filter:blur(0)}}
+.dash-shot{animation:dash-in 1.9s cubic-bezier(.22,.61,.36,1) .25s both}
+.product-caption{animation:dash-in 1.9s cubic-bezier(.22,.61,.36,1) .5s both}
 .dash-shot{position:relative;aspect-ratio:16/9;border-radius:20px;overflow:hidden;border:1px solid #d9cfc2;box-shadow:0 26px 54px #65462e1f;background:#0b1220;display:grid;grid-template-columns:19% 1fr;container-type:inline-size;isolation:isolate}
 .dash-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-1;pointer-events:none}
 .dash-side{background:#10161f;padding:2.2cqw 1.5cqw;display:flex;flex-direction:column;gap:1.5cqw;min-width:0}
