@@ -8,7 +8,7 @@ export const PATHS: Record<Lang, string> = { az: '/', ru: '/ru', en: '/en' };
 const META: Record<Lang, { title: string; description: string; keywords: string[]; locale: string; ogImage: string }> = {
   az: {
     title: 'LeadDrive CRM — Azərbaycan üçün CRM sistemi: satış, WhatsApp, AI',
-    description: 'LeadDrive — Azərbaycan şirkətləri üçün CRM həlli: WhatsApp, Instagram və Telegram bir Inbox-da, satış pipeline-ı, müqavilələr, fakturalar, dəstək və AI köməkçiləri. Demo — WhatsApp ilə.',
+    description: 'LeadDrive — Azərbaycan şirkətləri üçün CRM həlli: WhatsApp, Instagram və Telegram bir Inbox-da, satış boru xətti, müqavilələr, fakturalar, dəstək və AI köməkçiləri. Demo — WhatsApp ilə.',
     keywords: ['CRM', 'CRM həlli', 'CRM sistemi', 'CRM Azərbaycan', 'CRM Bakı', 'CRM proqramı', 'WhatsApp CRM', 'satış idarəetməsi', 'müştəri bazası', 'AI CRM', 'LeadDrive'],
     locale: 'az_AZ',
     ogImage: '/og-az.png',

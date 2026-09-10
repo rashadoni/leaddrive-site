@@ -4,7 +4,7 @@ import type { Lang } from './product-map';
 export type Shot = { src: string; w: number; h: number; caption: Record<Lang, string> };
 
 export const SHOTS: Record<string, Shot> = {
-  deals: { src: '/screens/deals.webp', w: 1470, h: 614, caption: { az: 'Real ekran: satış pipeline-ı və sövdələşmələr', ru: 'Реальный экран: воронка и сделки', en: 'Real screen: pipeline and deals' } },
+  deals: { src: '/screens/deals.webp', w: 1470, h: 614, caption: { az: 'Real ekran: satış boru xətti və sövdələşmələr', ru: 'Реальный экран: воронка и сделки', en: 'Real screen: pipeline and deals' } },
   inbox: { src: '/screens/inbox.webp', w: 1470, h: 686, caption: { az: 'Real ekran: Gələn qutusu, WhatsApp söhbəti və lid kartı', ru: 'Реальный экран: Inbox, диалог WhatsApp и карточка лида', en: 'Real screen: inbox, a WhatsApp chat and the lead card' } },
   deal: { src: '/screens/deal.webp', w: 1568, h: 690, caption: { az: 'Real ekran: sövdələşmə kartı və AI proqnozu', ru: 'Реальный экран: карточка сделки и AI-прогноз', en: 'Real screen: deal card and AI forecast' } },
   forecast: { src: '/screens/forecast.webp', w: 1470, h: 598, caption: { az: 'Real ekran: satış proqnozu və kvotalar', ru: 'Реальный экран: прогноз продаж и квоты', en: 'Real screen: sales forecast and quotas' } },
