@@ -9,7 +9,7 @@ export const CAPS: Record<Lang, { kind: CapKind; title: string; sub: string }[]>
   az: [
     { kind: 'social', title: 'Müştərilərlə sosial şəbəkələrdə yazışır', sub: 'WhatsApp, Instagram, TikTok, Facebook' },
     { kind: 'risk', title: 'Sövdələşmə risklərini təhlil edir', sub: 'Da Vinci siqnalları' },
-    { kind: 'score', title: 'Lidləri qiymətləndirir, qaynarları eskalasiya edir', sub: 'Inbox → lid → menecer' },
+    { kind: 'score', title: 'Lidləri qiymətləndirir, ən perspektivlilərini menecerə ötürür', sub: 'Inbox → lid → menecer' },
     { kind: 'call', title: 'Zəngi dinləyib xülasə yazır', sub: 'mövzular, əhval, tapşırıqlar' },
     { kind: 'remind', title: 'Ödəniş və uzadılma xatırlatmaları göndərir', sub: 'faktura, müqavilə' },
     { kind: 'tasks', title: 'Tapşırıq yaradır və görüşə hazırlayır', sub: 'təqvim, xülasə' },
