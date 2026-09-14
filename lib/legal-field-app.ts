@@ -28,7 +28,7 @@ export const FIELD_APP_PRIVACY: Record<Lang, LegalCopy> = {
     sections: [
       { h: '1. Hesab', p: ['Tətbiqdə qeydiyyat yoxdur: hesabı Müştərinin administratoru LeadDrive CRM-də yaradır. Tətbiq əməkdaşın adını, istifadəçi adını və ya e-poçtunu, rolunu və şirkətini emal edir. Giriş tokeni telefonda saxlanılır.'] },
       { h: '2. Yer məlumatı', list: [
-        'Dəqiq GPS nöqtələri yalnız aktiv iş günü ərzində toplanır: siz «İş gününü başlat» düyməsinə toxunduqdan sonra. Bu vaxt ərzində bildiriş daim görünür.',
+        'Dəqiq GPS nöqtələri yalnız aktiv iş günü ərzində toplanır: siz «İş gününü başlat» düyməsinə toxunduqdan sonra. Bu vaxt ərzində Tətbiq bildiriş göstərir (Android 13 və daha yeni versiyalarda — bildirişlərə icazə verdikdə); iş gününün vəziyyəti Tətbiqin «Bu gün» ekranında həmişə görünür.',
         '«Fasilə» zamanı, «Günü bitir» düyməsinə toxunduqda və hesabdan çıxdıqda toplama dayanır.',
         'Ziyarətə giriş və çıxış qeyd olunanda həmin anın koordinatları yazılır.',
         'Tətbiq fon rejimində yer icazəsi (ACCESS_BACKGROUND_LOCATION) istəmir və iş günündən kənar yer toplamır.',
@@ -82,7 +82,7 @@ export const FIELD_APP_PRIVACY: Record<Lang, LegalCopy> = {
     sections: [
       { h: '1. Аккаунт', p: ['Регистрации в Приложении нет: аккаунт создаёт администратор Клиента в LeadDrive CRM. Приложение обрабатывает имя сотрудника, логин или адрес электронной почты, роль и компанию. Токен входа хранится на телефоне.'] },
       { h: '2. Местоположение', list: [
-        'Точные GPS-точки собираются только во время активного рабочего дня: после того как вы нажали «Начать рабочий день». Всё это время на экране видно уведомление.',
+        'Точные GPS-точки собираются только во время активного рабочего дня: после того как вы нажали «Начать рабочий день». Всё это время Приложение показывает уведомление (на Android 13 и новее — если вы разрешили уведомления); состояние рабочего дня всегда видно на экране «Сегодня».',
         'Сбор останавливается на «Перерыве», по кнопке «Завершить день» и при выходе из аккаунта.',
         'При отметке входа на визит и выхода с него записываются координаты этого момента.',
         'Приложение не запрашивает разрешение на фоновое местоположение (ACCESS_BACKGROUND_LOCATION) и не собирает местоположение вне рабочего дня.',
@@ -136,7 +136,7 @@ export const FIELD_APP_PRIVACY: Record<Lang, LegalCopy> = {
     sections: [
       { h: '1. Account', p: ['There is no sign-up in the App: the Customer’s administrator creates the account in LeadDrive CRM. The App processes the employee’s name, username or email address, role and company. The sign-in token is stored on the phone.'] },
       { h: '2. Location', list: [
-        'Precise GPS points are collected only during an active workday: after you tap “Start workday”. A notification stays visible the whole time.',
+        'Precise GPS points are collected only during an active workday: after you tap “Start workday”. The App shows a notification the whole time (on Android 13 and later, once you allow notifications); the workday status is always visible on the Today screen.',
         'Collection stops during a “Break”, when you tap “End day” and when you sign out.',
         'Checking in to and out of a visit records the coordinates of that moment.',
         'The App does not request background location permission (ACCESS_BACKGROUND_LOCATION) and does not collect location outside the workday.',
