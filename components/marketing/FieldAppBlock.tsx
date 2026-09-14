@@ -4,7 +4,7 @@ import { LEGAL_PATH } from '@/lib/legal-copy';
 import { langPrefix } from '@/lib/site-paths';
 
 /**
- * The agents' Android app on the field sales solution page. Facts only: the
+ * The agents' Android app on the field orders solution page. Facts only: the
  * screenshot is the real app on a tablet with demo data (2026-09-14), and the
  * app is not on Google Play yet — say "soon", never show a store badge that
  * leads nowhere. Swap the note for a Google Play link once it is published.
