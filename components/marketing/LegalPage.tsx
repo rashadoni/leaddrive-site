@@ -15,7 +15,7 @@ export function LegalPage({ lang, page }: { lang: Lang; page: LegalKey }) {
   const w = LEGAL_LABELS[lang];
   const paths = forAllLangs((l) => legalPath(l, page));
   const jsonLd = [
-    { '@context': 'https://schema.org', '@type': 'WebPage', name: c.title, description: c.description, url: SITE_URL + paths[lang], inLanguage: lang, dateModified: COMPANY.updated },
+    { '@context': 'https://schema.org', '@type': 'WebPage', name: c.title, description: c.description, url: SITE_URL + paths[lang], inLanguage: lang, dateModified: c.updated ?? COMPANY.updated },
     breadcrumbLd([{ name: 'LeadDrive CRM', path: homePath(lang) }, { name: c.label, path: paths[lang] }]),
   ];
   const operator = [COMPANY.legalName, COMPANY.brand, COMPANY.taxId && `VÖEN ${COMPANY.taxId}`, COMPANY.address, COMPANY.city[lang]].filter(Boolean).join(' · ');
@@ -26,7 +26,7 @@ export function LegalPage({ lang, page }: { lang: Lang; page: LegalKey }) {
         <header className="article-head">
           <h1>{c.h1}</h1>
           <p className="article-intro">{c.intro}</p>
-          <p className="article-meta">{w.updated}: <time dateTime={COMPANY.updated}>{COMPANY.updated}</time></p>
+          <p className="article-meta">{w.updated}: <time dateTime={c.updated ?? COMPANY.updated}>{c.updated ?? COMPANY.updated}</time></p>
         </header>
         <div className="article-grid">
           <div className="article-body">
