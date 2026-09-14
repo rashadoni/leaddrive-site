@@ -11,6 +11,7 @@ import { hubPath } from '@/lib/site-paths';
 import { ICONS } from './ProductMap';
 import { SHOTS, SOLUTION_SHOT } from '@/lib/shots';
 import { Scene } from './Pains';
+import { FieldAppBlock } from './FieldAppBlock';
 
 const COPY = {
   ru: { home: 'Главная', pains: 'Что болит сегодня', painsSub: 'Три ситуации, с которыми к нам приходят чаще всего.', modules: 'Какие модули это закрывают', modulesSub: 'Экраны CRM, которые вы увидите на демо.', map: 'Смотреть на карте продукта', faq: 'Вопросы по этому решению', more: 'Другие решения', demo: 'Показать на демо', industry: 'Отраслевой раздел', all: 'Все решения' },
@@ -91,6 +92,8 @@ export function SolutionPage({ solution: s, lang }: { solution: Solution; lang: 
             })}
           </div>
         </section>
+
+        {s.slug === 'field-sales-crm' && <FieldAppBlock lang={lang} />}
 
         {SOLUTION_STEPS[s.slug] && (
           <section className="sol-steps wrap">
