@@ -9,8 +9,13 @@
 /legal/privacy https://app.leaddrivecrm.org/legal/privacy?lang=en 302
 /legal/terms https://app.leaddrivecrm.org/legal/terms?lang=en 302
 /legal/data-deletion https://app.leaddrivecrm.org/legal/data-deletion?lang=en 302
-/legal / 301
-/legal/* / 301
+# 302, not 301: this catch-all is a fallback for paths we have not mapped yet,
+# and a 301 is cached by the browser for ever. Before the three rules above
+# existed, /legal/privacy fell through to here, and visitors who opened it then
+# still get sent to the home page from their own cache no matter what the
+# server now answers. A fallback must never be permanent.
+/legal / 302
+/legal/* / 302
 /landing / 301
 /landing/* / 301
 /marketing / 301

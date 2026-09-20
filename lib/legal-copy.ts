@@ -197,6 +197,24 @@ export const CRM_LEGAL_BASE = 'https://app.leaddrivecrm.org/legal';
 
 export const CRM_LEGAL_LINKS: { key: string; path: string; label: Record<Lang, string> }[] = [
   {
+    key: 'privacy',
+    path: 'privacy',
+    label: {
+      az: 'CRM məxfilik siyasəti',
+      ru: 'Политика конфиденциальности CRM',
+      en: 'CRM Privacy Policy',
+    },
+  },
+  {
+    key: 'terms',
+    path: 'terms',
+    label: {
+      az: 'CRM istifadə şərtləri',
+      ru: 'Условия использования CRM',
+      en: 'CRM Terms of Use',
+    },
+  },
+  {
     key: 'data-deletion',
     path: 'data-deletion',
     label: {
@@ -206,6 +224,14 @@ export const CRM_LEGAL_LINKS: { key: string; path: string; label: Record<Lang, s
     },
   },
 ];
+
+// Site documents that stay in the footer because the CRM has no counterpart:
+// the mobile-app privacy notice, cookies and the refund terms. The site's own
+// /privacy and /terms-of-use pages are NOT dropped — they still build, still
+// carry their metadata, and the demo form's consent checkbox still links
+// /privacy, which is where the marketing site's own data processing has to be
+// disclosed.
+export const FOOTER_SITE_LEGAL_KEYS: LegalKey[] = ['field-app-privacy', 'cookies', 'refund'];
 
 export const crmLegalHref = (path: string, lang: Lang) =>
   `${CRM_LEGAL_BASE}/${path}?lang=${lang}`;
