@@ -185,3 +185,27 @@ export const LEGAL: Record<LegalKey, Record<Lang, LegalCopy>> = {
 
 export const LEGAL_PATH: Record<LegalKey, string> = { privacy: '/privacy', 'field-app-privacy': '/privacy/field-app', 'terms-of-use': '/terms-of-use', cookies: '/cookies', refund: '/refund' };
 export const LEGAL_KEYS: LegalKey[] = ['privacy', 'field-app-privacy', 'terms-of-use', 'cookies', 'refund'];
+
+// The CRM's own legal documents live on the app host, not here. They are public
+// and need no login, and Meta's App Review uses these exact destinations (see
+// public/_redirects). Data deletion has no counterpart on the marketing site at
+// all, so without this the footer simply had no way to reach it.
+//
+// These are absolute URLs on purpose: langPrefix() must not be pasted in front
+// of them, and the language travels in the query string the app reads.
+export const CRM_LEGAL_BASE = 'https://app.leaddrivecrm.org/legal';
+
+export const CRM_LEGAL_LINKS: { key: string; path: string; label: Record<Lang, string> }[] = [
+  {
+    key: 'data-deletion',
+    path: 'data-deletion',
+    label: {
+      az: 'Məlumatların silinməsi',
+      ru: 'Удаление данных',
+      en: 'Data Deletion',
+    },
+  },
+];
+
+export const crmLegalHref = (path: string, lang: Lang) =>
+  `${CRM_LEGAL_BASE}/${path}?lang=${lang}`;
