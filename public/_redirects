@@ -6,6 +6,9 @@
 /features / 301
 /about /#team 301
 /contact / 301
+/legal/privacy https://app.leaddrivecrm.org/legal/privacy?lang=en 302
+/legal/terms https://app.leaddrivecrm.org/legal/terms?lang=en 302
+/legal/data-deletion https://app.leaddrivecrm.org/legal/data-deletion?lang=en 302
 /legal / 301
 /legal/* / 301
 /landing / 301
