@@ -45,6 +45,7 @@ export function DemoModal({ lang }: { lang: Lang }) {
     const v = (k: string) => { const x = f.get(k); return typeof x === 'string' ? x.trim() : ''; };
     const errs: Record<string, string> = {};
     if (!v('name')) errs.name = c.required;
+    if (!v('company')) errs.company = c.required;
     if (!v('phone')) errs.phone = c.required;
     if (!v('email')) errs.email = c.required; else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v('email'))) errs.email = c.badEmail;
     if (f.get('consent') !== 'on') errs.consent = c.consentRequired;
@@ -53,7 +54,7 @@ export function DemoModal({ lang }: { lang: Lang }) {
     setState('sending');
     const message = [v('message'), '', `— Dil / язык: ${lang}`, `— Səhifə: ${window.location.href}`, `— Razılıq / согласие: ${new Date().toISOString()}`].join('\n');
     try {
-      const r = await fetch(DEMO_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name: v('name'), email: v('email'), phone: v('phone'), company: v('company'), message, website: v('website'), source: 'web_form', org_slug: 'leaddrive' }) });
+      const r = await fetch(DEMO_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name: v('name'), email: v('email'), phone: v('phone'), company: v('company'), message, website: v('website'), locale: lang, consent: true }) });
       setState(r.ok ? 'ok' : 'error');
     } catch { setState('error'); }
   }
@@ -64,14 +65,14 @@ export function DemoModal({ lang }: { lang: Lang }) {
       <dialog className="modal" open aria-modal="true" aria-labelledby="demo-title" ref={dialog}>
         <button type="button" className="modal-close" aria-label={c.close} onClick={() => setOpen(false)}><X size={20} /></button>
         {state === 'ok' ? (
-          <div className="modal-ok"><CheckCircle2 size={44} /><h2>{c.okTitle}</h2><p>{c.okText}</p><a className="cta" href={WA} target="_blank" rel="noopener" data-wa-direct>{c.whatsapp}<span><ArrowUpRight size={18} /></span></a></div>
+          <div className="modal-ok"><CheckCircle2 size={44} /><h2>{c.okTitle}</h2><p>{c.okText}</p></div>
         ) : (
           <form onSubmit={submit} noValidate>
             <h2 id="demo-title">{c.title}</h2>
             <p className="modal-sub">{c.sub}</p>
             <div className="modal-grid">
               <label className={errors.name ? 'is-err' : ''}><span>{c.name} *</span><input ref={first} name="name" autoComplete="name" />{errors.name && <em>{errors.name}</em>}</label>
-              <label><span>{c.company}</span><input name="company" autoComplete="organization" /></label>
+              <label className={errors.company ? 'is-err' : ''}><span>{c.company} *</span><input name="company" autoComplete="organization" />{errors.company && <em>{errors.company}</em>}</label>
               <label className={errors.email ? 'is-err' : ''}><span>{c.email} *</span><input name="email" type="email" autoComplete="email" inputMode="email" />{errors.email && <em>{errors.email}</em>}</label>
               <label className={errors.phone ? 'is-err' : ''}><span>{c.phone} *</span><input name="phone" type="tel" autoComplete="tel" inputMode="tel" placeholder="+994 …" />{errors.phone && <em>{errors.phone}</em>}</label>
               <label className="modal-full"><span>{c.message}</span><textarea name="message" rows={3} placeholder={c.messagePh} /></label>
