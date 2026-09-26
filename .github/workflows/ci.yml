@@ -65,6 +65,12 @@ jobs:
       - name: Check the deploy config can be generated
         run: node scripts/cf-deploy-config.mjs
 
+      # The transformer has focused unit coverage, but Wrangler is the final
+      # parser of this file. A dry run catches schema/asset packaging drift on
+      # every PR without authenticating or publishing anything.
+      - name: Validate the asset-only package with Wrangler
+        run: npx wrangler deploy --config dist/server/wrangler.deploy.json --dry-run --outdir .wrangler/dry-run
+
 # Выкатка живёт НЕ здесь. С 9 сентября 2026 сайт собирает и публикует
 # Cloudflare Workers Builds: репозиторий подключён к воркеру leaddrive-site,
 # продовая ветка main, команда сборки `npm run build && node

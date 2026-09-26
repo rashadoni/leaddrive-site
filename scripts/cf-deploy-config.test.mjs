@@ -7,6 +7,17 @@ import { fileURLToPath } from 'node:url'
 import test from 'node:test'
 
 const script = join(dirname(fileURLToPath(import.meta.url)), 'cf-deploy-config.mjs')
+const headersFixture = `/*
+  Content-Security-Policy: default-src 'self'
+  Permissions-Policy: camera=()
+  Referrer-Policy: strict-origin-when-cross-origin
+  Strict-Transport-Security: max-age=31536000
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+
+/_next/static/*
+  Cache-Control: public, max-age=31536000, immutable
+`
 
 test('turns vinext output into a fail-closed asset-only deploy config', async () => {
   const root = await mkdtemp(join(tmpdir(), 'leaddrive-cf-config-'))
@@ -28,6 +39,7 @@ test('turns vinext output into a fail-closed asset-only deploy config', async ()
           directory: '../client',
           binding: 'ASSETS',
           not_found_handling: 'none',
+          run_worker_first: true,
         },
       }),
     )
@@ -45,6 +57,7 @@ test('turns vinext output into a fail-closed asset-only deploy config', async ()
     const files = [
       'index.html',
       '404.html',
+      '_headers',
       '_redirects',
       'build-stamp.json',
       'ru.html',
@@ -53,7 +66,7 @@ test('turns vinext output into a fail-closed asset-only deploy config', async ()
       'terms-of-use.html',
       'solutions/sales-crm.html',
     ]
-    await Promise.all(files.map((file) => writeFile(join(client, file), 'fixture')))
+    await Promise.all(files.map((file) => writeFile(join(client, file), file === '_headers' ? headersFixture : 'fixture')))
 
     const result = spawnSync(process.execPath, [script], { cwd: root, encoding: 'utf8' })
     assert.equal(result.status, 0, result.stderr)
@@ -63,6 +76,7 @@ test('turns vinext output into a fail-closed asset-only deploy config', async ()
     assert.equal(output.topLevelName, 'leaddrive-site')
     assert.equal(output.main, undefined)
     assert.equal(output.assets.binding, undefined)
+    assert.equal(output.assets.run_worker_first, undefined)
     assert.equal(output.assets.not_found_handling, '404-page')
     assert.equal(output.assets.html_handling, 'auto-trailing-slash')
     assert.deepEqual(output.routes, [
@@ -101,6 +115,51 @@ test('refuses an asset-only deploy when vinext skipped a route', async () => {
     const files = [
       'index.html',
       '404.html',
+      '_headers',
+      '_redirects',
+      'build-stamp.json',
+      'ru.html',
+      'en.html',
+      'privacy.html',
+      'terms-of-use.html',
+      'solutions/sales-crm.html',
+    ]
+    await Promise.all(files.map((file) => writeFile(join(client, file), file === '_headers' ? headersFixture : 'fixture')))
+
+    const result = spawnSync(process.execPath, [script], { cwd: root, encoding: 'utf8' })
+    assert.equal(result.status, 1)
+    assert.match(result.stderr, /prerender did not render every route: \/account: skipped \(dynamic\)/)
+  } finally {
+    await rm(root, { recursive: true, force: true })
+  }
+})
+
+test('refuses an asset-only deploy without the static security header policy', async () => {
+  const root = await mkdtemp(join(tmpdir(), 'leaddrive-cf-config-no-headers-'))
+  try {
+    const server = join(root, 'dist', 'server')
+    const client = join(root, 'dist', 'client')
+    await mkdir(join(client, 'solutions'), { recursive: true })
+    await mkdir(server, { recursive: true })
+
+    await writeFile(
+      join(server, 'wrangler.json'),
+      JSON.stringify({ main: './index.js', assets: { directory: '../client', binding: 'ASSETS' } }),
+    )
+    await writeFile(
+      join(server, 'vinext-prerender.json'),
+      JSON.stringify({
+        trailingSlash: false,
+        routes: [
+          { route: '/', status: 'rendered', router: 'app' },
+          { route: '/solutions/[slug]', path: '/solutions/sales-crm', status: 'rendered', router: 'app' },
+        ],
+      }),
+    )
+
+    const files = [
+      'index.html',
+      '404.html',
       '_redirects',
       'build-stamp.json',
       'ru.html',
@@ -113,7 +172,7 @@ test('refuses an asset-only deploy when vinext skipped a route', async () => {
 
     const result = spawnSync(process.execPath, [script], { cwd: root, encoding: 'utf8' })
     assert.equal(result.status, 1)
-    assert.match(result.stderr, /prerender did not render every route: \/account: skipped \(dynamic\)/)
+    assert.match(result.stderr, /static security headers are missing/)
   } finally {
     await rm(root, { recursive: true, force: true })
   }

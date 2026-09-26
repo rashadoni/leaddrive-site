@@ -41,11 +41,37 @@ config.assets.html_handling = 'auto-trailing-slash'
 // Remove the binding too; it only exists for Worker code to call env.ASSETS.
 delete config.main
 delete config.assets.binding
+delete config.assets.run_worker_first
 
 const assetRoot = resolve(dirname(SRC), config.assets.directory)
 const routeAssetExists = (route) =>
   existsSync(resolve(assetRoot, `${route}.html`)) ||
   existsSync(resolve(assetRoot, route, 'index.html'))
+
+const headersPath = resolve(assetRoot, '_headers')
+const parseHeaderRules = (source) => {
+  const rules = new Map()
+  let currentRule
+
+  for (const line of source.split(/\r?\n/)) {
+    const trimmed = line.trim()
+    if (!trimmed || trimmed.startsWith('#')) continue
+
+    if (!/^\s/.test(line)) {
+      currentRule = trimmed
+      if (!rules.has(currentRule)) rules.set(currentRule, new Map())
+      continue
+    }
+
+    const separator = trimmed.indexOf(':')
+    if (!currentRule || separator < 1) continue
+    const name = trimmed.slice(0, separator).toLowerCase()
+    const value = trimmed.slice(separator + 1).trim()
+    rules.get(currentRule).set(name, value)
+  }
+
+  return rules
+}
 
 const problems = []
 if (config.name !== WORKER) problems.push(`name is ${config.name}`)
@@ -56,6 +82,7 @@ if (!Array.isArray(config.routes) || config.routes.length !== 3) {
 if (!config.assets?.directory) problems.push('assets.directory is missing — every static file would be dropped')
 if (config.main) problems.push('main is still present — HTML would invoke the SSR Worker')
 if (config.assets?.binding) problems.push('assets.binding is still present without a Worker entrypoint')
+if (config.assets?.run_worker_first !== undefined) problems.push('assets.run_worker_first is present — assets must never invoke a Worker')
 if (config.assets?.not_found_handling !== '404-page') problems.push('assets.not_found_handling is not 404-page')
 if (config.assets?.html_handling !== 'auto-trailing-slash') problems.push('assets.html_handling is not auto-trailing-slash')
 if (prerender.trailingSlash !== false) problems.push('prerender manifest must keep trailingSlash=false')
@@ -73,6 +100,27 @@ if (!Array.isArray(prerender.routes) || prerender.routes.length === 0) {
 if (!existsSync(resolve(assetRoot, 'index.html'))) problems.push('static home page is missing')
 if (!existsSync(resolve(assetRoot, '404.html'))) problems.push('static 404 page is missing')
 if (!existsSync(resolve(assetRoot, '_redirects'))) problems.push('static redirect rules are missing')
+if (!existsSync(headersPath)) {
+  problems.push('static security headers are missing')
+} else {
+  const headerRules = parseHeaderRules(readFileSync(headersPath, 'utf8'))
+  const globalHeaders = headerRules.get('/*')
+  for (const header of [
+    'content-security-policy',
+    'permissions-policy',
+    'referrer-policy',
+    'strict-transport-security',
+    'x-content-type-options',
+    'x-frame-options',
+  ]) {
+    if (!globalHeaders?.has(header)) problems.push(`static global header ${header} is missing`)
+  }
+
+  const assetCache = headerRules.get('/_next/static/*')?.get('cache-control')?.toLowerCase()
+  if (assetCache !== 'public, max-age=31536000, immutable') {
+    problems.push('fingerprinted static assets are not configured for immutable one-year browser caching')
+  }
+}
 if (!existsSync(resolve(assetRoot, 'build-stamp.json'))) problems.push('build stamp is missing')
 for (const route of ['ru', 'en', 'privacy', 'terms-of-use', 'solutions/sales-crm']) {
   if (!routeAssetExists(route)) problems.push(`static route /${route} is missing`)
