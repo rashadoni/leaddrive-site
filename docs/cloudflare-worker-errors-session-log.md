@@ -179,3 +179,70 @@ Append-only continuity journal for the investigation started on 2026-09-26 (Euro
 - PR #32 (`https://github.com/rashadoni/leaddrive-site/pull/32`) opened from checkpoint `36efcd8`. GitHub CI run `36270132190` passed: 3/3 deploy-config tests, 111 sitemap URLs, 112 prerendered routes with 0 skipped, a valid asset-only config with all 3 triggers, and Wrangler 4.92.0 dry-run packaging of 348 assets with no bindings. The advisory lint step still reports the repository's existing 25-item UI backlog and remains non-blocking by design.
 - Updated the post-release verification contract for the intended canonical-host topology: the exact build SHA must be served by `leaddrivecrm.org`, while both `www` and `new` must return exact 301 redirects to the same apex path and query. This workflow change will not be merged until the corresponding Cloudflare edge rule exists and has been verified independently.
 - Made full Worker invocation observability explicit in the generated deploy config (`enabled: true`, sampling rate 1). Static Assets still bypass the Worker and produce no invocation events; retaining 100% sampling means any future topology regression is visible from its very first runtime invocation instead of being hidden by sampling.
+
+## 2026-09-26 — hardening CI, CORS release, and edge-access boundary
+
+- Static hardening PR #32 is open at
+  `https://github.com/rashadoni/leaddrive-site/pull/32`, exact head
+  `d1c1f05f7640f10d39b270a23d26019eef9548fd`. Its latest GitHub CI run
+  `36271229376` passed the build, asset-only config tests, sitemap checks and
+  Wrangler dry-run. The live verification job is intentionally skipped on a
+  pull request and will run after release.
+- The production verification workflow now expects exact permanent redirects
+  from `www` and `new` to the same apex path and query. PR #32 therefore remains
+  intentionally unmerged until the Cloudflare Single Redirect exists; merging
+  first would knowingly make the post-release topology check fail.
+- The related API repair is in separate `leaddrive-v2` PR #448. Its exact-head
+  safety-lane CI passed production build, full typecheck, PostgreSQL and event
+  platform gates, blocking test baselines, runner policy and secret scan. It
+  was squash-merged as `13277465d731cdfc106e7942c0a2b97ffa38d0b5`, and
+  SHA-bound production workflow `36272090842` is in progress through the
+  repository's documented GitHub Actions route.
+- General Cloudflare API access uses a separate OAuth resource from the already
+  authenticated read-only Observability service. Two browser-consent windows
+  expired without a callback; no rule, token, account or production setting
+  was changed. Reusing the Observability access token against the general MCP
+  was rejected with HTTP 401, confirming that its resource boundary cannot be
+  bypassed. A fresh owner click on Allow remains required before reading or
+  appending zone rules.
+- The edge mutation remains narrowly specified and has not been guessed: first
+  read the existing `http_request_dynamic_redirect` and
+  `http_request_firewall_custom` entry-point rulesets; then append one exact
+  alias-to-apex 301 rule preserving path/query and one exact Managed Challenge
+  rule for marketing hosts + `GET /` + a user agent beginning `axios/`. Never
+  replace an existing ruleset or target the app/MTM hosts.
+- An authenticated count query from the asset-only release boundary
+  `2026-09-26T15:05:39Z` through `2026-09-26T21:22:26Z` again returned exactly
+  zero `cf-worker-event` rows for `leaddrive-site`. This extends the verified
+  zero-invocation interval to more than six hours while normal static delivery
+  continues.
+
+Current stopping point: repository hardening and its CI are complete; the
+separate CORS production release is in progress; Cloudflare edge rules remain
+blocked only on a fresh general-API OAuth consent. Next action: complete the
+exact-SHA CORS release and smoke, then obtain that one consent, audit/append the
+two edge rules, release PR #32 and verify the final public topology.
+
+## 2026-09-26 — CORS release completed; OAuth clarification
+
+- Superseding the in-progress status above, production workflow `36272090842`
+  completed successfully for exact `leaddrive-v2` `main` SHA
+  `13277465d731cdfc106e7942c0a2b97ffa38d0b5`. Its atomic deployment and all
+  built-in scheduler, tenant, public ping, exact-revision, login and asset
+  checks passed.
+- Independent production probes confirmed the exact SHA and a working CORS
+  matrix: canonical marketing preflight received the reviewed allow headers;
+  an unlisted origin received no allow-origin header; and a synthetic
+  honeypot POST returned 201 with the canonical allow-origin header without
+  reaching persistence or notification code.
+- Clarification to the OAuth count above: including the current post-release
+  attempt, three compatible general-API consent windows have expired without a
+  callback. Every attempt ended without a Cloudflare mutation or stored
+  general-API credential. The read-only Observability credential remains valid
+  and isolated to its own OAuth resource.
+
+Current stopping point: application CORS is complete in production and static
+PR #32 remains green/unmerged. The sole immediate blocker is the account
+owner's one-click Allow on a fresh general Cloudflare API OAuth window; after
+that, the remaining edge audit/mutations and static release can proceed
+autonomously.
