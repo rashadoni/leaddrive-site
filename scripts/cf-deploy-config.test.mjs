@@ -79,6 +79,7 @@ test('turns vinext output into a fail-closed asset-only deploy config', async ()
     assert.equal(output.assets.run_worker_first, undefined)
     assert.equal(output.assets.not_found_handling, '404-page')
     assert.equal(output.assets.html_handling, 'auto-trailing-slash')
+    assert.deepEqual(output.observability, { enabled: true, head_sampling_rate: 1 })
     assert.deepEqual(output.routes, [
       { pattern: 'leaddrivecrm.org/*', zone_name: 'leaddrivecrm.org' },
       { pattern: 'www.leaddrivecrm.org/*', zone_name: 'leaddrivecrm.org' },

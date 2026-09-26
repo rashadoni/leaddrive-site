@@ -35,6 +35,9 @@ config.workers_dev = false
 config.routes = ROUTES
 config.assets.not_found_handling = '404-page'
 config.assets.html_handling = 'auto-trailing-slash'
+// The expected request count is zero, but keep 100% invocation logs so any
+// future regression back into Worker execution is measurable immediately.
+config.observability = { enabled: true, head_sampling_rate: 1 }
 
 // With no Worker entrypoint, every request is handled by Static Assets:
 // existing pages are served directly and misses use the generated 404.html.
@@ -85,6 +88,9 @@ if (config.assets?.binding) problems.push('assets.binding is still present witho
 if (config.assets?.run_worker_first !== undefined) problems.push('assets.run_worker_first is present — assets must never invoke a Worker')
 if (config.assets?.not_found_handling !== '404-page') problems.push('assets.not_found_handling is not 404-page')
 if (config.assets?.html_handling !== 'auto-trailing-slash') problems.push('assets.html_handling is not auto-trailing-slash')
+if (config.observability?.enabled !== true || config.observability?.head_sampling_rate !== 1) {
+  problems.push('100% Worker observability is required to detect any runtime regression')
+}
 if (prerender.trailingSlash !== false) problems.push('prerender manifest must keep trailingSlash=false')
 if (!Array.isArray(prerender.routes) || prerender.routes.length === 0) {
   problems.push('prerender manifest has no routes')
