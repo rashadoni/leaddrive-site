@@ -83,16 +83,14 @@ jobs:
 # при этом не выкатывая. У Cloudflare токен свой, он живёт на их стороне и через
 # GitHub не проходит.
 #
-# Что здесь потеряно и стоит вернуть отдельно: проверка, что все три адреса
-# отдают именно этот коммит. Cloudflare сообщает об успехе `wrangler deploy`,
-# а это подтверждает доставку ИМЕНИ, а не байтов — на подмене обоев мы на этом
-# уже обожглись. Вернуть как отдельную джобу, которая ждёт метку сборки на
-# leaddrivecrm.org, www и new, когда в сборку добавят штамп коммита.
+# Независимая проверка ниже ждёт точный SHA на каноническом apex и отдельно
+# подтверждает, что www/new сохраняют path/query при edge redirect на apex.
 
   # Cloudflare Workers Builds сообщает об успехе сам, но его «wrangler deploy
   # прошёл» подтверждает доставку ИМЕНИ воркера, а не байтов на трёх адресах.
-  # Здесь проверяется содержимое: пока все три хоста не отдадут штамп именно
-  # этого коммита, выкатка не считается состоявшейся.
+  # Здесь проверяется содержимое на каноническом apex. Алиасы www/new должны
+  # остановиться раньше Worker routing и вернуть постоянный edge redirect на
+  # тот же path/query канонического адреса.
   #
   # Джоба намеренно НЕ обязательная: она может отчитаться только на push в
   # main, а обязательная проверка должна уметь отчитаться на каждом PR — иначе
@@ -104,36 +102,42 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     steps:
-      - name: Wait until all three hostnames serve this commit
+      - name: Wait until the canonical hostname serves this commit
         run: |
           set -u
-          hosts="leaddrivecrm.org www.leaddrivecrm.org new.leaddrivecrm.org"
           # Сборка у Cloudflare стартует от того же пуша и занимает около трёх
           # минут; ждём с запасом, но не бесконечно.
           deadline=$(( $(date +%s) + 900 ))
-          pending="$hosts"
           attempt=0
-          while [ -n "$pending" ] && [ "$(date +%s)" -lt "$deadline" ]; do
+          ready=""
+          while [ -z "$ready" ] && [ "$(date +%s)" -lt "$deadline" ]; do
             attempt=$((attempt + 1))
-            still=""
-            for host in $pending; do
-              body=$(curl -fsS --max-time 20 -H 'Cache-Control: no-cache' \
-                "https://$host/build-stamp.json?cb=${GITHUB_RUN_ID}-${attempt}" || true)
-              case "$body" in
-                *"$GITHUB_SHA"*) echo "  ok    $host отдаёт $GITHUB_SHA" ;;
-                *) still="$still $host" ;;
-              esac
-            done
-            pending=$(echo "$still" | xargs || true)
-            [ -n "$pending" ] && { echo "  ждём:$pending"; sleep 30; }
+            body=$(curl -fsS --max-time 20 -H 'Cache-Control: no-cache' \
+              "https://leaddrivecrm.org/build-stamp.json?cb=${GITHUB_RUN_ID}-${attempt}" || true)
+            case "$body" in
+              *"$GITHUB_SHA"*) ready=yes ;;
+              *) echo "  ждём leaddrivecrm.org"; sleep 30 ;;
+            esac
           done
-          if [ -n "$pending" ]; then
-            echo "::error::не дождались коммита $GITHUB_SHA на:$pending"
-            for host in $pending; do
-              echo "--- $host ---"
-              curl -sS --max-time 20 "https://$host/build-stamp.json?cb=final" || true
-              echo
-            done
+          if [ -z "$ready" ]; then
+            echo "::error::не дождались коммита $GITHUB_SHA на leaddrivecrm.org"
+            curl -sS --max-time 20 "https://leaddrivecrm.org/build-stamp.json?cb=final" || true
             exit 1
           fi
-          echo "все три адреса отдают $GITHUB_SHA"
+          echo "leaddrivecrm.org отдаёт $GITHUB_SHA"
+
+      - name: Verify www and new redirect to the canonical hostname
+        run: |
+          set -u
+          probe="__canonical-host-check/${GITHUB_RUN_ID}"
+          query="source=verify-live&sha=${GITHUB_SHA}"
+          for host in www.leaddrivecrm.org new.leaddrivecrm.org; do
+            expected="https://leaddrivecrm.org/${probe}?${query}"
+            result=$(curl -sS --max-time 20 --max-redirs 0 -o /dev/null \
+              -w '%{http_code} %{redirect_url}' "https://${host}/${probe}?${query}" || true)
+            if [ "$result" != "301 $expected" ]; then
+              echo "::error::${host}: ожидали 301 ${expected}, получили ${result}"
+              exit 1
+            fi
+            echo "  ok    ${host} -> ${expected}"
+          done
