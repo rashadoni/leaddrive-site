@@ -15,6 +15,7 @@ import { dirname, resolve } from 'node:path'
 
 const SRC = 'dist/server/wrangler.json'
 const OUT = 'dist/server/wrangler.deploy.json'
+const PRERENDER = 'dist/server/vinext-prerender.json'
 const WORKER = 'leaddrive-site'
 const ZONE = 'leaddrivecrm.org'
 
@@ -27,6 +28,7 @@ const ROUTES = [
 ]
 
 const config = JSON.parse(readFileSync(SRC, 'utf8'))
+const prerender = JSON.parse(readFileSync(PRERENDER, 'utf8'))
 config.name = WORKER
 config.topLevelName = WORKER
 config.workers_dev = false
@@ -56,6 +58,18 @@ if (config.main) problems.push('main is still present — HTML would invoke the 
 if (config.assets?.binding) problems.push('assets.binding is still present without a Worker entrypoint')
 if (config.assets?.not_found_handling !== '404-page') problems.push('assets.not_found_handling is not 404-page')
 if (config.assets?.html_handling !== 'auto-trailing-slash') problems.push('assets.html_handling is not auto-trailing-slash')
+if (prerender.trailingSlash !== false) problems.push('prerender manifest must keep trailingSlash=false')
+if (!Array.isArray(prerender.routes) || prerender.routes.length === 0) {
+  problems.push('prerender manifest has no routes')
+} else {
+  const incompleteRoutes = prerender.routes.filter((route) => route.status !== 'rendered')
+  if (incompleteRoutes.length) {
+    const details = incompleteRoutes
+      .map((route) => `${route.path ?? route.route}: ${route.status}${route.reason ? ` (${route.reason})` : ''}`)
+      .join(', ')
+    problems.push(`prerender did not render every route: ${details}`)
+  }
+}
 if (!existsSync(resolve(assetRoot, 'index.html'))) problems.push('static home page is missing')
 if (!existsSync(resolve(assetRoot, '404.html'))) problems.push('static 404 page is missing')
 if (!existsSync(resolve(assetRoot, '_redirects'))) problems.push('static redirect rules are missing')

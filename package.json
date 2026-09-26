@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "vinext dev",
     "build": "node scripts/build-stamp.mjs && vinext build",
-    "start": "wrangler dev --config dist/server/wrangler.json",
+    "start": "node scripts/cf-deploy-config.mjs && wrangler dev --config dist/server/wrangler.deploy.json",
     "lint": "oxlint",
     "format": "oxfmt",
     "test:cf-config": "node --test scripts/cf-deploy-config.test.mjs"

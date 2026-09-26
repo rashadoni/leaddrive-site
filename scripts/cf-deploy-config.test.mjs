@@ -31,6 +31,16 @@ test('turns vinext output into a fail-closed asset-only deploy config', async ()
         },
       }),
     )
+    await writeFile(
+      join(server, 'vinext-prerender.json'),
+      JSON.stringify({
+        trailingSlash: false,
+        routes: [
+          { route: '/', status: 'rendered', router: 'app' },
+          { route: '/solutions/[slug]', path: '/solutions/sales-crm', status: 'rendered', router: 'app' },
+        ],
+      }),
+    )
 
     const files = [
       'index.html',
@@ -60,6 +70,50 @@ test('turns vinext output into a fail-closed asset-only deploy config', async ()
       { pattern: 'www.leaddrivecrm.org/*', zone_name: 'leaddrivecrm.org' },
       { pattern: 'new.leaddrivecrm.org', custom_domain: true },
     ])
+  } finally {
+    await rm(root, { recursive: true, force: true })
+  }
+})
+
+test('refuses an asset-only deploy when vinext skipped a route', async () => {
+  const root = await mkdtemp(join(tmpdir(), 'leaddrive-cf-config-skipped-'))
+  try {
+    const server = join(root, 'dist', 'server')
+    const client = join(root, 'dist', 'client')
+    await mkdir(join(client, 'solutions'), { recursive: true })
+    await mkdir(server, { recursive: true })
+
+    await writeFile(
+      join(server, 'wrangler.json'),
+      JSON.stringify({ main: './index.js', assets: { directory: '../client', binding: 'ASSETS' } }),
+    )
+    await writeFile(
+      join(server, 'vinext-prerender.json'),
+      JSON.stringify({
+        trailingSlash: false,
+        routes: [
+          { route: '/', status: 'rendered', router: 'app' },
+          { route: '/account', status: 'skipped', reason: 'dynamic' },
+        ],
+      }),
+    )
+
+    const files = [
+      'index.html',
+      '404.html',
+      '_redirects',
+      'build-stamp.json',
+      'ru.html',
+      'en.html',
+      'privacy.html',
+      'terms-of-use.html',
+      'solutions/sales-crm.html',
+    ]
+    await Promise.all(files.map((file) => writeFile(join(client, file), 'fixture')))
+
+    const result = spawnSync(process.execPath, [script], { cwd: root, encoding: 'utf8' })
+    assert.equal(result.status, 1)
+    assert.match(result.stderr, /prerender did not render every route: \/account: skipped \(dynamic\)/)
   } finally {
     await rm(root, { recursive: true, force: true })
   }
