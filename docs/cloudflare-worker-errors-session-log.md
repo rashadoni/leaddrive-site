@@ -69,3 +69,33 @@ Append-only continuity journal for the investigation started on 2026-09-26 (Euro
 - A safe live routing check at approximately 15:13Z returned `200 application/json` for `app.leaddrivecrm.org/api/v1/mtm/mobile/ping`, while the same path on apex and `new` returned the marketing site's static `404 text/html`. The current app also validates that ping before saving a server, so normal setup will not persist the apex marketing host.
 - Volume alone looks deceptively similar: one continuously working agent produces about 120 uploads/hour or 960 in an 8-hour day; 35 agent-days produce about 33,600 uploads, near the historical 33.15k Worker invocations. That numerical coincidence does not overcome the hostname mismatch. MTM is therefore not supported as the cause of `leaddrive-site` errors under normal configuration. It could contribute only if an old/corrupt device stored the apex or `new` hostname, or if the live account routes differ from the deployed config; Workers Logs grouped by host/path would close that residual uncertainty.
 - Next step: once read-only Cloudflare analytics access exists, query the exact pre/post intervals by outcome, version, hostname and path. Confirm the historical error class and check specifically for `/api/v1/mtm/mobile/location`; do not make another production change without that evidence.
+
+## 2026-09-26 — autonomous completion attempt and access boundary
+
+- The user explicitly asked to continue autonomously to the end. Work resumed from the saved stopping point: the asset-only release was live and publicly verified, while exact Cloudflare Analytics/Logs remained unavailable.
+- Reconfirmed task routing before further work: worktree `/mnt/HC_Volume_106454338/codex-alt-data/worktrees/leaddrive-site-cloudflare-errors`, branch `codex/fix-cloudflare-worker-errors`, origin `https://github.com/rashadoni/leaddrive-site.git`; production remains Cloudflare Worker `leaddrive-site`, released only from GitHub `main` by Cloudflare Workers Builds. No new production mutation was made.
+- Exhaustive read-only access audit found no usable Cloudflare credential:
+  - no `CLOUDFLARE_*`, `CF_*`, or `WRANGLER_*` variable is present in the task environment;
+  - the standard Wrangler configuration contains logs/cache only, with no OAuth config;
+  - repository GitHub Actions secrets are empty; the only Cloudflare-related repository variable is the non-secret account ID;
+  - the Cloudflare Workers Builds credential is held by Cloudflare and is not exposed to GitHub Actions;
+  - GitHub checks expose build/version metadata but no request analytics or invocation logs;
+  - an unauthenticated GraphQL request returned Cloudflare code `9106` for missing authentication headers.
+- The existing managed Chrome target was inspected without reading cookies or credentials. Its Cloudflare tab is still redirected to the login page, neither login field is autofilled, and the same browser profile is not authenticated to GitHub. Thus the prior Dashboard session cannot be resumed autonomously, and initiating a new identity-provider authorization or resetting credentials would exceed the available authority.
+- The connected mailbox contains one matching Cloudflare alert, `[Action required] Workers CPU limit exceeded`, timestamped `2026-09-26T14:09:11Z`, before the asset-only deployment at `15:05:39Z`. No later matching alert was present as of approximately `15:27Z`. This is useful chronology but not a replacement for metrics: alert delivery is thresholded and may be delayed or deduplicated.
+- A second low-volume public verification ran from `2026-09-26T15:28:20.335Z` to `15:28:20.982Z`:
+  - `/` 200 / 125,514 bytes / `cf-cache-status: HIT`;
+  - `/ru` 200 / 133,444 bytes / `HIT`;
+  - `/en` 200 / 122,769 bytes / `HIT`;
+  - `/solutions/sales-crm` 200 / 52,385 bytes / `HIT`;
+  - a fresh unknown path 404 / 5,636 bytes / `HIT`;
+  - `build-stamp.json` returned 200 / 67 bytes / `HIT` on apex, `www`, and `new`, and all three still identified merge SHA `534f2fb10082562324fc0aeb780fe16b2ced9aac` on `main`;
+  - `app.leaddrivecrm.org/api/v1/mtm/mobile/ping` returned 200 JSON with `cf-cache-status: DYNAMIC`, independently confirming that the MTM API and the marketing site's asset-only delivery are different host-level paths.
+- Exact matched comparison windows are now fixed for when access is supplied:
+  - 24-hour pre-deploy: `2026-09-25T15:05:39Z` through `2026-09-26T15:05:39Z`;
+  - 24-hour post-deploy: `2026-09-26T15:05:39Z` through `2026-09-27T15:05:39Z`;
+  - a shorter early comparison may use equal-duration windows ending/starting at `15:05:39Z`, but must be labelled preliminary and normalized by requests.
+- GraphQL `workersInvocationsAdaptive`, filtered to `scriptName: leaddrive-site`, is the appropriate source for requests, errors, outcomes/statuses, CPU and wall-time quantiles. Host, path, response status and the residual MTM hypothesis require Workers Observability logs/querying, including an explicit check for `/api/v1/mtm/mobile/location` and version IDs `ff076a34-32cb-4911-be39-ef5c556ed68a` versus `bb261b0b-d36f-4032-9c25-8fe895ecbeab`.
+- Concrete external blocker: Cloudflare requires either a renewed authenticated Dashboard session or an account-owned read-only API token. The least-privilege token needs Account Analytics Read plus Workers `Metadata Read-Only`/Observability Read scoped to `leaddrive-site`; it must be supplied only through the process environment and never committed or written to this journal. On Workers Free, stored Workers Logs have a 3-day retention window, so historical path-level classification is time-sensitive; aggregate GraphQL Worker metrics remain available longer.
+- Current evidence supports the deployed architectural fix and rejects normal MTM routing as the cause of `leaddrive-site`, but it still does not honestly classify the historical 10.77k errors or establish a numerical post-release error-rate/CPU delta. That final classification is blocked solely on account authentication, not on code, CI, deployment, or public availability.
+- Next step after the external access boundary is resolved: query the two fixed 24-hour windows (or equal elapsed preliminary windows), report requests/errors/error rate, `exceededResources` versus exceptions, CPU/wall-time quantiles by version, and host/path groups; then close the incident or revert merge commit `534f2fb10082562324fc0aeb780fe16b2ced9aac` only if those measurements contradict the current evidence.
