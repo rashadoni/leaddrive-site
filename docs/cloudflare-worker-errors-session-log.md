@@ -105,3 +105,11 @@ Append-only continuity journal for the investigation started on 2026-09-26 (Euro
 - The user asked to start the remaining verification. At `2026-09-26T19:29:07Z`, the environment still contained no Cloudflare/Wrangler credential and the managed Chrome Cloudflare target still resolved to the account login page rather than the Worker metrics view.
 - Opened the exact `leaddrive-site` errors URL in the Codex in-app browser for account-owner authentication. No password reset, identity-provider authorization, token creation, or other account mutation was attempted. The metrics query remains ready to run immediately after the owner completes sign-in.
 - Precise stopping point remains authentication: no additional code or production change is needed or justified while the account telemetry is unavailable.
+
+## 2026-09-26 — official Observability OAuth initiated
+
+- The user opened the exact Cloudflare metrics URL in the Codex in-app browser and asked to start again. The browser UI and the task's server-side tools do not share cookies, so an authenticated dashboard tab alone cannot authorize API calls from the task.
+- Plugin discovery confirmed there is no separate Cloudflare app connector in the public plugin directory. Inspection of the already installed official Cloudflare plugin then confirmed that it bundles Cloudflare's official remote MCP service.
+- Added the least-purpose official endpoint `https://observability.mcp.cloudflare.com/mcp` to Codex as `cloudflare-observability` and started its OAuth flow. This avoids copying dashboard cookies, passwords, or API tokens and is narrower than enabling the general Cloudflare API MCP.
+- The OAuth listener is currently active and waiting for the account owner to approve access in the browser. No Cloudflare data has been returned yet and no production/account mutation has been performed. If the browser's localhost callback cannot reach the remote listener, retain the callback tab and resume the task so its one-time authorization response can be forwarded to the waiting listener without exposing credentials.
+- Next step: complete the pending OAuth callback, verify the connection, then immediately query historical Workers Logs before Free-plan retention expires and collect matched Worker metrics around `2026-09-26T15:05:39Z`.
