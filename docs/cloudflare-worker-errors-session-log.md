@@ -246,3 +246,37 @@ PR #32 remains green/unmerged. The sole immediate blocker is the account
 owner's one-click Allow on a fresh general Cloudflare API OAuth window; after
 that, the remaining edge audit/mutations and static release can proceed
 autonomously.
+
+## 2026-09-27 — resumed edge hardening and pre-change baseline
+
+- Resumed from the saved stopping point. Static hardening PR #32 remains open,
+  mergeable and clean at exact head
+  `b2d04108fe80944c5b6c8f4b4e48f01aa3cd8ac1`; its build check is green and
+  the production-only live verification is correctly skipped on the PR.
+- The complete 24-hour post-release interval is
+  `2026-09-26T15:05:39Z` through `2026-09-27T15:05:39Z`. At
+  `2026-09-27T07:29:34Z`, 7 hours 36 minutes remained, so the final exact-window
+  Observability query was not run early. Read-only public smoke still returned
+  apex `200` with `cf-cache-status: HIT` and application `/api/v1/ping` `200`.
+- Captured an explicit pre-change edge baseline: the apex returned `200/HIT`;
+  deep-path requests to both `www` and `new` returned `404/HIT` rather than a
+  canonical redirect; and an `axios/1.7.9` request to apex `/` returned
+  `200/HIT` without mitigation. These three probes will be repeated after the
+  rules are installed.
+- A fresh general Cloudflare API OAuth listener is active. The application
+  could not navigate the local in-app browser automatically, so the owner was
+  given a fresh consent link and asked to confirm the prompt. No callback URL,
+  authorization code, state, token or other secret is recorded here.
+- Revalidated the current official Cloudflare contract before mutation: alias
+  redirects belong in the zone-level `http_request_dynamic_redirect` entry
+  point, and the narrow bot signature belongs in
+  `http_request_firewall_custom` with `managed_challenge`. The existing
+  rulesets must be read first and new rules appended rather than replacing the
+  entry-point ruleset.
+
+Current stopping point: all repository and application changes are complete;
+the pre-change edge baseline is recorded; general Cloudflare API consent is
+awaiting the owner's browser confirmation. Next action: on callback, read the
+zone and existing entry-point rules, append only the exact redirect and axios
+challenge rules, verify their public behavior and zero Worker invocation, then
+merge/release PR #32.
