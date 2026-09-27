@@ -333,3 +333,42 @@ green build at head `a33f44050b5cee5709b5359d7e3becd52894767f` before this
 journal checkpoint. Next action: push this checkpoint, wait for the refreshed
 PR gate, squash-merge PR #32, monitor the Cloudflare production build and run
 the exact build/header/redirect/demo/MTM smoke matrix.
+
+## 2026-09-27 — static hardening production release completed
+
+- The final PR checkpoint `a5ae65d1ae382991dbfebe086c48bca2e680085b`
+  passed GitHub CI run `36305223709`: deploy-config tests, advisory lint,
+  production build, exact build-stamp inclusion, asset-only config generation
+  and Wrangler dry-run all completed successfully.
+- PR #32 was squash-merged to `main` at `2026-09-27T08:08:33Z` as exact SHA
+  `a62e8131f6e1250540fcaa52d28a2cb5ea469649`. The normal GitHub-to-Cloudflare
+  release path was used; there was no manual Wrangler deployment.
+- Main CI run `36305269829` completed successfully. Its production-only
+  `verify-live` job waited for the exact SHA on the apex and then confirmed
+  exact 301 path/query-preserving redirects for both aliases.
+- Independent production smoke read
+  `{"sha":"a62e8131f6e1250540fcaa52d28a2cb5ea469649","branch":"main"}`
+  from `/build-stamp.json`. Apex `/` returned `200` and `HIT`; the live response
+  contains the enforced CSP, Permissions-Policy, Referrer-Policy, one-year
+  HSTS, nosniff and frame-deny headers. A fingerprinted CSS asset returned
+  `200/HIT` with `Cache-Control: public, max-age=31536000, immutable`, and an
+  unknown marketing path returned the expected 404.
+- The final protection matrix remained exact: axios on apex `/` returned 403
+  challenge; a browser request returned the static page; aliases returned the
+  canonical 301; and `https://app.leaddrivecrm.org/api/v1/ping` returned
+  `{"ok":true}`. Demo CORS preflight returned 204 with the exact canonical
+  allow-origin/method/header/max-age values, while an unlisted origin received
+  no allow-origin header. A filled-honeypot synthetic POST returned 201 with
+  canonical CORS and, by route design, did not persist or notify.
+- The authenticated Observability query for the release-and-smoke interval
+  `2026-09-27T08:08:33Z` through `2026-09-27T08:11:18Z` returned exactly zero
+  `cf-worker-event` rows for `leaddrive-site`. The released headers, redirects,
+  static 404, cache behavior and WAF challenge therefore remain outside Worker
+  execution.
+
+Current stopping point: the requested architecture, edge protection, CORS
+repair, repository guards, merge, production deployment and post-release smoke
+are complete and green. The only remaining ordered item is the time-gated full
+24-hour Observability interval ending `2026-09-27T15:05:39Z`. Next action: at
+or after that timestamp, run the exact interval query, append its invocation and
+error totals, and close the task if they remain zero.
