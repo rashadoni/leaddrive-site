@@ -372,3 +372,27 @@ are complete and green. The only remaining ordered item is the time-gated full
 24-hour Observability interval ending `2026-09-27T15:05:39Z`. Next action: at
 or after that timestamp, run the exact interval query, append its invocation and
 error totals, and close the task if they remain zero.
+
+## 2026-09-27 — final 24-hour verification scheduled
+
+- At `2026-09-27T08:20:42Z`, the exact 24-hour interval still had not closed;
+  running the final calculation early would have produced incomplete evidence.
+- This Codex runtime does not expose the application's native scheduled-task
+  tool. A persistent one-shot user timer named
+  `codex-leaddrive-final-observability.timer` was therefore scheduled for
+  `2026-09-27T15:10:00Z`, four minutes and 21 seconds after the interval ends.
+  It resumes this exact task/session and is limited to 45 minutes.
+- The resumed task is narrowly scoped to two read-only Observability counts for
+  the fixed interval, the already-defined production smoke matrix, and this
+  append-only journal checkpoint. It explicitly prohibits Cloudflare,
+  production, WAF, redirect and application changes.
+- The timer was verified active with `Persistent=yes`, one-second accuracy,
+  zero randomized delay, and the dedicated static-hardening worktree as its
+  working directory. No OAuth callback, authorization code, token or other
+  credential was stored in the timer or this journal.
+
+Current stopping point: all implementation and deployment work remains complete
+and green; only the immutable interval ending `2026-09-27T15:05:39Z` is still
+open. Next action: the scheduled continuation will run at `15:10:00Z`, record
+the exact total invocation and error counts, repeat the read-only smoke matrix,
+checkpoint this journal, and close the active goal if every result is green.
