@@ -48,3 +48,288 @@ Append-only continuity journal for the investigation started on 2026-09-26 (Euro
 - A separate read-only review checked the implementation against the pinned Wrangler 4.92.0 schema/code and vinext 1.0.0-beta.5 output. It found no blocking issue: Wrangler supports an asset-only config without `main` and rejects leaving `assets.binding` when no script exists; `404-page` plus `auto-trailing-slash` is the intended static-site topology.
 - The review identified a non-blocking fail-closed gap: checking only representative HTML paths would allow a future vinext change to silently skip a newly dynamic route. The config transformer now reads `dist/server/vinext-prerender.json`, requires `trailingSlash: false`, and refuses deployment if any route is skipped or errored. A negative regression test covers that refusal. `npm start` now also uses the transformed deploy config so local production-topology smoke no longer exercises the discarded SSR config.
 - Next step: run the targeted checks again, push the hardened guard, wait for the replacement PR CI, then merge and monitor both GitHub content verification and Cloudflare Workers Builds.
+
+## 2026-09-26 — production release and post-deploy verification
+
+- Hardened checkpoint `fa0629ec2921fc3d07bda6e473a46bc15cdd0582` passed replacement PR CI run `36250606817`: 2/2 deploy-config tests, 112 routes rendered, 0 skipped, 111 CDN warmup paths, and an asset-only deploy config with all 3 production triggers. The advisory lint step continued to report the repository's existing UI backlog; the blocking build and config gates passed.
+- PR #31 was merged at 2026-09-26 15:04:45Z. The production source is merge commit `534f2fb10082562324fc0aeb780fe16b2ced9aac`.
+- Cloudflare Workers Build `d635c286-6ec8-42aa-aad4-fb14944663c0` completed successfully at 15:05:39Z and created Worker Version `bb261b0b-d36f-4032-9c25-8fe895ecbeab`.
+- GitHub Actions production run `36250680562` passed both jobs. Its `verify-live` job independently confirmed that `leaddrivecrm.org`, `www.leaddrivecrm.org`, and `new.leaddrivecrm.org` all served build stamp `534f2fb10082562324fc0aeb780fe16b2ced9aac`.
+- Low-volume post-deploy smoke at 2026-09-26 15:13:07Z–15:13:07Z returned: `/` 200 / 125,514 bytes / 0.092 s; `/ru` 200 / 133,444 bytes / 0.093 s; `/en` 200 / 122,769 bytes / 0.205 s; `/solutions/sales-crm` 200 / 52,385 bytes / 0.090 s; an unknown URL 404 / 5,636 bytes / 0.081 s; and `build-stamp.json` 200 / 67 bytes / 0.071 s. A preceding header probe showed `cf-cache-status: HIT` on every tested HTML page and the custom 404, whereas the 14:52:35Z pre-deploy HTML/404 probes had no `cf-cache-status` and were dynamically rendered. This is topology evidence, not a statistically meaningful latency benchmark.
+- Redirect smoke preserved the intended results: `/demo` and `/plans` returned 301; both slashed and unslashed legal targets returned their intended 302 to the CRM; legal fallback returned 302; legacy `/landing/*` and `/marketing/*` returned 301. Trailing-slash normalization now returns Cloudflare's 307 to the canonical non-slash URL, instead of the former framework 308; the canonical URL itself and SEO metadata are unchanged.
+- Static HTML retained language-specific title, canonical and H1 metadata for `/`, `/ru`, `/en`, and `/solutions/sales-crm`. The live JavaScript bundle still contains the demo form copy and the external endpoint `https://app.leaddrivecrm.org/api/v1/public/demo-requests`; no real form was submitted during smoke.
+- Current Cloudflare account analytics and Workers Logs are still unavailable: the managed Dashboard tab is unauthenticated and the host has no Cloudflare API token or Wrangler OAuth session. Therefore the historical 10.77k errors cannot be classified by outcome/path, and no honest post-release Worker error-rate or CPU-time delta can yet be reported. Public and deployment evidence proves the asset-only release is live; it does not substitute for account analytics.
+- Rollback, if new evidence requires it: revert merge commit `534f2fb10082562324fc0aeb780fe16b2ced9aac` through a reviewed PR to `main`; Cloudflare Workers Builds will publish the resulting SHA and the existing `verify-live` gate will verify all three hosts. No rollback is indicated by the completed smoke.
+
+## 2026-09-26 — MTM GPS causal hypothesis
+
+- The latest published mobile prerelease checked was `v3.3.0-build358`, commit `d0e9e97a5ede8fea014e18700b5253bfc4e7cd51`, published 2026-09-24 19:58:00Z.
+- Android may emit native location readings every 5–10 seconds, but the app admits at most one fresh upload every 30 seconds. Tracking runs only for a signed-in `AGENT` with a confirmed, active, unpaused workday. After connectivity returns, one successful live point can flush up to 8 queued points, so a recovery tick can temporarily make up to 9 POSTs.
+- The upload target is `POST https://<selected-tenant-host>/api/v1/mtm/mobile/location`. Normal server selection is `app.leaddrivecrm.org` or a tenant subdomain. `leaddrive-site` has only exact apex, `www`, and `new` triggers; it has no `*.leaddrivecrm.org` or `app.leaddrivecrm.org` trigger. Cloudflare route matching requires an explicit leading hostname wildcard to include subdomains.
+- A safe live routing check at approximately 15:13Z returned `200 application/json` for `app.leaddrivecrm.org/api/v1/mtm/mobile/ping`, while the same path on apex and `new` returned the marketing site's static `404 text/html`. The current app also validates that ping before saving a server, so normal setup will not persist the apex marketing host.
+- Volume alone looks deceptively similar: one continuously working agent produces about 120 uploads/hour or 960 in an 8-hour day; 35 agent-days produce about 33,600 uploads, near the historical 33.15k Worker invocations. That numerical coincidence does not overcome the hostname mismatch. MTM is therefore not supported as the cause of `leaddrive-site` errors under normal configuration. It could contribute only if an old/corrupt device stored the apex or `new` hostname, or if the live account routes differ from the deployed config; Workers Logs grouped by host/path would close that residual uncertainty.
+- Next step: once read-only Cloudflare analytics access exists, query the exact pre/post intervals by outcome, version, hostname and path. Confirm the historical error class and check specifically for `/api/v1/mtm/mobile/location`; do not make another production change without that evidence.
+
+## 2026-09-26 — autonomous completion attempt and access boundary
+
+- The user explicitly asked to continue autonomously to the end. Work resumed from the saved stopping point: the asset-only release was live and publicly verified, while exact Cloudflare Analytics/Logs remained unavailable.
+- Reconfirmed task routing before further work: worktree `/mnt/HC_Volume_106454338/codex-alt-data/worktrees/leaddrive-site-cloudflare-errors`, branch `codex/fix-cloudflare-worker-errors`, origin `https://github.com/rashadoni/leaddrive-site.git`; production remains Cloudflare Worker `leaddrive-site`, released only from GitHub `main` by Cloudflare Workers Builds. No new production mutation was made.
+- Exhaustive read-only access audit found no usable Cloudflare credential:
+  - no `CLOUDFLARE_*`, `CF_*`, or `WRANGLER_*` variable is present in the task environment;
+  - the standard Wrangler configuration contains logs/cache only, with no OAuth config;
+  - repository GitHub Actions secrets are empty; the only Cloudflare-related repository variable is the non-secret account ID;
+  - the Cloudflare Workers Builds credential is held by Cloudflare and is not exposed to GitHub Actions;
+  - GitHub checks expose build/version metadata but no request analytics or invocation logs;
+  - an unauthenticated GraphQL request returned Cloudflare code `9106` for missing authentication headers.
+- The existing managed Chrome target was inspected without reading cookies or credentials. Its Cloudflare tab is still redirected to the login page, neither login field is autofilled, and the same browser profile is not authenticated to GitHub. Thus the prior Dashboard session cannot be resumed autonomously, and initiating a new identity-provider authorization or resetting credentials would exceed the available authority.
+- The connected mailbox contains one matching Cloudflare alert, `[Action required] Workers CPU limit exceeded`, timestamped `2026-09-26T14:09:11Z`, before the asset-only deployment at `15:05:39Z`. No later matching alert was present as of approximately `15:27Z`. This is useful chronology but not a replacement for metrics: alert delivery is thresholded and may be delayed or deduplicated.
+- A second low-volume public verification ran from `2026-09-26T15:28:20.335Z` to `15:28:20.982Z`:
+  - `/` 200 / 125,514 bytes / `cf-cache-status: HIT`;
+  - `/ru` 200 / 133,444 bytes / `HIT`;
+  - `/en` 200 / 122,769 bytes / `HIT`;
+  - `/solutions/sales-crm` 200 / 52,385 bytes / `HIT`;
+  - a fresh unknown path 404 / 5,636 bytes / `HIT`;
+  - `build-stamp.json` returned 200 / 67 bytes / `HIT` on apex, `www`, and `new`, and all three still identified merge SHA `534f2fb10082562324fc0aeb780fe16b2ced9aac` on `main`;
+  - `app.leaddrivecrm.org/api/v1/mtm/mobile/ping` returned 200 JSON with `cf-cache-status: DYNAMIC`, independently confirming that the MTM API and the marketing site's asset-only delivery are different host-level paths.
+- Exact matched comparison windows are now fixed for when access is supplied:
+  - 24-hour pre-deploy: `2026-09-25T15:05:39Z` through `2026-09-26T15:05:39Z`;
+  - 24-hour post-deploy: `2026-09-26T15:05:39Z` through `2026-09-27T15:05:39Z`;
+  - a shorter early comparison may use equal-duration windows ending/starting at `15:05:39Z`, but must be labelled preliminary and normalized by requests.
+- GraphQL `workersInvocationsAdaptive`, filtered to `scriptName: leaddrive-site`, is the appropriate source for requests, errors, outcomes/statuses, CPU and wall-time quantiles. Host, path, response status and the residual MTM hypothesis require Workers Observability logs/querying, including an explicit check for `/api/v1/mtm/mobile/location` and version IDs `ff076a34-32cb-4911-be39-ef5c556ed68a` versus `bb261b0b-d36f-4032-9c25-8fe895ecbeab`.
+- Concrete external blocker: Cloudflare requires either a renewed authenticated Dashboard session or an account-owned read-only API token. The least-privilege token needs Account Analytics Read plus Workers `Metadata Read-Only`/Observability Read scoped to `leaddrive-site`; it must be supplied only through the process environment and never committed or written to this journal. On Workers Free, stored Workers Logs have a 3-day retention window, so historical path-level classification is time-sensitive; aggregate GraphQL Worker metrics remain available longer.
+- Current evidence supports the deployed architectural fix and rejects normal MTM routing as the cause of `leaddrive-site`, but it still does not honestly classify the historical 10.77k errors or establish a numerical post-release error-rate/CPU delta. That final classification is blocked solely on account authentication, not on code, CI, deployment, or public availability.
+- Next step after the external access boundary is resolved: query the two fixed 24-hour windows (or equal elapsed preliminary windows), report requests/errors/error rate, `exceededResources` versus exceptions, CPU/wall-time quantiles by version, and host/path groups; then close the incident or revert merge commit `534f2fb10082562324fc0aeb780fe16b2ced9aac` only if those measurements contradict the current evidence.
+
+## 2026-09-26 — resumed analytics attempt at 19:29Z
+
+- The user asked to start the remaining verification. At `2026-09-26T19:29:07Z`, the environment still contained no Cloudflare/Wrangler credential and the managed Chrome Cloudflare target still resolved to the account login page rather than the Worker metrics view.
+- Opened the exact `leaddrive-site` errors URL in the Codex in-app browser for account-owner authentication. No password reset, identity-provider authorization, token creation, or other account mutation was attempted. The metrics query remains ready to run immediately after the owner completes sign-in.
+- Precise stopping point remains authentication: no additional code or production change is needed or justified while the account telemetry is unavailable.
+
+## 2026-09-26 — official Observability OAuth initiated
+
+- The user opened the exact Cloudflare metrics URL in the Codex in-app browser and asked to start again. The browser UI and the task's server-side tools do not share cookies, so an authenticated dashboard tab alone cannot authorize API calls from the task.
+- Plugin discovery confirmed there is no separate Cloudflare app connector in the public plugin directory. Inspection of the already installed official Cloudflare plugin then confirmed that it bundles Cloudflare's official remote MCP service.
+- Added the least-purpose official endpoint `https://observability.mcp.cloudflare.com/mcp` to Codex as `cloudflare-observability` and started its OAuth flow. This avoids copying dashboard cookies, passwords, or API tokens and is narrower than enabling the general Cloudflare API MCP.
+- The OAuth listener is currently active and waiting for the account owner to approve access in the browser. No Cloudflare data has been returned yet and no production/account mutation has been performed. If the browser's localhost callback cannot reach the remote listener, retain the callback tab and resume the task so its one-time authorization response can be forwarded to the waiting listener without exposing credentials.
+- Next step: complete the pending OAuth callback, verify the connection, then immediately query historical Workers Logs before Free-plan retention expires and collect matched Worker metrics around `2026-09-26T15:05:39Z`.
+
+## 2026-09-26 — OAuth client compatibility workaround
+
+- The account owner approved the first Observability OAuth request and the one-time callback was safely forwarded to the waiting remote listener without logging the code. Cloudflare returned HTTP 200, but `codex-cli 0.145.0` rejected the callback before token exchange with `Authorization server response missing required issuer`.
+- This is a confirmed Codex OAuth regression rather than an account or Cloudflare permission failure: current OpenAI Codex issues document that the affected client parses the callback but discards the valid RFC 9207 `iss` parameter before issuer validation; a separate report reproduces the same failure specifically with Cloudflare MCP.
+- Downloaded the official `codex-cli 0.142.0` Linux musl release to a task-specific temporary directory and verified its SHA-256 (`2e3acb39a277ff11c314d832cfdd246faebeea26bf01aff8e9e10641e6dea801`) against the digest published on the OpenAI GitHub release. The installed/system Codex binary was not replaced or modified.
+- The older binary cannot parse the current global `[agents]` configuration, so it is running with an isolated minimal temporary `CODEX_HOME` containing only the official Cloudflare Observability MCP endpoint. A fresh OAuth listener is active and waiting for the owner's second consent/callback. No secret, authorization code, or OAuth state is stored in this journal.
+- Next step: forward the fresh localhost callback to the compatible listener, verify OAuth token storage, connect to the Observability MCP, and query the incident metrics/logs.
+
+## 2026-09-26 — authenticated production classification and incident closure
+
+- The second official Cloudflare Observability OAuth flow completed successfully through the verified, isolated `codex-cli 0.142.0` compatibility binary. The installed Codex binary was not replaced. The resulting credential was installed in the normal Codex credential store with owner-only permissions, and the official `https://observability.mcp.cloudflare.com/mcp` endpoint remains registered as `cloudflare-observability`. No token, authorization code, cookie, or credential value was printed or added to the repository.
+- Authenticated read-only access enumerated Worker `leaddrive-site` (tag `8203df61e3ae44a09c9a1a3d12a79a7e`) with `modified_on` `2026-09-26T15:05:35.272944Z`, consistent with the asset-only release. The Observability MCP server identified itself as `workers-observability` version `0.5.5`.
+- The exact 24-hour pre-deploy window `2026-09-25T15:05:39Z` through `2026-09-26T15:05:39Z` contains 33,463 invocation rows, all on old Worker Version `ff076a34-32cb-4911-be39-ef5c556ed68a`:
+  - `ok`: 22,384 (66.8918%);
+  - `exceededCpu`: 11,019 (32.9289%);
+  - `canceled`: 60 (0.1793%).
+- Response outcomes independently corroborate the classification: 11,003 `exceededCpu` invocations returned 503 and 16 ended with status 0; the 60 canceled invocations also ended with status 0. Successful responses were 20,901 status 200, 1,455 status 404, 22 status 308, and 6 status 405.
+- The error-event dataset contains 11,287 `cf-worker` error records, and every one groups under the same platform error: `Worker exceeded CPU time limit.` The error-event count is not an invocation denominator because failed invocations may emit an additional platform error record. Canonical invocation outcome counts above are taken from `cf-worker-event`/`$workers.outcome`.
+- CPU telemetry matches the platform classification. For `exceededCpu`, CPU time was median 10 ms, p95 10 ms, p99 10 ms, average 10.166 ms, and max 73 ms; wall time was median 12 ms, p95 16 ms, p99 28 ms, average 12.905 ms, and max 207 ms. Distribution calculations are retained as supporting telemetry; canonical invocation counts come from count-only queries because combined multi-calculation responses occasionally omitted a small number of successful rows.
+- Request-path aggregation identifies the load source and rules out the user's MTM hypothesis for this Worker:
+  - 31,566 of 33,463 invocations (94.3311%) were `GET /`;
+  - 11,010 of 11,019 CPU failures (99.9183%) were `GET /`;
+  - the remaining nine CPU failures were isolated public scanner/unknown paths;
+  - an exact `$metadata.trigger` search for `/api/v1/mtm/mobile/location` returned zero, and an independent exact `$workers.event.request.path` query also returned zero. Both fields contained data elsewhere in the window, so the zero is not caused by an absent field.
+- Host aggregation for `GET /` found 31,535 requests to the apex, 26 to `www`, 3 to `new`, and 2 unusual explicit-port probes. None were routed to `app.leaddrivecrm.org`, where the MTM API actually lives.
+- User-agent aggregation shows that the root load was overwhelmingly automated: `axios/1.8.3` generated 25,868 root invocations, `axios/1.7.9` 5,419, and `axios/1.16.1` 155. Together that is 31,442 (99.6072%) of root invocations. The traffic was spread across many residential/mobile networks and countries. Treating it as distributed automated/proxied traffic is an evidence-based inference, not an attribution to a specific actor; the user-agent strings can be spoofed. It is nevertheless incompatible with normal phone GPS uploads, which use `POST /api/v1/mtm/mobile/location` on the app/tenant host.
+- A matched early before/after comparison uses equal 4 h 42 m 43 s windows around the release:
+  - pre, `2026-09-26T10:22:56Z`–`15:05:39Z`: 7,114 invocations, including 3,470 `exceededCpu` failures;
+  - post, `2026-09-26T15:05:39Z`–`19:48:22Z`: zero Worker invocations and zero Worker errors.
+  This is the intended result of asset-only delivery: public requests continue to be served by Static Assets without invoking the Worker runtime.
+- A narrow boundary check strengthens the deployment correlation: the 15 minutes immediately before release contained 550 invocations (379 `ok`, 171 `exceededCpu`); the 15 minutes immediately after contained zero Worker invocations.
+- Final public smoke after the authenticated queries returned 200 with `cf-cache-status: HIT` on `/` for apex, `www`, and `new`; the custom unknown route returned 404 with `HIT`. All three `build-stamp.json` files still identify `main` SHA `534f2fb10082562324fc0aeb780fe16b2ced9aac`. The independent MTM ping on `app.leaddrivecrm.org` returned 200 JSON with `cf-cache-status: DYNAMIC`.
+- Final causal conclusion: the incident was real CPU-limit exhaustion in the old vinext runtime-SSR Worker, amplified by heavy automated `GET /` traffic. It was not caused by normal MTM GPS uploads. The asset-only release removed runtime rendering from the marketing routes and eliminated Worker execution/errors in every observed post-release interval while preserving live delivery. No rollback or additional production mutation is indicated.
+- The full 24-hour post-deploy window will not complete until `2026-09-27T15:05:39Z`. That future duration is not required to classify or close the incident: exact platform errors, version/path correlation, matched before/after intervals, deployment evidence, and live smoke all agree. A later full-day query is optional longitudinal confirmation only.
+- Current stopping point: implementation, release, authenticated root-cause classification, MTM exclusion, matched post-release verification, and public smoke are complete. Next action: no immediate production change; retain the static topology and optionally re-query the completed 24-hour post window after `2026-09-27T15:05:39Z`.
+
+## 2026-09-26 — ordered static-site hardening plan
+
+- The user asked to continue immediately and to preserve the complete task order so no hardening step is forgotten. Work continues in the existing dedicated worktree on new branch `codex/static-site-hardening`, which contains the append-only incident history and has been merged with current `origin/main` (`534f2fb10082562324fc0aeb780fe16b2ced9aac`). Production remains GitHub `main` -> Cloudflare Workers Builds; no direct/manual deployment is permitted.
+- The execution order is fixed as follows:
+  1. Audit current external resources, canonical metadata, redirects, Cloudflare rules and CI so headers or redirects cannot break the public site.
+  2. Add static `_headers` rules for safe security headers and immutable browser caching of fingerprinted assets; do not add a runtime Worker.
+  3. Establish the apex as the canonical host and implement host redirects at the Cloudflare edge without Worker execution, but only after confirming that `www` and `new` are not required as independent public hosts and updating smoke/build-stamp checks accordingly.
+  4. Strengthen deployment guards so production configuration fails if `main`, `assets.binding`, `run_worker_first`, skipped prerenders, missing headers, missing redirects, or incomplete routes can reintroduce runtime processing.
+  5. Add an operational check/alert whose invariant is zero `leaddrive-site` Worker invocations and zero Worker errors; HTTP requests served by Static Assets are tracked separately from Worker compute.
+  6. Read existing Cloudflare zone rules before mutation, then create one narrow WAF rule for the confirmed automated signature: marketing hosts + `GET /` + user agent beginning with `axios/`. Avoid country/IP-wide rules and preserve browsers, verified crawlers, application/API hosts and MTM. Prefer a reversible challenge/observation stage before permanent blocking when the plan/tooling supports it.
+  7. Run targeted local checks, checkpoint only task-owned paths, push the feature branch, open a new PR, wait for GitHub CI, and merge only if all blocking gates pass.
+  8. Verify the Cloudflare build/version, apex page, canonical host redirects, custom 404, security/cache headers, build stamp, demo integration and independent MTM ping after release.
+  9. At or after `2026-09-27T15:05:39Z`, query the complete 24-hour post-release Observability window and record invocation/error totals. This time-gated confirmation must not be invented or marked complete early.
+- Safety constraints: keep the marketing deployment asset-only; never add request-time logging, middleware, SSR, authentication, bot filtering or redirects to a Worker; audit CSP against real external resources before enforcement; do not overwrite existing Cloudflare rulesets; and keep rollback changes path-scoped and reversible.
+- Current step: repository/external-resource audit is in progress. No production setting has been changed in this hardening phase yet.
+
+## 2026-09-26 — static hardening audit findings
+
+- Canonical-host history was resolved before changing redirects. Repository history shows that `www` and `new` previously redirected to the apex; those rules were removed only because Workers Static Assets `_redirects` does not support domain-level redirects. Current metadata, sitemap, robots and canonical tags all identify `https://leaddrivecrm.org`. The intended edge configuration is therefore a Cloudflare Single Redirect for each alias, preserving path and query, while retaining the existing Worker routes as a temporary rollout fallback.
+- The active site uses same-origin images, scripts, styles and video. The only active browser API call is the demo form POST to `https://app.leaddrivecrm.org/api/v1/public/demo-requests`; WhatsApp is a top-level navigation. An unused `LiveHero` component still names an obsolete app-host video that returns 404, but the component is not imported and is not part of the rendered site. No cleanup of that dormant component is included in this path-scoped hardening task.
+- A safe preflight-only production probe found a separate functional defect: the demo endpoint answers `OPTIONS` with 204 but supplies none of `Access-Control-Allow-Origin`, `Access-Control-Allow-Methods`, or `Access-Control-Allow-Headers`. No real lead was submitted. Source inspection of current `leaddrive-v2` `origin/main` confirms that the route exports only POST, adds no CORS headers to success/error results, and that the proxy's early 429 response also lacks them. This makes the marketing site's cross-origin JSON submission browser-blocked even though the endpoint itself is reachable.
+- The ordered plan is extended, without renumbering or dropping prior work: after the static-site repository checkpoint and before final end-to-end demo verification, prepare a separate safety-lane `leaddrive-v2` fix with an exact marketing-origin allowlist, explicit safe OPTIONS response, CORS headers on every POST/429 branch, focused route/proxy tests, reviewed PR, CI and normal production deployment. Disallowed origins must never receive `Access-Control-Allow-Origin`.
+- Began the repository hardening implementation: add a static `_headers` policy, require it in the generated deploy artifact, and strip/assert absence of `assets.run_worker_first` alongside `main` and `assets.binding`. The deploy transformer also validates the required global security headers and immutable cache rule so a future build cannot silently omit them.
+- The sitemap audit found that every URL claimed the generator's execution date as `lastmod`, even when its page had not changed, and the generator was not part of the build. This stale/non-deterministic signal is now another ordered repository-hardening task: remove the misleading `lastmod`, make sitemap generation an explicit first build step, and retain the committed generated file for inspection.
+- Added a CI-only `wrangler deploy --dry-run` after the deploy-config transform. This independently parses and packages the exact asset-only artifact on GitHub without credentials or publication, catching Wrangler schema drift before Cloudflare production builds see it.
+- Repository checks for this phase passed on the task worktree: `git diff --check`; Node syntax checks for the deploy transformer/test and sitemap generator; and `npm run test:cf-config` with all 3 tests passing. Sitemap regeneration produced 111 unique apex URLs, 444 alternate-language links, zero non-apex URLs and zero misleading `lastmod` elements. Full `vinext build` and Wrangler packaging remain intentionally delegated to GitHub CI under the host resource policy.
+- PR #32 (`https://github.com/rashadoni/leaddrive-site/pull/32`) opened from checkpoint `36efcd8`. GitHub CI run `36270132190` passed: 3/3 deploy-config tests, 111 sitemap URLs, 112 prerendered routes with 0 skipped, a valid asset-only config with all 3 triggers, and Wrangler 4.92.0 dry-run packaging of 348 assets with no bindings. The advisory lint step still reports the repository's existing 25-item UI backlog and remains non-blocking by design.
+- Updated the post-release verification contract for the intended canonical-host topology: the exact build SHA must be served by `leaddrivecrm.org`, while both `www` and `new` must return exact 301 redirects to the same apex path and query. This workflow change will not be merged until the corresponding Cloudflare edge rule exists and has been verified independently.
+- Made full Worker invocation observability explicit in the generated deploy config (`enabled: true`, sampling rate 1). Static Assets still bypass the Worker and produce no invocation events; retaining 100% sampling means any future topology regression is visible from its very first runtime invocation instead of being hidden by sampling.
+
+## 2026-09-26 — hardening CI, CORS release, and edge-access boundary
+
+- Static hardening PR #32 is open at
+  `https://github.com/rashadoni/leaddrive-site/pull/32`, exact head
+  `d1c1f05f7640f10d39b270a23d26019eef9548fd`. Its latest GitHub CI run
+  `36271229376` passed the build, asset-only config tests, sitemap checks and
+  Wrangler dry-run. The live verification job is intentionally skipped on a
+  pull request and will run after release.
+- The production verification workflow now expects exact permanent redirects
+  from `www` and `new` to the same apex path and query. PR #32 therefore remains
+  intentionally unmerged until the Cloudflare Single Redirect exists; merging
+  first would knowingly make the post-release topology check fail.
+- The related API repair is in separate `leaddrive-v2` PR #448. Its exact-head
+  safety-lane CI passed production build, full typecheck, PostgreSQL and event
+  platform gates, blocking test baselines, runner policy and secret scan. It
+  was squash-merged as `13277465d731cdfc106e7942c0a2b97ffa38d0b5`, and
+  SHA-bound production workflow `36272090842` is in progress through the
+  repository's documented GitHub Actions route.
+- General Cloudflare API access uses a separate OAuth resource from the already
+  authenticated read-only Observability service. Two browser-consent windows
+  expired without a callback; no rule, token, account or production setting
+  was changed. Reusing the Observability access token against the general MCP
+  was rejected with HTTP 401, confirming that its resource boundary cannot be
+  bypassed. A fresh owner click on Allow remains required before reading or
+  appending zone rules.
+- The edge mutation remains narrowly specified and has not been guessed: first
+  read the existing `http_request_dynamic_redirect` and
+  `http_request_firewall_custom` entry-point rulesets; then append one exact
+  alias-to-apex 301 rule preserving path/query and one exact Managed Challenge
+  rule for marketing hosts + `GET /` + a user agent beginning `axios/`. Never
+  replace an existing ruleset or target the app/MTM hosts.
+- An authenticated count query from the asset-only release boundary
+  `2026-09-26T15:05:39Z` through `2026-09-26T21:22:26Z` again returned exactly
+  zero `cf-worker-event` rows for `leaddrive-site`. This extends the verified
+  zero-invocation interval to more than six hours while normal static delivery
+  continues.
+
+Current stopping point: repository hardening and its CI are complete; the
+separate CORS production release is in progress; Cloudflare edge rules remain
+blocked only on a fresh general-API OAuth consent. Next action: complete the
+exact-SHA CORS release and smoke, then obtain that one consent, audit/append the
+two edge rules, release PR #32 and verify the final public topology.
+
+## 2026-09-26 — CORS release completed; OAuth clarification
+
+- Superseding the in-progress status above, production workflow `36272090842`
+  completed successfully for exact `leaddrive-v2` `main` SHA
+  `13277465d731cdfc106e7942c0a2b97ffa38d0b5`. Its atomic deployment and all
+  built-in scheduler, tenant, public ping, exact-revision, login and asset
+  checks passed.
+- Independent production probes confirmed the exact SHA and a working CORS
+  matrix: canonical marketing preflight received the reviewed allow headers;
+  an unlisted origin received no allow-origin header; and a synthetic
+  honeypot POST returned 201 with the canonical allow-origin header without
+  reaching persistence or notification code.
+- Clarification to the OAuth count above: including the current post-release
+  attempt, three compatible general-API consent windows have expired without a
+  callback. Every attempt ended without a Cloudflare mutation or stored
+  general-API credential. The read-only Observability credential remains valid
+  and isolated to its own OAuth resource.
+
+Current stopping point: application CORS is complete in production and static
+PR #32 remains green/unmerged. The sole immediate blocker is the account
+owner's one-click Allow on a fresh general Cloudflare API OAuth window; after
+that, the remaining edge audit/mutations and static release can proceed
+autonomously.
+
+## 2026-09-27 — resumed edge hardening and pre-change baseline
+
+- Resumed from the saved stopping point. Static hardening PR #32 remains open,
+  mergeable and clean at exact head
+  `b2d04108fe80944c5b6c8f4b4e48f01aa3cd8ac1`; its build check is green and
+  the production-only live verification is correctly skipped on the PR.
+- The complete 24-hour post-release interval is
+  `2026-09-26T15:05:39Z` through `2026-09-27T15:05:39Z`. At
+  `2026-09-27T07:29:34Z`, 7 hours 36 minutes remained, so the final exact-window
+  Observability query was not run early. Read-only public smoke still returned
+  apex `200` with `cf-cache-status: HIT` and application `/api/v1/ping` `200`.
+- Captured an explicit pre-change edge baseline: the apex returned `200/HIT`;
+  deep-path requests to both `www` and `new` returned `404/HIT` rather than a
+  canonical redirect; and an `axios/1.7.9` request to apex `/` returned
+  `200/HIT` without mitigation. These three probes will be repeated after the
+  rules are installed.
+- A fresh general Cloudflare API OAuth listener is active. The application
+  could not navigate the local in-app browser automatically, so the owner was
+  given a fresh consent link and asked to confirm the prompt. No callback URL,
+  authorization code, state, token or other secret is recorded here.
+- Revalidated the current official Cloudflare contract before mutation: alias
+  redirects belong in the zone-level `http_request_dynamic_redirect` entry
+  point, and the narrow bot signature belongs in
+  `http_request_firewall_custom` with `managed_challenge`. The existing
+  rulesets must be read first and new rules appended rather than replacing the
+  entry-point ruleset.
+
+Current stopping point: all repository and application changes are complete;
+the pre-change edge baseline is recorded; general Cloudflare API consent is
+awaiting the owner's browser confirmation. Next action: on callback, read the
+zone and existing entry-point rules, append only the exact redirect and axios
+challenge rules, verify their public behavior and zero Worker invocation, then
+merge/release PR #32.
+
+## 2026-09-27 — Cloudflare edge rules installed and verified
+
+- Corrected the OAuth transport assumption explicitly: Chrome runs on the
+  owner's Mac while Codex and its loopback callback listener run on Contabo.
+  Cloudflare's registered PKCE redirect therefore reached the Mac's
+  `127.0.0.1` and correctly showed connection refused. A fresh owner-approved
+  callback was relayed once to the matching loopback listener on Contabo. No
+  callback URL, authorization code, token or other secret is retained here.
+- General Cloudflare API OAuth now works for the account containing the active
+  `leaddrivecrm.org` zone (`Pro Website`). The credential is held only in the
+  host credential store with mode 0600; the separate Observability credential
+  was preserved.
+- Read the zone rulesets before mutation. Neither
+  `http_request_dynamic_redirect` nor `http_request_firewall_custom` had an
+  entry-point ruleset, so there was no existing customer rule to overwrite.
+  Both proposed payloads then passed the Cloudflare API's non-persisting
+  `dry_run=true` validation.
+- Created zone ruleset `fffdb740b4b2450abf764f4c07c13f50` with rule ref
+  `leaddrive_aliases_to_apex`. It returns 301 for exactly `www.leaddrivecrm.org`
+  and `new.leaddrivecrm.org`, builds the target from the apex plus the original
+  URI path, and preserves the query string.
+- Created zone ruleset `2769fdecf4414f1bb43617f019d8a8c8` with rule ref
+  `leaddrive_challenge_axios_root`. It uses `managed_challenge` only when the
+  host is one of the three marketing hosts, the method is GET, the path is
+  exactly `/`, and the lower-cased user agent begins with `axios/`.
+- Live verification passed: both aliases redirect a deep path and multi-value
+  query to the exact apex URL; the apex remains `200` with
+  `cf-cache-status: HIT`; `axios/1.7.9` on apex `/` receives `403` with
+  `cf-mitigated: challenge`; the same user agent on a non-root marketing path
+  reaches the normal static 404; and the application `/api/v1/ping` remains
+  `200` even with the axios user agent.
+- An authenticated Observability calculation covering
+  `2026-09-27T07:55:00Z` through `2026-09-27T08:05:13Z`, including the rule
+  creation and live probes, returned exactly zero `cf-worker-event` rows for
+  service `leaddrive-site`. The redirects, challenge, normal cache hit and
+  static 404 therefore did not invoke the Worker.
+- Audited native alerting without creating runtime infrastructure. The account
+  exposes `workers_observability_alert` notification delivery, but the public
+  Cloudflare API and current Workers Observability API expose query/telemetry
+  operations and notification delivery only, not creation of the underlying
+  threshold alert definition. Creating a delivery policy alone would never
+  evaluate the zero-invocation invariant. The supported operational control is
+  therefore the exact count query above plus the complete 24-hour query after
+  `2026-09-27T15:05:39Z`; no cron Worker, Tail Worker or incomplete notification
+  policy was added.
+
+Current stopping point: both production edge rules are live and verified, the
+post-change Worker event count is zero, and PR #32 is clean/mergeable with a
+green build at head `a33f44050b5cee5709b5359d7e3becd52894767f` before this
+journal checkpoint. Next action: push this checkpoint, wait for the refreshed
+PR gate, squash-merge PR #32, monitor the Cloudflare production build and run
+the exact build/header/redirect/demo/MTM smoke matrix.
