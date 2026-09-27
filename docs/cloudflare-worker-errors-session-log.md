@@ -396,3 +396,47 @@ and green; only the immutable interval ending `2026-09-27T15:05:39Z` is still
 open. Next action: the scheduled continuation will run at `15:10:00Z`, record
 the exact total invocation and error counts, repeat the read-only smoke matrix,
 checkpoint this journal, and close the active goal if every result is green.
+
+## 2026-09-27 — exact 24-hour verification completed
+
+- The one-shot continuation fired after the required boundary, but its
+  unattended CLI process inherited a read-only sandbox: authenticated
+  Observability query calls were cancelled by the client before execution and
+  the shell could not start. That attempt made no Cloudflare, production,
+  repository or journal change. This limitation was superseded by resuming the
+  same task in the normal desktop execution context.
+- At `2026-09-27T16:37:54Z`, the fixed interval had been closed for more than
+  an hour. Two authenticated Workers Observability calculations were then run
+  against dataset `cloudflare-workers` for exactly
+  `2026-09-26T15:05:39Z` through `2026-09-27T15:05:39Z`; neither endpoint was
+  widened, shifted or replaced with a relative window.
+- The first calculation filtered `$metadata.service = leaddrive-site` and
+  `$metadata.type = cf-worker-event`. Its aggregate count was exactly **0**.
+- The second used the same filters and added `$metadata.level = error`. Its
+  aggregate count was exactly **0**. Thus the complete fixed 24-hour window
+  contains zero Worker invocations and zero Worker error events.
+- The owner's screenshot saying that Workers exceeded the free-tier CPU limit
+  at least 1,000 times in the past 24 hours is a retrospective rolling-window
+  warning and contains no visible generation timestamp. It is consistent with
+  the already-documented pre-fix incident, but it is not evidence of a new
+  post-release failure. The fixed post-release Observability interval above is
+  the authoritative control and shows zero executions; buying Workers Paid is
+  not required to solve this incident.
+- Independent live smoke at `2026-09-27T16:40:03Z` through `16:40:44Z` passed:
+  `/build-stamp.json` returned 200 with exact production SHA
+  `a62e8131f6e1250540fcaa52d28a2cb5ea469649` on branch `main`; browser-like
+  apex `/` returned `200` with `cf-cache-status: HIT`; `axios/1.7.9` on apex
+  `/` returned `403` with `cf-mitigated: challenge`; both `www` and `new`
+  returned exact 301 redirects to the apex while preserving the complete deep
+  path and multi-value query; and `https://app.leaddrivecrm.org/api/v1/ping`
+  returned `200` with `{"ok":true}`.
+- The browser response still carries CSP, Permissions-Policy,
+  Referrer-Policy, one-year HSTS, nosniff and frame-deny headers. No Cloudflare
+  rule, Worker deployment, application runtime or production resource was
+  changed during the final verification. The transient timer self-collected
+  and no timer unit remains.
+
+Current result: the CPU-limit root cause is removed, the static marketing site
+completed a full exact 24-hour interval with zero Worker invocations and zero
+Worker errors, and the final production smoke is green. There are no remaining
+implementation, deployment or verification actions for this incident.
