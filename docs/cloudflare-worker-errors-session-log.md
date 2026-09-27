@@ -440,3 +440,21 @@ Current result: the CPU-limit root cause is removed, the static marketing site
 completed a full exact 24-hour interval with zero Worker invocations and zero
 Worker errors, and the final production smoke is green. There are no remaining
 implementation, deployment or verification actions for this incident.
+
+## 2026-09-27 — current rolling-window confirmation
+
+- After the owner asked whether the CPU-limit problem was really solved, a new
+  authenticated calculation was run for the then-current rolling 24 hours,
+  exactly `2026-09-26T16:44:05Z` through `2026-09-27T16:44:05Z`.
+- For `leaddrive-site`, `$metadata.type = cf-worker-event` again returned an
+  aggregate count of **0**; the same query with
+  `$metadata.level = error` also returned **0**.
+- Because the supplied Cloudflare warning is account-wide rather than labelled
+  with a Worker name, the same rolling interval was additionally checked for
+  error-level `cf-worker-event` rows across every service in the account. The
+  aggregate count was **0**, and grouping by `$metadata.service` returned no
+  error groups.
+- This fresh rolling-window evidence confirms that the screenshot represents a
+  previously generated/historical alert rather than an ongoing Worker CPU
+  failure. No Cloudflare setting, Worker, rule, production resource or
+  application code was changed during this follow-up.
