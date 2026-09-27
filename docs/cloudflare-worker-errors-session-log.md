@@ -280,3 +280,56 @@ awaiting the owner's browser confirmation. Next action: on callback, read the
 zone and existing entry-point rules, append only the exact redirect and axios
 challenge rules, verify their public behavior and zero Worker invocation, then
 merge/release PR #32.
+
+## 2026-09-27 — Cloudflare edge rules installed and verified
+
+- Corrected the OAuth transport assumption explicitly: Chrome runs on the
+  owner's Mac while Codex and its loopback callback listener run on Contabo.
+  Cloudflare's registered PKCE redirect therefore reached the Mac's
+  `127.0.0.1` and correctly showed connection refused. A fresh owner-approved
+  callback was relayed once to the matching loopback listener on Contabo. No
+  callback URL, authorization code, token or other secret is retained here.
+- General Cloudflare API OAuth now works for the account containing the active
+  `leaddrivecrm.org` zone (`Pro Website`). The credential is held only in the
+  host credential store with mode 0600; the separate Observability credential
+  was preserved.
+- Read the zone rulesets before mutation. Neither
+  `http_request_dynamic_redirect` nor `http_request_firewall_custom` had an
+  entry-point ruleset, so there was no existing customer rule to overwrite.
+  Both proposed payloads then passed the Cloudflare API's non-persisting
+  `dry_run=true` validation.
+- Created zone ruleset `fffdb740b4b2450abf764f4c07c13f50` with rule ref
+  `leaddrive_aliases_to_apex`. It returns 301 for exactly `www.leaddrivecrm.org`
+  and `new.leaddrivecrm.org`, builds the target from the apex plus the original
+  URI path, and preserves the query string.
+- Created zone ruleset `2769fdecf4414f1bb43617f019d8a8c8` with rule ref
+  `leaddrive_challenge_axios_root`. It uses `managed_challenge` only when the
+  host is one of the three marketing hosts, the method is GET, the path is
+  exactly `/`, and the lower-cased user agent begins with `axios/`.
+- Live verification passed: both aliases redirect a deep path and multi-value
+  query to the exact apex URL; the apex remains `200` with
+  `cf-cache-status: HIT`; `axios/1.7.9` on apex `/` receives `403` with
+  `cf-mitigated: challenge`; the same user agent on a non-root marketing path
+  reaches the normal static 404; and the application `/api/v1/ping` remains
+  `200` even with the axios user agent.
+- An authenticated Observability calculation covering
+  `2026-09-27T07:55:00Z` through `2026-09-27T08:05:13Z`, including the rule
+  creation and live probes, returned exactly zero `cf-worker-event` rows for
+  service `leaddrive-site`. The redirects, challenge, normal cache hit and
+  static 404 therefore did not invoke the Worker.
+- Audited native alerting without creating runtime infrastructure. The account
+  exposes `workers_observability_alert` notification delivery, but the public
+  Cloudflare API and current Workers Observability API expose query/telemetry
+  operations and notification delivery only, not creation of the underlying
+  threshold alert definition. Creating a delivery policy alone would never
+  evaluate the zero-invocation invariant. The supported operational control is
+  therefore the exact count query above plus the complete 24-hour query after
+  `2026-09-27T15:05:39Z`; no cron Worker, Tail Worker or incomplete notification
+  policy was added.
+
+Current stopping point: both production edge rules are live and verified, the
+post-change Worker event count is zero, and PR #32 is clean/mergeable with a
+green build at head `a33f44050b5cee5709b5359d7e3becd52894767f` before this
+journal checkpoint. Next action: push this checkpoint, wait for the refreshed
+PR gate, squash-merge PR #32, monitor the Cloudflare production build and run
+the exact build/header/redirect/demo/MTM smoke matrix.
