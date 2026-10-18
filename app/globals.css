@@ -379,3 +379,5 @@ dialog.modal{position:relative;margin:0;border:0;max-width:none;inset:auto}
 .dash-side{gap:1.2cqw;padding:2cqw 1.3cqw}
 .dash-side nav{gap:.28cqw}
 .dash-side nav span{padding:.58cqw .7cqw;font-size:.92cqw;gap:.65cqw}
+.modal-modules{border:0;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:8px 16px}.modal-modules legend{font-size:13px;font-weight:700;color:#3d443f;margin-bottom:8px;padding:0}.modal-modules label{flex-direction:row;align-items:center;gap:8px;font-weight:500;font-size:14px;cursor:pointer}.modal-modules input{width:auto;padding:0}
+@media (max-width:640px){.modal-modules{grid-template-columns:1fr}}

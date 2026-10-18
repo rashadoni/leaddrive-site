@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { ArrowUpRight, CheckCircle2, X } from 'lucide-react';
 import type { Lang } from '@/lib/product-map';
-import { DEMO_CHALLENGE_ENDPOINT, DEMO_ENDPOINT, DEMO_FORM } from '@/lib/demo-form-copy';
+import { DEMO_CHALLENGE_ENDPOINT, DEMO_ENDPOINT, DEMO_FORM, DEMO_MODULES, DEMO_MODULES_LABEL } from '@/lib/demo-form-copy';
 import { prepareDemoSolution, type DemoSolution } from '@/lib/demo-challenge';
 import { langPrefix } from '@/lib/site-paths';
 
@@ -60,7 +60,7 @@ export function DemoModal({ lang }: { lang: Lang }) {
     try {
       const challenge = await (solution.current ?? prepareDemoSolution(DEMO_CHALLENGE_ENDPOINT));
       solution.current = prepareDemoSolution(DEMO_CHALLENGE_ENDPOINT); // spent by this attempt; a retry needs a fresh one
-      const r = await fetch(DEMO_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name: v('name'), email: v('email'), phone: v('phone'), company: v('company'), message, website: v('website'), locale: lang, consent: true, challenge }) });
+      const r = await fetch(DEMO_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name: v('name'), email: v('email'), phone: v('phone'), company: v('company'), message, website: v('website'), locale: lang, consent: true, challenge, requestedModules: f.getAll('modules').map(String) }) });
       setState(r.ok ? 'ok' : 'error');
     } catch { setState('error'); }
   }
@@ -81,6 +81,7 @@ export function DemoModal({ lang }: { lang: Lang }) {
               <label className={errors.company ? 'is-err' : ''}><span>{c.company} *</span><input name="company" autoComplete="organization" />{errors.company && <em>{errors.company}</em>}</label>
               <label className={errors.email ? 'is-err' : ''}><span>{c.email} *</span><input name="email" type="email" autoComplete="email" inputMode="email" />{errors.email && <em>{errors.email}</em>}</label>
               <label className={errors.phone ? 'is-err' : ''}><span>{c.phone} *</span><input name="phone" type="tel" autoComplete="tel" inputMode="tel" placeholder="+994 …" />{errors.phone && <em>{errors.phone}</em>}</label>
+              <fieldset className="modal-full modal-modules"><legend>{DEMO_MODULES_LABEL[lang]}</legend>{DEMO_MODULES.map((m) => <label key={m.id}><input type="checkbox" name="modules" value={m.id} defaultChecked={m.ticked} /><span>{m.label[lang]}</span></label>)}</fieldset>
               <label className="modal-full"><span>{c.message}</span><textarea name="message" rows={3} placeholder={c.messagePh} /></label>
               <input name="website" tabIndex={-1} autoComplete="off" className="hp" aria-hidden="true" />
             </div>

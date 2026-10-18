@@ -6,6 +6,26 @@ import type { Lang } from './product-map';
 export const DEMO_ENDPOINT = 'https://app.leaddrivecrm.org/api/v1/public/demo-requests';
 // The bot check the form solves before sending (lib/demo-challenge.ts).
 export const DEMO_CHALLENGE_ENDPOINT = 'https://app.leaddrivecrm.org/api/v1/public/demo-requests/challenge';
+
+// The demo's modules — the ids the CRM keeps (leaddrive-v2
+// src/lib/demo-center/journey/modules.ts). The demo opens with the ones
+// ticked; three are ticked until the visitor says otherwise (owner, 18.10.2026).
+export const DEMO_MODULES: { id: string; ticked: boolean; label: Record<Lang, string> }[] = [
+  { id: 'omnichannel', ticked: true, label: { az: 'Omni-kanal və AI agent', ru: 'Омниканал и ИИ-агент', en: 'Omni-channel and AI agent' } },
+  { id: 'ai-calls', ticked: true, label: { az: 'AI zənglər', ru: 'ИИ-звонки', en: 'AI calls' } },
+  { id: 'deals', ticked: true, label: { az: 'Satış: sövdələşmə və təklif', ru: 'Продажи: сделки и КП', en: 'Sales: deals and quotes' } },
+  { id: 'service-desk', ticked: false, label: { az: 'Service Desk', ru: 'Service Desk', en: 'Service Desk' } },
+  { id: 'call-center', ticked: false, label: { az: 'Call Center', ru: 'Call Center', en: 'Call Center' } },
+  { id: 'route-field', ticked: false, label: { az: 'Marşrut & Sahə', ru: 'Маршрут и поле', en: 'Route & Field' } },
+  { id: 'personnel', ticked: false, label: { az: 'Kadr uçotu', ru: 'Учёт персонала', en: 'Attendance' } },
+  { id: 'contracts', ticked: false, label: { az: 'Müqavilələr', ru: 'Договоры', en: 'Contracts' } },
+  { id: 'marketing', ticked: false, label: { az: 'Marketinq kampaniyaları', ru: 'Маркетинговые кампании', en: 'Marketing campaigns' } },
+];
+export const DEMO_MODULES_LABEL: Record<Lang, string> = {
+  az: 'Hansı modullar maraqlıdır? Demo onlarla başlayacaq',
+  ru: 'Какие модули интересны? Демо начнётся с них',
+  en: 'Which modules interest you? The demo starts with them',
+};
 export const NOTIFY_EMAIL = 'info@fanumsec.com';
 
 export const DEMO_FORM: Record<Lang, {
