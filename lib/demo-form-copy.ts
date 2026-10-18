@@ -33,7 +33,7 @@ export const DEMO_FORM: Record<Lang, {
   submit: string; sending: string; or: string; whatsapp: string; consent: string; consentLabel: string; consentLink: string; consentRequired: string; okTitle: string; okText: string; errTitle: string; errText: string; close: string; required: string; badEmail: string;
 }> = {
   az: {
-    title: 'Demo sorğusu', sub: 'Formu doldurun, iş saatlarında bir saat ərzində sizinlə əlaqə saxlayıb demonu razılaşdıracağıq.',
+    title: 'Demo sorğusu', sub: 'Formu doldurun — e-poçtunuza təsdiq linki gələcək. Linkə keçəndən sonra şəxsi demo açılacaq, seçdiyiniz modullarla başlayacaq.',
     name: 'Ad, soyad', company: 'Şirkət', email: 'İş e-poçtu', phone: 'Telefon və ya WhatsApp', size: 'Komandanın ölçüsü', sizes: ['1–5 nəfər', '6–20 nəfər', '21–50 nəfər', '51+ nəfər'],
     interest: 'Sizi nə maraqlandırır', interests: ['Satış və WhatsApp', 'Dəstək və tiketlər', 'Müqavilələr və fakturalar', 'Sahə komandaları', 'AI agent', 'Bütün CRM'],
     message: 'Mesaj', messagePh: 'Prosesiniz, müraciətlərin haradan gəldiyi, indi nə istifadə edirsiniz…',
@@ -41,7 +41,7 @@ export const DEMO_FORM: Record<Lang, {
     okTitle: 'Sorğu qəbul edildi.', okText: 'E-poçtunuza təsdiq məktubu göndərdik. Məktubdakı linkə keçin — e-poçt təsdiqlənəcək və demo açılacaq. Məktub görünmürsə, Spam qovluğuna baxın.', errTitle: 'Göndərmək alınmadı.', errText: 'Bir dəqiqədən sonra yenidən cəhd edin və ya WhatsApp-da yazın.', close: 'Bağla', required: 'Bu sahə mütləqdir', badEmail: 'E-poçtu yoxlayın',
   },
   ru: {
-    title: 'Запрос демо', sub: 'Заполните форму, в рабочие часы свяжемся в течение часа и согласуем демо.',
+    title: 'Запрос демо', sub: 'Заполните форму — на почту придёт ссылка для подтверждения. После перехода по ней откроется персональное демо, начнётся с выбранных модулей.',
     name: 'Имя, фамилия', company: 'Компания', email: 'Рабочая почта', phone: 'Телефон или WhatsApp', size: 'Размер команды', sizes: ['1–5 человек', '6–20 человек', '21–50 человек', '51+ человек'],
     interest: 'Что интересует', interests: ['Продажи и WhatsApp', 'Поддержка и тикеты', 'Договоры и счета', 'Полевые команды', 'AI-агент', 'Вся CRM'],
     message: 'Сообщение', messagePh: 'Ваш процесс, откуда приходят обращения, чем пользуетесь сейчас…',
@@ -49,7 +49,7 @@ export const DEMO_FORM: Record<Lang, {
     okTitle: 'Запрос принят.', okText: 'Мы отправили письмо на вашу почту. Перейдите по ссылке в нём — почта подтвердится, и откроется демо. Если письма нет, посмотрите в папке «Спам».', errTitle: 'Не удалось отправить.', errText: 'Попробуйте через минуту или напишите в WhatsApp.', close: 'Закрыть', required: 'Обязательное поле', badEmail: 'Проверьте почту',
   },
   en: {
-    title: 'Request a demo', sub: 'Fill in the form; during business hours we reply within an hour and schedule the demo.',
+    title: 'Request a demo', sub: 'Fill in the form — a confirmation link comes to your email. Follow it and your personal demo opens, starting with the modules you chose.',
     name: 'Full name', company: 'Company', email: 'Work email', phone: 'Phone or WhatsApp', size: 'Team size', sizes: ['1–5 people', '6–20 people', '21–50 people', '51+ people'],
     interest: 'What are you interested in', interests: ['Sales and WhatsApp', 'Support and tickets', 'Contracts and invoices', 'Field teams', 'AI agent', 'The whole CRM'],
     message: 'Message', messagePh: 'Your process, where requests come from, what you use today…',
