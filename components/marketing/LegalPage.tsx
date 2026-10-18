@@ -31,7 +31,7 @@ export function LegalPage({ lang, page }: { lang: Lang; page: LegalKey }) {
         <div className="article-grid">
           <div className="article-body">
             {c.sections.map((s) => (
-              <section key={s.h}>
+              <section key={s.h} id={s.id}>
                 <h2>{s.h}</h2>
                 {s.p?.map((p) => <p key={p}>{p}</p>)}
                 {s.list && <ul>{s.list.map((li) => <li key={li}>{li}</li>)}</ul>}

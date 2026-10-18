@@ -2,7 +2,8 @@ import type { Lang } from './product-map';
 import { COMPANY } from './company';
 import { FIELD_APP_PRIVACY } from './legal-field-app';
 
-export type LegalSection = { h: string; p?: string[]; list?: string[] };
+/** `id` makes the section linkable (`#id`), e.g. the deletion link given to Google Play. */
+export type LegalSection = { id?: string; h: string; p?: string[]; list?: string[] };
 /** `updated` overrides COMPANY.updated for a page revised on its own date. */
 export type LegalCopy = { title: string; description: string; label: string; h1: string; intro: string; updated?: string; sections: LegalSection[] };
 export type LegalKey = 'privacy' | 'field-app-privacy' | 'terms-of-use' | 'cookies' | 'refund';
