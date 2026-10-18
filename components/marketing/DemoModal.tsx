@@ -3,7 +3,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { ArrowUpRight, CheckCircle2, X } from 'lucide-react';
 import type { Lang } from '@/lib/product-map';
-import { DEMO_ENDPOINT, DEMO_FORM } from '@/lib/demo-form-copy';
+import { DEMO_CHALLENGE_ENDPOINT, DEMO_ENDPOINT, DEMO_FORM } from '@/lib/demo-form-copy';
+import { prepareDemoSolution, type DemoSolution } from '@/lib/demo-challenge';
 import { langPrefix } from '@/lib/site-paths';
 
 const WA = 'https://wa.me/994512060838';
@@ -20,6 +21,8 @@ export function DemoModal({ lang }: { lang: Lang }) {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const dialog = useRef<HTMLDialogElement>(null);
   const first = useRef<HTMLInputElement>(null);
+  // The bot check, solved while the visitor types (lib/demo-challenge.ts).
+  const solution = useRef<Promise<DemoSolution | null> | null>(null);
 
   useEffect(() => {
     const onClick = (e: MouseEvent) => {
@@ -36,6 +39,7 @@ export function DemoModal({ lang }: { lang: Lang }) {
     document.addEventListener('keydown', onKey);
     document.body.style.overflow = 'hidden';
     const t = window.setTimeout(() => first.current?.focus(), 50);
+    solution.current = prepareDemoSolution(DEMO_CHALLENGE_ENDPOINT);
     return () => { document.removeEventListener('keydown', onKey); document.body.style.overflow = ''; window.clearTimeout(t); };
   }, [open]);
 
@@ -54,7 +58,9 @@ export function DemoModal({ lang }: { lang: Lang }) {
     setState('sending');
     const message = [v('message'), '', `— Dil / язык: ${lang}`, `— Səhifə: ${window.location.href}`, `— Razılıq / согласие: ${new Date().toISOString()}`].join('\n');
     try {
-      const r = await fetch(DEMO_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name: v('name'), email: v('email'), phone: v('phone'), company: v('company'), message, website: v('website'), locale: lang, consent: true }) });
+      const challenge = await (solution.current ?? prepareDemoSolution(DEMO_CHALLENGE_ENDPOINT));
+      solution.current = prepareDemoSolution(DEMO_CHALLENGE_ENDPOINT); // spent by this attempt; a retry needs a fresh one
+      const r = await fetch(DEMO_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name: v('name'), email: v('email'), phone: v('phone'), company: v('company'), message, website: v('website'), locale: lang, consent: true, challenge }) });
       setState(r.ok ? 'ok' : 'error');
     } catch { setState('error'); }
   }
