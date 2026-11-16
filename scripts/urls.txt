@@ -64,6 +64,9 @@ https://leaddrivecrm.org/en/privacy
 https://leaddrivecrm.org/privacy/field-app
 https://leaddrivecrm.org/ru/privacy/field-app
 https://leaddrivecrm.org/en/privacy/field-app
+https://leaddrivecrm.org/privacy/time-app
+https://leaddrivecrm.org/ru/privacy/time-app
+https://leaddrivecrm.org/en/privacy/time-app
 https://leaddrivecrm.org/terms-of-use
 https://leaddrivecrm.org/ru/terms-of-use
 https://leaddrivecrm.org/en/terms-of-use

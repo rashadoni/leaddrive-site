@@ -529,6 +529,30 @@
     <changefreq>yearly</changefreq><priority>0.3</priority>
   </url>
   <url>
+    <loc>https://leaddrivecrm.org/privacy/time-app</loc>
+    <xhtml:link rel="alternate" hreflang="az" href="https://leaddrivecrm.org/privacy/time-app"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://leaddrivecrm.org/ru/privacy/time-app"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://leaddrivecrm.org/en/privacy/time-app"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://leaddrivecrm.org/privacy/time-app"/>
+    <changefreq>yearly</changefreq><priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://leaddrivecrm.org/ru/privacy/time-app</loc>
+    <xhtml:link rel="alternate" hreflang="az" href="https://leaddrivecrm.org/privacy/time-app"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://leaddrivecrm.org/ru/privacy/time-app"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://leaddrivecrm.org/en/privacy/time-app"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://leaddrivecrm.org/privacy/time-app"/>
+    <changefreq>yearly</changefreq><priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://leaddrivecrm.org/en/privacy/time-app</loc>
+    <xhtml:link rel="alternate" hreflang="az" href="https://leaddrivecrm.org/privacy/time-app"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://leaddrivecrm.org/ru/privacy/time-app"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://leaddrivecrm.org/en/privacy/time-app"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://leaddrivecrm.org/privacy/time-app"/>
+    <changefreq>yearly</changefreq><priority>0.3</priority>
+  </url>
+  <url>
     <loc>https://leaddrivecrm.org/terms-of-use</loc>
     <xhtml:link rel="alternate" hreflang="az" href="https://leaddrivecrm.org/terms-of-use"/>
     <xhtml:link rel="alternate" hreflang="ru" href="https://leaddrivecrm.org/ru/terms-of-use"/>

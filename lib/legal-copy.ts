@@ -1,12 +1,13 @@
 import type { Lang } from './product-map';
 import { COMPANY } from './company';
 import { FIELD_APP_PRIVACY } from './legal-field-app';
+import { TIME_APP_PRIVACY } from './legal-time-app';
 
 /** `id` makes the section linkable (`#id`), e.g. the deletion link given to Google Play. */
 export type LegalSection = { id?: string; h: string; p?: string[]; list?: string[] };
 /** `updated` overrides COMPANY.updated for a page revised on its own date. */
 export type LegalCopy = { title: string; description: string; label: string; h1: string; intro: string; updated?: string; sections: LegalSection[] };
-export type LegalKey = 'privacy' | 'field-app-privacy' | 'terms-of-use' | 'cookies' | 'refund';
+export type LegalKey = 'privacy' | 'field-app-privacy' | 'time-app-privacy' | 'terms-of-use' | 'cookies' | 'refund';
 
 export const LEGAL_LABELS: Record<Lang, { legal: string; updated: string; home: string; contact: string; operator: string; contactLine: string }> = {
   az: { legal: 'Hüquqi məlumat', updated: 'Son yenilənmə', home: 'Ana səhifə', contact: 'Sual üçün əlaqə', operator: 'Operator', contactLine: 'Sual və müraciətlər üçün:' },
@@ -147,6 +148,7 @@ export const LEGAL: Record<LegalKey, Record<Lang, LegalCopy>> = {
     ] },
   },
   'field-app-privacy': FIELD_APP_PRIVACY,
+  'time-app-privacy': TIME_APP_PRIVACY,
   refund: {
     az: { title: 'Ödənişin geri qaytarılması siyasəti — LeadDrive CRM', description: 'LeadDrive CRM üçün ödənişlərin geri qaytarılması qaydası: sınaq dövrü, istifadə olunmamış abunə dövrü, tətbiq işləri.', label: 'Geri qaytarma siyasəti', h1: 'Ödənişin geri qaytarılması siyasəti', intro: 'Sayt ödəniş qəbul etmir. LeadDrive CRM-ə abunəlik və tətbiq xidmətləri müştəri ilə bağlanan müqavilə və hesab-faktura əsasında ödənilir. Aşağıdakı qaydalar müqavilədə başqa şərt nəzərdə tutulmadıqda tətbiq olunur.', sections: [
       { h: '1. Sınaq dövrü', p: ['Tətbiqdən əvvəl pilot şöbə üçün sınaq dövrü razılaşdırılır. Sınaq dövründə abunə haqqı tutulmur.'] },
@@ -184,8 +186,8 @@ export const LEGAL: Record<LegalKey, Record<Lang, LegalCopy>> = {
   },
 };
 
-export const LEGAL_PATH: Record<LegalKey, string> = { privacy: '/privacy', 'field-app-privacy': '/privacy/field-app', 'terms-of-use': '/terms-of-use', cookies: '/cookies', refund: '/refund' };
-export const LEGAL_KEYS: LegalKey[] = ['privacy', 'field-app-privacy', 'terms-of-use', 'cookies', 'refund'];
+export const LEGAL_PATH: Record<LegalKey, string> = { privacy: '/privacy', 'field-app-privacy': '/privacy/field-app', 'time-app-privacy': '/privacy/time-app', 'terms-of-use': '/terms-of-use', cookies: '/cookies', refund: '/refund' };
+export const LEGAL_KEYS: LegalKey[] = ['privacy', 'field-app-privacy', 'time-app-privacy', 'terms-of-use', 'cookies', 'refund'];
 
 // The CRM's own legal documents live on the app host, not here. They are public
 // and need no login, and Meta's App Review uses these exact destinations (see
