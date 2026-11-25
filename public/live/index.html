@@ -340,7 +340,9 @@ h1 { font-size: 104px; line-height: 1.02; } h2 { font-size: 62px; line-height: 1
 .ptab td { background: var(--surface2); padding: 17px 16px; font: 700 21px/1.2 var(--text); text-align: right; font-variant-numeric: tabular-nums; transition: background .4s, color .4s; }
 .ptab td:first-child { border-radius: 14px 0 0 14px; } .ptab td:last-child { border-radius: 0 14px 14px 0; }
 .ptab td.low { color: var(--ok); } .ptab td.high { color: var(--bad); }
-.ptab td.flash { background: #2a1a0e; }
+.ptab td.flash { background: #3a2412; }
+.plegend { position: absolute; left: 24px; right: 24px; bottom: 22px; display: flex; gap: 26px; font: 600 17px/1 var(--text); color: var(--muted); }
+.plegend span { display: inline-flex; align-items: center; gap: 9px; } .plegend i { width: 14px; height: 14px; border-radius: 4px; }
 /* auction */
 .auc { display: flex; align-items: center; gap: 20px; margin: 22px; padding: 22px 24px; border-radius: 18px; background: var(--surface2); }
 .auc .best { font: 800 64px/1 var(--display); color: var(--hot-ink); font-variant-numeric: tabular-nums; }
@@ -637,11 +639,12 @@ h1 { font-size: 104px; line-height: 1.02; } h2 { font-size: 62px; line-height: 1
 <section class="scene" data-name="qiymet" data-dur="10000" data-note="40 секунд. Цены конкурентов меняются — таблица сама пересчитывает, кто дешевле.&#10;«Каждую ночь собираем цены и ассортимент с сайтов конкурентов, утром — письмо с Excel». Работает в аптечной рознице; для другой отрасли — настройка.">
   <div class="side">
     <p class="eyebrow" data-a="up">12 · Qiymət monitorinqi</p>
-    <h2 style="--d:80">Rəqib harada <span class="acc">ucuzdur?</span></h2>
-    <p class="lead" data-a="up" style="--d:300">Hər gecə toplanır, səhər Excel ilə məktub gəlir.</p>
+    <h2 style="--d:80">Rəqib eyni məhsulu <span class="acc">neçəyə satır?</span></h2>
+    <p class="lead" data-a="up" style="--d:300">Hər gecə rəqib saytlarından qiymətlər toplanır və sizin məhsullarla tutuşdurulur. Səhər Excel ilə məktub gəlir.</p>
   </div>
   <div class="panel" data-a="tilt" style="--d:250; left:930px; top:180px; width:860px; height:610px; padding:10px 24px; box-sizing:border-box;">
     <table class="ptab" id="ptab"><thead><tr><th>Məhsul</th><th>Sizin sayt</th><th>Rəqib A</th><th>Rəqib B</th></tr></thead><tbody></tbody></table>
+    <div class="plegend"><span><i style="background:var(--ok)"></i>ən aşağı qiymət</span><span><i style="background:var(--bad)"></i>siz rəqiblərdən bahasınız</span><span><i style="background:#3a2412"></i>qiymət bu gecə dəyişib</span></div>
   </div>
 </section>
 
