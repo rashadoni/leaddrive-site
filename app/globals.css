@@ -409,6 +409,10 @@ dialog.modal{position:relative;margin:0;border:0;max-width:none;inset:auto}
 .op-line.is-ai .op-who{color:var(--orange)}
 .op-did{list-style:none;margin:0;padding:0 4px 2px;display:flex;flex-wrap:wrap;gap:5px}
 .op-did li{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:600;color:var(--forest);background:#d9ecdf99;border-radius:999px;padding:3px 9px}
+.op-mode{display:inline-flex;gap:2px;background:#f4f5f7;border-radius:999px;padding:2px;flex-shrink:0}
+.op-mode button{display:inline-flex;align-items:center;gap:5px;height:26px;padding:0 10px;border-radius:999px;font-size:12px;font-weight:600;color:#5b6470;background:transparent}
+.op-mode button[aria-pressed=true]{background:#fff;color:var(--ink);box-shadow:0 1px 3px #14181f1f}
+.op-did li.op-did-note{background:none;color:#7c8274;font-weight:600;letter-spacing:.06em;text-transform:uppercase;font-size:10px;margin-left:auto;padding:3px 2px}
 .op-orb-row{display:flex;align-items:center;gap:18px;padding:6px 4px 4px}
 .op-orb{position:relative;width:84px;height:84px;flex-shrink:0;display:grid;place-items:center;background:none;border-radius:50%}
 .op-orb-halo{position:absolute;inset:-24%;border-radius:50%;background:radial-gradient(circle,#ff8a5280 0%,#f6531633 40%,transparent 70%);filter:blur(14px);animation:op-halo 4.5s ease-in-out infinite;pointer-events:none}
