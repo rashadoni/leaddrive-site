@@ -1,0 +1,569 @@
+<!doctype html>
+<html lang="az" data-lang="az">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AI operator — LeadDrive CRM</title>
+<meta name="description" content="Instagram, WhatsApp, Facebook və telefon zənglərinə AI operator cavab verir, sifarişi və müraciəti CRM-ə yazır. Azərbaycan dilində, gecə də.">
+<link rel="canonical" href="https://leaddrivecrm.org/ai/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="website">
+<meta property="og:title" content="LeadDrive AI operator — müştəri yazır, cavab dərhal gəlir">
+<meta property="og:description" content="Instagram, WhatsApp, Facebook və telefon — hamısına bir AI operator cavab verir. Azərbaycan dilində.">
+<meta property="og:url" content="https://leaddrivecrm.org/ai/">
+<meta property="og:image" content="https://leaddrivecrm.org/og-az.png">
+<style>
+@font-face { font-family: 'Manrope'; font-style: normal; font-weight: 400; font-display: swap; src: url(/live/fonts/manrope-06863ab0cd.woff2) format('woff2'); unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+@font-face { font-family: 'Manrope'; font-style: normal; font-weight: 400; font-display: swap; src: url(/live/fonts/manrope-a71980257c.woff2) format('woff2'); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family: 'Manrope'; font-style: normal; font-weight: 400; font-display: swap; src: url(/live/fonts/manrope-f2edea8e97.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: 'Manrope'; font-style: normal; font-weight: 500; font-display: swap; src: url(/live/fonts/manrope-06863ab0cd.woff2) format('woff2'); unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+@font-face { font-family: 'Manrope'; font-style: normal; font-weight: 500; font-display: swap; src: url(/live/fonts/manrope-a71980257c.woff2) format('woff2'); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family: 'Manrope'; font-style: normal; font-weight: 500; font-display: swap; src: url(/live/fonts/manrope-f2edea8e97.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: 'Manrope'; font-style: normal; font-weight: 600; font-display: swap; src: url(/live/fonts/manrope-06863ab0cd.woff2) format('woff2'); unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+@font-face { font-family: 'Manrope'; font-style: normal; font-weight: 600; font-display: swap; src: url(/live/fonts/manrope-a71980257c.woff2) format('woff2'); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family: 'Manrope'; font-style: normal; font-weight: 600; font-display: swap; src: url(/live/fonts/manrope-f2edea8e97.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: 'Manrope'; font-style: normal; font-weight: 700; font-display: swap; src: url(/live/fonts/manrope-06863ab0cd.woff2) format('woff2'); unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+@font-face { font-family: 'Manrope'; font-style: normal; font-weight: 700; font-display: swap; src: url(/live/fonts/manrope-a71980257c.woff2) format('woff2'); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family: 'Manrope'; font-style: normal; font-weight: 700; font-display: swap; src: url(/live/fonts/manrope-f2edea8e97.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: 'Manrope'; font-style: normal; font-weight: 800; font-display: swap; src: url(/live/fonts/manrope-06863ab0cd.woff2) format('woff2'); unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+@font-face { font-family: 'Manrope'; font-style: normal; font-weight: 800; font-display: swap; src: url(/live/fonts/manrope-a71980257c.woff2) format('woff2'); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family: 'Manrope'; font-style: normal; font-weight: 800; font-display: swap; src: url(/live/fonts/manrope-f2edea8e97.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: 'Unbounded'; font-style: normal; font-weight: 500; font-display: swap; src: url(/live/fonts/unbounded-38ab925f3f.woff2) format('woff2'); unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+@font-face { font-family: 'Unbounded'; font-style: normal; font-weight: 500; font-display: swap; src: url(/live/fonts/unbounded-dcd6859611.woff2) format('woff2'); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family: 'Unbounded'; font-style: normal; font-weight: 500; font-display: swap; src: url(/live/fonts/unbounded-10e743c668.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: 'Unbounded'; font-style: normal; font-weight: 700; font-display: swap; src: url(/live/fonts/unbounded-38ab925f3f.woff2) format('woff2'); unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+@font-face { font-family: 'Unbounded'; font-style: normal; font-weight: 700; font-display: swap; src: url(/live/fonts/unbounded-dcd6859611.woff2) format('woff2'); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family: 'Unbounded'; font-style: normal; font-weight: 700; font-display: swap; src: url(/live/fonts/unbounded-10e743c668.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: 'Unbounded'; font-style: normal; font-weight: 800; font-display: swap; src: url(/live/fonts/unbounded-38ab925f3f.woff2) format('woff2'); unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+@font-face { font-family: 'Unbounded'; font-style: normal; font-weight: 800; font-display: swap; src: url(/live/fonts/unbounded-dcd6859611.woff2) format('woff2'); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family: 'Unbounded'; font-style: normal; font-weight: 800; font-display: swap; src: url(/live/fonts/unbounded-10e743c668.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+
+/* Layout: sticky header; hero = one promise left, a channel switcher right (tabs ordered by real inbound volume on prod); then even grids of 3 or 4 tiles, one dark proof band, one closing CTA band. Brand tokens are the live leaddrivecrm.org ones. */
+:root{
+  --bg:#fffdf9; --surface:#ffffff; --sunk:#f4f1eb; --ink:#28352f; --muted:#646a65; --line:#e3e0d8;
+  --accent:#e65426; --accent-dark:#bd3d16; --on-accent:#ffffff;
+  --forest:#243d36; --on-forest:#f3efe6; --forest-muted:#b9c6bd; --forest-line:#3a564d; --bubble:#2f4c43; --bubble-ai:#f3efe6; --on-bubble-ai:#243d36;
+  --peach:#ffe8d5; --mint:#d7e3d4; --ok:#1d7a4a;
+  --note:#fff3a8; --note-ink:#4a3d00; --note-edge:#e0c84a;
+  --display:"Unbounded","Manrope",Arial,sans-serif;
+  --body:"Manrope",Arial,sans-serif;
+  --r:18px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#121815; --surface:#19211d; --sunk:#1f2823; --ink:#ecefe8; --muted:#a2aaa3; --line:#2c3731;
+  --accent:#ff6a3d; --accent-dark:#ff8a64; --on-accent:#1a0d07;
+  --forest:#0c1411; --on-forest:#f0ede5; --forest-muted:#9fb0a6; --forest-line:#2a3b34; --bubble:#1d2c27; --bubble-ai:#e9e4d8; --on-bubble-ai:#14201c;
+  --peach:#3a2a20; --mint:#22302a; --ok:#5fc48c;
+  --note:#3b3413; --note-ink:#f4e7a6; --note-edge:#7d6c1f; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#121815; --surface:#19211d; --sunk:#1f2823; --ink:#ecefe8; --muted:#a2aaa3; --line:#2c3731;
+  --accent:#ff6a3d; --accent-dark:#ff8a64; --on-accent:#1a0d07;
+  --forest:#0c1411; --on-forest:#f0ede5; --forest-muted:#9fb0a6; --forest-line:#2a3b34; --bubble:#1d2c27; --bubble-ai:#e9e4d8; --on-bubble-ai:#14201c;
+  --peach:#3a2a20; --mint:#22302a; --ok:#5fc48c;
+  --note:#3b3413; --note-ink:#f4e7a6; --note-edge:#7d6c1f; color-scheme:dark}
+
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+h1,h2,h3,p{margin:0}
+h1,h2{font-family:var(--display);font-weight:600;letter-spacing:-.03em;text-wrap:balance}
+h3{font-size:18px;font-weight:700;letter-spacing:-.01em}
+a{color:inherit}
+button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
+a:focus-visible,button:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:6px}
+
+:root[data-lang="az"] .ru{display:none}
+:root[data-lang="ru"] .az{display:none}
+
+.wrap{max-width:1200px;margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+section{padding-block:72px}
+.eyebrow{font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+.lead{color:var(--muted);font-size:18px;max-width:58ch}
+.h2{font-size:clamp(26px,3.4vw,40px);line-height:1.15;max-width:24ch}
+.sec-head{display:grid;gap:14px;margin-bottom:36px}
+
+.btn{display:inline-flex;align-items:center;gap:10px;height:52px;padding-inline:24px;border-radius:999px;font-weight:700;text-decoration:none;font-size:16px;white-space:nowrap}
+.btn-main{background:var(--accent);color:var(--on-accent)}
+.btn-main:hover{background:var(--accent-dark)}
+.btn-line{border:1.5px solid var(--line);background:var(--surface)}
+.btn-line:hover{border-color:var(--ink)}
+.btn svg{width:18px;height:18px}
+
+
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--bg)}
+.header{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:color-mix(in srgb,var(--bg) 94%,transparent);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.header .wrap{display:flex;align-items:center;gap:20px;height:72px}
+.brand{display:flex;align-items:center;gap:8px;font-weight:800;font-size:21px;letter-spacing:-.04em;text-decoration:none;white-space:nowrap}
+.brand i{width:9px;height:9px;border-radius:50%;background:var(--accent)}
+.brand small{font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.04em;align-self:flex-end;padding-bottom:3px}
+.nav{display:flex;gap:24px;font-size:14px;font-weight:600;margin-left:auto}
+.nav a{text-decoration:none;color:var(--muted)}
+.nav a:hover{color:var(--ink)}
+.tools{display:flex;align-items:center;gap:10px}
+.seg{display:flex;border:1px solid var(--line);border-radius:999px;padding:3px;background:var(--surface)}
+.seg button{height:30px;padding-inline:11px;border-radius:999px;font-size:12.5px;font-weight:800;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.header .btn{height:42px;padding-inline:18px;font-size:14px}
+
+.hero{padding-block:56px 40px}
+.hero-grid{display:grid;grid-template-columns:1fr 1.05fr;gap:48px;align-items:center}
+.hero-copy{display:grid;gap:22px;min-width:0}
+.hero h1{font-size:clamp(34px,5vw,60px);line-height:1.05}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero .ctas{display:flex;flex-wrap:wrap;gap:12px}
+.chan-list{display:flex;flex-wrap:wrap;gap:6px}
+.chan-list>span{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:5px 10px}
+.chan-list svg{width:16px;height:16px}
+
+/* demo card — the one bold moment */
+.demo{background:var(--forest);color:var(--on-forest);border-radius:26px;padding:20px;display:grid;grid-template-columns:minmax(0,1fr);gap:16px;min-width:0;box-shadow:0 30px 60px -30px rgba(20,40,34,.55)}
+.tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;background:rgba(255,255,255,.07);border-radius:14px;padding:4px}
+.tabs button{padding:8px 6px 7px;border-radius:10px;font-size:13px;font-weight:800;color:var(--forest-muted);display:grid;justify-items:center;gap:3px;line-height:1.2}
+.tabs button svg{width:18px;height:18px}
+.tabs button small{font-size:10.5px;font-weight:700;opacity:.85;font-variant-numeric:tabular-nums}
+.tabs button[aria-selected="true"]{background:var(--on-forest);color:var(--forest)}
+.demo-head{display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:12.5px;color:var(--forest-muted)}
+.demo-head b{color:var(--on-forest);font-size:14px}
+.sample{font-size:10.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;border:1px dashed var(--forest-line);border-radius:999px;padding:3px 8px;white-space:nowrap}
+.chat{display:grid;gap:8px;min-height:250px;align-content:start}
+.msg{max-width:84%;padding:9px 13px;border-radius:16px;font-size:14.5px;line-height:1.45;background:var(--bubble);justify-self:start;border-bottom-left-radius:5px}
+.msg.ai{justify-self:end;background:var(--bubble-ai);color:var(--on-bubble-ai);border-bottom-left-radius:16px;border-bottom-right-radius:5px}
+.msg .tr{display:block;font-size:12px;opacity:.72;margin-top:3px}
+:root[data-lang="ru"] .msg .tr{display:none}
+.msg .meta{display:block;font-size:10.5px;font-weight:700;opacity:.6;margin-top:4px;text-align:right}
+.msg.in{animation:pop .35s ease both}
+@keyframes pop{from{opacity:.0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.did{display:flex;flex-wrap:wrap;gap:6px}
+.did span{font-size:12px;font-weight:700;border:1px solid var(--forest-line);border-radius:999px;padding:4px 10px}
+.demo-foot{font-size:12px;color:var(--forest-muted)}
+
+.call-top{display:flex;align-items:center;gap:14px}
+.play{width:54px;height:54px;border-radius:50%;background:var(--accent);color:var(--on-accent);display:grid;place-items:center;flex-shrink:0}
+.play svg{width:22px;height:22px}
+.wave{flex:1;display:flex;align-items:center;gap:2px;height:54px;min-width:0;cursor:pointer}
+.wave i{flex:1;min-width:0;border-radius:2px;background:var(--forest-line);transition:background .15s}
+.wave i.ai{background:#4f6f64}
+.wave i.done{background:var(--accent)}
+.wave i.ai.done{background:#ff8a5c}
+.time{font-variant-numeric:tabular-nums;font-size:13px;color:var(--forest-muted);min-width:76px;text-align:right}
+.lines{display:grid;gap:6px}
+.line{display:grid;grid-template-columns:52px 1fr;gap:10px;padding:8px 10px;border-radius:12px;font-size:14px;line-height:1.45;text-align:left;width:100%;transition:background .2s,opacity .2s;opacity:.62}
+.line .who{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding-top:3px;color:var(--forest-muted)}
+.line.ai .who{color:#ff9a72}
+.line .tr{display:block;font-size:12px;color:var(--forest-muted);margin-top:2px}
+:root[data-lang="ru"] .line .tr{display:none}
+.line.now{opacity:1;background:rgba(255,255,255,.08)}
+.line.past{opacity:.9}
+
+
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:stretch}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:26px;display:grid;gap:12px;align-content:start;min-width:0}
+.tile p{color:var(--muted);font-size:15px}
+.ico{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:var(--peach);color:var(--accent)}
+.ico svg{width:22px;height:22px}
+.tile .chips{display:flex;flex-wrap:wrap;gap:6px}
+.tile .chips span{font-size:12px;font-weight:700;border-radius:999px;padding:4px 10px;background:var(--sunk)}
+.mini-play{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;font-weight:700;border:1.5px solid var(--line);border-radius:999px;padding:7px 14px;justify-self:start}
+.mini-play svg{width:14px;height:14px;color:var(--accent)}
+
+.morning{background:var(--sunk)}
+.checks{display:grid;gap:18px;align-content:start}
+.check{display:grid;grid-template-columns:28px 1fr;gap:12px}
+.check b{display:block;font-size:17px}
+.check p{color:var(--muted);font-size:15px}
+.check svg{width:22px;height:22px;color:var(--ok);margin-top:2px}
+.crm{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:22px;display:grid;gap:14px;min-width:0}
+.crm-head{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.crm-head b{font-size:15px}
+.tag{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);border:1px dashed var(--line);border-radius:999px;padding:3px 9px}
+.sum{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.sum div{border:1px solid var(--line);border-radius:14px;padding:12px;display:grid;gap:2px}
+.sum strong{font-family:var(--display);font-size:24px;font-weight:600;font-variant-numeric:tabular-nums}
+.sum span{font-size:12px;color:var(--muted);line-height:1.35}
+.feed{display:grid;gap:8px}
+.feed-row{display:grid;grid-template-columns:30px 1fr auto;gap:12px;align-items:center;font-size:14px;padding:10px 12px;background:var(--sunk);border-radius:12px}
+.feed-row svg{width:20px;height:20px}
+.feed-row small{display:block;color:var(--muted);font-size:12.5px}
+.feed-row .st{font-size:12px;font-weight:700;color:var(--accent);white-space:nowrap}
+.feed-row .st.ok{color:var(--ok)}
+
+.proof{background:var(--forest);color:var(--on-forest)}
+.proof .eyebrow{color:#ff9a72}
+.proof .lead{color:var(--forest-muted)}
+.stat{border:1px solid var(--forest-line);border-radius:var(--r);padding:26px;display:grid;gap:6px;align-content:start}
+.stat strong{font-family:var(--display);font-size:clamp(30px,3.6vw,44px);font-weight:600;line-height:1.05;font-variant-numeric:tabular-nums}
+.stat>span{color:var(--forest-muted);font-size:15px}
+
+.price strong{font-family:var(--display);font-size:30px;font-weight:600;line-height:1.1;font-variant-numeric:tabular-nums}
+.price strong small{font-family:var(--body);font-size:14px;font-weight:700;color:var(--muted)}
+.price ul{margin:0;padding:0;list-style:none;display:grid;gap:6px;font-size:14.5px;color:var(--muted)}
+.price li{display:flex;justify-content:space-between;gap:10px;border-bottom:1px solid var(--line);padding-bottom:6px}
+.price li b{color:var(--ink);font-variant-numeric:tabular-nums;white-space:nowrap}
+.trial{margin-top:18px;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center;background:var(--peach);border-radius:var(--r);padding:26px 28px}
+.trial h3{font-size:22px}
+.trial p{color:var(--ink);opacity:.8;margin-top:6px}
+
+.closing{padding-block:0 72px}
+.close-band{background:var(--accent);color:var(--on-accent);border-radius:28px;padding:48px;display:grid;grid-template-columns:1fr auto;gap:28px;align-items:center}
+.close-band h2{font-size:clamp(24px,3vw,36px);line-height:1.15}
+.close-band p{opacity:.9;margin-top:10px;max-width:52ch}
+.close-band .btn{background:var(--on-accent);color:var(--accent)}
+.close-band .num{font-variant-numeric:tabular-nums;font-weight:800;user-select:all}
+footer{border-top:1px solid var(--line);padding-block:26px;font-size:13px;color:var(--muted)}
+footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+@media (max-width:980px){
+  .hero-grid,.grid2{grid-template-columns:1fr}
+  .grid4{grid-template-columns:1fr 1fr}
+    .nav{display:none}
+  .tools{margin-left:auto}
+}
+@media (max-width:680px){
+  section{padding-block:52px}
+  .grid3,.grid4{grid-template-columns:1fr}
+    .sum{grid-template-columns:1fr 1fr}
+  .trial,.close-band{grid-template-columns:1fr;padding:28px}
+  .header .btn{display:none}
+  .brand small{display:none}
+  .line{grid-template-columns:1fr;gap:2px}
+  .wave{gap:1px}
+  .time{min-width:0;font-size:12px}
+  .demo{padding:14px}
+  .seg button{padding-inline:8px}
+  .tabs button{font-size:11.5px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-ig" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-wa" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.4 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.5-3.9-4.7-4.1-.1-.2-1.1-1.5-1.1-2.8 0-1.3.7-2 1-2.3.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6-.4.4c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1.1c.2-.3.4-.2.7-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.3Z"/></symbol>
+  <symbol id="i-ph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2Z"/></symbol>
+  <symbol id="i-fb" viewBox="0 0 24 24" fill="currentColor"><path d="M14 8V6.5c0-.8.2-1.3 1.4-1.3H17V2.2c-.3 0-1.3-.2-2.5-.2C12 2 10.5 3.5 10.5 6.2V8H8v3.2h2.5V22H14V11.2h2.7l.4-3.2Z"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13a1 1 0 0 0 1.5.9l10.4-6.5a1 1 0 0 0 0-1.8L9.5 4.6A1 1 0 0 0 8 5.5Z"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></symbol>
+</svg>
+
+<header class="header">
+  <div class="wrap">
+    <a class="brand" href="/"><i></i>LeadDrive <small>CRM</small></a>
+    <nav class="nav" aria-label="Bölmələr">
+      <a href="#how"><span class="az">Kimlər üçün</span><span class="ru">Для кого</span></a>
+      <a href="#price"><span class="az">Qiymət</span><span class="ru">Цена</span></a>
+      <a href="#faq"><span class="az">Suallar</span><span class="ru">Вопросы</span></a>
+    </nav>
+    <div class="tools">
+      <div class="seg" role="group" aria-label="Dil / язык">
+        <button type="button" data-set-lang="az" aria-pressed="true">AZ</button>
+        <button type="button" data-set-lang="ru" aria-pressed="false">RU</button>
+      </div>
+      <a class="btn btn-main" href="https://wa.me/994512060838" target="_blank" rel="noopener"><span class="az">Pulsuz sınaq</span><span class="ru">Бесплатный тест</span></a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <div class="eyebrow"><span class="az">AI operator · Azərbaycan dilində</span><span class="ru">ИИ-оператор · на азербайджанском</span></div>
+          <h1><span class="az">Müştəri yazır və ya zəng edir. <em>Cavab dərhal gəlir.</em></span><span class="ru">Клиент пишет или звонит. <em>Ответ приходит сразу.</em></span></h1>
+          <p class="lead"><span class="az">Instagram, WhatsApp, Facebook və telefon — hamısına bir AI operator cavab verir, sifarişi və müraciəti CRM-ə yazır. Gecə də, bayramda da.</span><span class="ru">Instagram, WhatsApp, Facebook и телефон — на всё отвечает один ИИ-оператор и записывает заказ и обращение в CRM. Ночью и в праздники тоже.</span></p>
+          <div class="ctas">
+            <a class="btn btn-main" href="https://wa.me/994512060838" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-wa"/></svg><span class="az">Pulsuz sınaq istəyirəm</span><span class="ru">Хочу бесплатный тест</span></a>
+            <a class="btn btn-line" href="#demo"><span class="az">Nümunəyə baxın</span><span class="ru">Посмотреть пример</span></a>
+          </div>
+          <div class="chan-list" aria-label="Kanallar">
+            <span><svg><use href="#i-ig"/></svg>Instagram</span>
+            <span><svg><use href="#i-wa"/></svg>WhatsApp</span>
+            <span><svg><use href="#i-fb"/></svg>Facebook</span>
+            <span><svg><use href="#i-ph"/></svg><span class="az">Telefon</span><span class="ru">Телефон</span></span>
+          </div>
+        </div>
+
+        <div class="demo" id="demo">
+          <div class="tabs" role="tablist" aria-label="Kanal">
+            <button type="button" role="tab" data-tab="ig" aria-selected="true"><svg><use href="#i-ig"/></svg>Instagram</button>
+            <button type="button" role="tab" data-tab="wa" aria-selected="false"><svg><use href="#i-wa"/></svg>WhatsApp</button>
+            <button type="button" role="tab" data-tab="ph" aria-selected="false"><svg><use href="#i-ph"/></svg><span class="az">Zəng</span><span class="ru">Звонок</span></button>
+          </div>
+          <div class="demo-head"><b id="demo-title"></b><span class="sample" id="demo-sample"></span></div>
+          <div id="chat-pane"><div class="chat" id="chat"></div></div>
+          <div id="call-pane" hidden>
+            <div class="call-top">
+              <button class="play" type="button" id="play" aria-label="Oxut / играть">
+                <svg id="ico-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.5.9l10.4-6.5a1 1 0 0 0 0-1.8L9.5 4.6A1 1 0 0 0 8 5.5Z"/></svg>
+                <svg id="ico-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" hidden><rect x="6" y="5" width="4.5" height="14" rx="1.2"/><rect x="13.5" y="5" width="4.5" height="14" rx="1.2"/></svg>
+              </button>
+              <div class="wave" id="wave" aria-hidden="true"></div>
+              <div class="time" id="time">0:00</div>
+            </div>
+            <div class="lines" id="lines" style="margin-top:12px"></div>
+          </div>
+          <div class="did" id="did"></div>
+          <div class="demo-foot" id="demo-foot"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIRECTIONS -->
+  <section id="how" style="padding-top:40px">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow"><span class="az">Kimlər üçün</span><span class="ru">Для кого</span></div>
+        <h2 class="h2"><span class="az">Müraciəti çox, cavab verən az olan biznes üçün</span><span class="ru">Для бизнеса, где обращений много, а отвечать некому</span></h2>
+      </div>
+      <div class="grid3">
+        <div class="tile">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="14" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M12 11v6M9 14h6"/></svg></div>
+          <h3><span class="az">Dərman və aptek</span><span class="ru">Аптеки и фарма</span></h3>
+          <p><span class="az">Alıcılar Instagram-da «harada satılır, neçəyədir» soruşur. Apteklər zəng edib sifariş verir — AI 1C kataloqundan götürür.</span><span class="ru">Покупатели спрашивают в Instagram «где продаётся, сколько стоит». Аптеки звонят и заказывают — ИИ берёт заказ из каталога 1С.</span></p>
+          <div class="chips"><span>Instagram</span><span class="az">Zəng</span><span class="ru">Звонок</span><span>1C</span></div>
+        </div>
+        <div class="tile">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="12" width="9" height="5" rx="1"/><rect x="13" y="12" width="9" height="5" rx="1"/><rect x="7" y="6" width="10" height="5" rx="1"/><path d="M2 21h20"/></svg></div>
+          <h3><span class="az">Tikinti materialları</span><span class="ru">Стройматериалы</span></h3>
+          <p><span class="az">Reelsin altında «qiymət?» yazırlar, WhatsApp-da həcm və çatdırılma soruşurlar. AI prays-listdən cavab verir, lidi menecerə ötürür.</span><span class="ru">Под рилсом пишут «цена?», в WhatsApp спрашивают объём и доставку. ИИ отвечает по прайсу и передаёт лид менеджеру.</span></p>
+          <div class="chips"><span>Instagram</span><span>WhatsApp</span><span class="az">Lid</span><span class="ru">Лид</span></div>
+        </div>
+        <div class="tile">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-4.5-7-11a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 6.5-7 11-7 11Z"/><path d="M9 11h6M12 8v6"/></svg></div>
+          <h3><span class="az">Klinika və xidmət</span><span class="ru">Клиники и услуги</span></h3>
+          <p><span class="az">«Sabah həkim işləyir? Neçəyədir?» — gün ərzində eyni suallar. AI cavab verir, müraciəti qeydiyyata ötürür.</span><span class="ru">«Завтра врач работает? Сколько стоит?» — одни и те же вопросы весь день. ИИ отвечает и передаёт обращение в регистратуру.</span></p>
+          <button type="button" class="mini-play" data-play-clinic><svg><use href="#i-play"/></svg><span class="az">Zəngə qulaq asın · 0:17</span><span class="ru">Послушать звонок · 0:17</span></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MORNING IN CRM -->
+  <section class="morning">
+    <div class="wrap">
+      <div class="grid2">
+        <div class="checks">
+          <div class="sec-head" style="margin-bottom:6px">
+            <div class="eyebrow"><span class="az">Bir yerdə</span><span class="ru">В одном месте</span></div>
+            <h2 class="h2"><span class="az">Bütün kanallar — bir siyahıda</span><span class="ru">Все каналы — в одном списке</span></h2>
+          </div>
+          <div class="check"><svg><use href="#i-check"/></svg><div><b><span class="az">Hər müraciət CRM-də</span><span class="ru">Каждое обращение в CRM</span></b><p><span class="az">Mesaj, şərh və zəng — müştərinin kartında, bir tarixçədə.</span><span class="ru">Сообщение, комментарий и звонок — в карточке клиента, одной историей.</span></p></div></div>
+          <div class="check"><svg><use href="#i-check"/></svg><div><b><span class="az">Şərh yazanı Direct-ə çağırır</span><span class="ru">Комментатора зовёт в Direct</span></b><p><span class="az">Postun altında açar söz yazılıb — AI şəxsi mesajla cavab verir.</span><span class="ru">Под постом написали ключевое слово — ИИ отвечает личным сообщением.</span></p></div></div>
+          <div class="check"><svg><use href="#i-check"/></svg><div><b><span class="az">Lazım olanda — insan</span><span class="ru">Когда нужно — человек</span></b><p><span class="az">Mürəkkəb sual, şikayət, «menecer istəyirəm» — AI söhbəti işçiyə verir.</span><span class="ru">Сложный вопрос, жалоба, «хочу менеджера» — ИИ передаёт разговор сотруднику.</span></p></div></div>
+          <div class="check"><svg><use href="#i-check"/></svg><div><b><span class="az">Qiymət yalnız sizin məlumatdan</span><span class="ru">Цена только из ваших данных</span></b><p><span class="az">Prays-listdə olmayan endirimi AI vəd etmir — menecerə ötürür.</span><span class="ru">Скидку, которой нет в прайсе, ИИ не обещает — передаёт менеджеру.</span></p></div></div>
+        </div>
+
+        <div class="crm" aria-label="CRM nümunəsi">
+          <div class="crm-head"><b><span class="az">Bu gecə · 22:00–09:00</span><span class="ru">Эта ночь · 22:00–09:00</span></b><span class="tag"><span class="az">Nümunə</span><span class="ru">Пример</span></span></div>
+          <div class="sum">
+            <div><strong>23</strong><span class="az">müraciət</span><span class="ru">обращения</span></div>
+            <div><strong>19</strong><span class="az">AI cavab verib</span><span class="ru">ответил ИИ</span></div>
+            <div><strong>3</strong><span class="az">yeni lid</span><span class="ru">новых лида</span></div>
+            <div><strong>1</strong><span class="az">menecer gözləyir</span><span class="ru">ждёт менеджера</span></div>
+          </div>
+          <div class="feed">
+            <div class="feed-row"><svg><use href="#i-ig"/></svg><span><span class="az">«Harada satılır?»</span><span class="ru">«Где продаётся?»</span><small>Instagram · 23:41</small></span><span class="st ok"><span class="az">cavablandı</span><span class="ru">отвечено</span></span></div>
+            <div class="feed-row"><svg><use href="#i-ig"/></svg><span><span class="az">Şərh «qiymət?» → Direct-də nömrə yazdı</span><span class="ru">Комментарий «цена?» → оставил номер в Direct</span><small><span class="az">Instagram şərhi</span><span class="ru">Комментарий Instagram</span> · 01:12</small></span><span class="st"><span class="az">yeni lid</span><span class="ru">новый лид</span></span></div>
+            <div class="feed-row"><svg><use href="#i-wa"/></svg><span><span class="az">2000 blok, Masazır</span><span class="ru">2000 блоков, Масазыр</span><small>WhatsApp · 07:05</small></span><span class="st"><span class="az">menecerə</span><span class="ru">менеджеру</span></span></div>
+            <div class="feed-row"><svg><use href="#i-ph"/></svg><span><span class="az">Aptek sifarişi · 2 məhsul</span><span class="ru">Заказ аптеки · 2 позиции</span><small><span class="az">Zəng</span><span class="ru">Звонок</span> · 08:20</small></span><span class="st"><span class="az">təsdiq gözləyir</span><span class="ru">ждёт подтверждения</span></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROOF -->
+  <section class="proof">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow"><span class="az">Artıq işləyir</span><span class="ru">Уже работает</span></div>
+        <h2 class="h2"><span class="az">Bakı şirkətləri müştəri müraciətlərini LeadDrive-da qəbul edir</span><span class="ru">Компании в Баку принимают обращения клиентов в LeadDrive</span></h2>
+      </div>
+      <div class="grid3">
+        <div class="stat"><strong>4</strong><span><span class="az">kanal bir siyahıda — Instagram, WhatsApp, Facebook və telefon</span><span class="ru">канала в одном списке — Instagram, WhatsApp, Facebook и телефон</span></span></div>
+        <div class="stat"><strong><span class="az">2 san</span><span class="ru">2 сек</span></strong><span><span class="az">— zəngdə AI bu qədər vaxtda cavab verir, pauza olmadan</span><span class="ru">— за столько ИИ отвечает на звонке, без неловких пауз</span></span></div>
+        <div class="stat"><strong>9 000+</strong><span><span class="az">məhsul — AI apteklərin telefon sifarişini bu kataloqdan götürür</span><span class="ru">товаров — из этого каталога ИИ принимает заказы аптек по телефону</span></span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICE -->
+  <section id="price">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow"><span class="az">Qiymət</span><span class="ru">Цена</span></div>
+        <h2 class="h2"><span class="az">Mesaj və dəqiqə üçün ödəyirsiniz — işlədiyiniz qədər</span><span class="ru">Вы платите за сообщения и минуты — сколько используете</span></h2>
+      </div>
+      <div class="grid3">
+        <div class="tile price">
+          <h3><span class="az">Mesajlar</span><span class="ru">Сообщения</span></h3>
+          <p><span class="az">Instagram, Facebook və WhatsApp-da AI-nin hər cavabı. WhatsApp-ın öz haqqı qiymətə daxildir.</span><span class="ru">Каждый ответ ИИ в Instagram, Facebook и WhatsApp. Плата самого WhatsApp уже внутри цены.</span></p>
+        </div>
+        <div class="tile price">
+          <h3><span class="az">Zəng dəqiqələri</span><span class="ru">Минуты звонков</span></h3>
+          <p><span class="az">AI-nin danışdığı dəqiqələr. Operatorun xətti qiymətə daxildir. Kataloqdan sifariş qəbulu ayrıca tarifdir.</span><span class="ru">Минуты, которые говорил ИИ. Линия оператора связи внутри цены. Приём заказов из каталога — отдельный тариф.</span></p>
+        </div>
+        <div class="tile price">
+          <h3><span class="az">Qoşulma</span><span class="ru">Подключение</span></h3>
+          <p><span class="az">CRM, nömrə və AI-nin şirkətinizə öyrədilməsi. Həcmə görə aylıq paket də var.</span><span class="ru">CRM, номер и обучение ИИ под вашу компанию. Есть и месячный пакет по объёму.</span></p>
+        </div>
+      </div>
+      <div class="trial">
+        <div>
+          <h3><span class="az">Qiyməti demoda hesablayırıq — sizin həcmə görə</span><span class="ru">Цену считаем на демо — под ваш объём</span></h3>
+          <p><span class="az">Pulsuz sınaq bir kanaldan başlayır: Instagram, WhatsApp və ya nömrəniz. Müddəti birlikdə razılaşırıq.</span><span class="ru">Бесплатный тест начинается с одного канала: Instagram, WhatsApp или ваш номер. Срок согласуем вместе.</span></p>
+        </div>
+        <a class="btn btn-line" href="https://wa.me/994512060838" target="_blank" rel="noopener"><span class="az">Qiyməti öyrənin</span><span class="ru">Узнать цену</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST -->
+  <section style="padding-top:0">
+    <div class="wrap">
+      <div class="grid4">
+        <div class="tile"><h3><span class="az">Hər söhbət saxlanılır</span><span class="ru">Каждый разговор сохранён</span></h3><p><span class="az">Yazışma və zəngin səsi müştərinin kartında.</span><span class="ru">Переписка и запись звонка — в карточке клиента.</span></p></div>
+        <div class="tile"><h3><span class="az">Məlumat şifrələnir</span><span class="ru">Данные зашифрованы</span></h3><p><span class="az">Hər şirkətin öz açarı var, başqası oxuya bilməz.</span><span class="ru">У каждой компании свой ключ, чужой не прочтёт.</span></p></div>
+        <div class="tile"><h3><span class="az">AI-ni istənilən an dayandırın</span><span class="ru">ИИ можно остановить в любой момент</span></h3><p><span class="az">Bir söhbətdə və ya bütün kanalda — bir düymə ilə.</span><span class="ru">В одном разговоре или во всём канале — одной кнопкой.</span></p></div>
+        <div class="tile"><h3><span class="az">Bakı şirkəti</span><span class="ru">Компания из Баку</span></h3><p>FANUM MMC · VÖEN 1704197981</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head"><h2 class="h2"><span class="az">Tez-tez soruşulur</span><span class="ru">Частые вопросы</span></h2></div>
+      <div class="grid3">
+        <div class="tile"><h3><span class="az">AI səhv cavab versə?</span><span class="ru">А если ИИ ответит неправильно?</span></h3><p><span class="az">Əmin olmadığı cavabı göndərmir — qaralama kimi işçiyə verir. İlk həftələr AI yalnız qaralama yaza bilər, siz təsdiqləyirsiniz.</span><span class="ru">Ответ, в котором не уверен, не отправляет — отдаёт сотруднику черновиком. Первые недели ИИ может только писать черновики, а вы их подтверждаете.</span></p></div>
+        <div class="tile"><h3><span class="az">AI şirkətimi haradan tanıyır?</span><span class="ru">Откуда ИИ знает мою компанию?</span></h3><p><span class="az">Prays-list, suallar və cavablar, kataloq — CRM-də yazırsınız. İşçilərin cavablarından da öyrənir.</span><span class="ru">Прайс, вопросы-ответы, каталог — вы пишете в CRM. Ещё он учится на ответах ваших сотрудников.</span></p></div>
+        <div class="tile"><h3><span class="az">Hansı dildə yazır?</span><span class="ru">На каком языке отвечает?</span></h3><p><span class="az">Yazışmada müştərinin dilində — azərbaycan, rus, ingilis. Telefonda — Azərbaycan dilində.</span><span class="ru">В переписке — на языке клиента: азербайджанский, русский, английский. По телефону — на азербайджанском.</span></p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLOSING -->
+  <section class="closing">
+    <div class="wrap">
+      <div class="close-band">
+        <div>
+          <h2><span class="az">Bir kanaldan başlayaq — ən çox yazılan yerdən</span><span class="ru">Начнём с одного канала — того, куда пишут больше всего</span></h2>
+          <p><span class="az">WhatsApp-da yazın: nə satırsınız və müştərilər harada yazır. Qalanını biz hazırlayırıq.</span><span class="ru">Напишите в WhatsApp: что продаёте и где вам пишут клиенты. Остальное подготовим мы.</span></p>
+          <p class="num">+994 51 206 08 38</p>
+        </div>
+        <a class="btn" href="https://wa.me/994512060838" target="_blank" rel="noopener"><span class="az">WhatsApp-da yazın</span><span class="ru">Написать в WhatsApp</span></a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>LeadDrive CRM · «FANUM» MMC · VÖEN 1704197981 · Bakı</span>
+    <span><a href="/" ><span class="az">Əsas səhifə</span><span class="ru">Главная</span></a> · <a class="az" href="/privacy">Məxfilik siyasəti</a><a class="ru" href="/ru/privacy">Политика конфиденциальности</a></span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var root=document.documentElement;
+  function store(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+  function read(k){try{return localStorage.getItem(k)}catch(e){return null}}
+  var WA={az:'Salam! AI operator üçün pulsuz sınaq istəyirəm.',ru:'Здравствуйте! Хочу бесплатный тест ИИ-оператора.'};
+  function setLang(l){root.dataset.lang=l;root.lang=l;document.querySelectorAll('a[href^="https://wa.me/"]').forEach(function(a){a.href='https://wa.me/994512060838?text='+encodeURIComponent(WA[l])});document.querySelectorAll('[data-set-lang]').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.setLang===l)});store('ld-lang',l)}
+  document.querySelectorAll('[data-set-lang]').forEach(function(b){b.addEventListener('click',function(){setLang(b.dataset.setLang)})});
+  var q=(location.search.match(/[?&]lang=(az|ru)/)||[])[1];
+  setLang(q||read('ld-lang')||'az');
+  function esc(t){var d=document.createElement('div');d.textContent=t;return d.innerHTML}
+  function both(az,ru){return '<span class="az">'+esc(az)+'</span><span class="ru">'+esc(ru)+'</span>'}
+
+  var CHATS={
+    ig:{title:['Dərman brendi · Direct','Фарм-бренд · Direct'],sample:['Nümunə yazışma','Пример переписки'],
+      msgs:[[0,'Salam, bu krem hansı apteklərdə var?','Здравствуйте, в каких аптеках есть этот крем?','23:41'],
+            [1,'Salam! Krem Bakıdakı tərəfdaş apteklərdə satılır. Hansı rayondasınız — ən yaxınını deyim.','Здравствуйте! Крем продаётся в аптеках-партнёрах по Баку. В каком вы районе — подскажу ближайшую.','23:41 · AI'],
+            [0,'Nəsimi','Насими','23:42'],
+            [1,'Nəsimidə iki aptekdə var. Ünvanları və iş saatlarını göndərirəm.','В Насими есть в двух аптеках. Отправляю адреса и часы работы.','23:42 · AI']],
+      did:[['Şirkətin biliyindən cavab','Ответ из знаний компании'],['Gecə də, saniyələrdə','Ночью, за секунды'],['Söhbət CRM-də','Разговор в CRM']],
+      foot:['Yazışma nümunədir: real müştəri deyil.','Переписка — пример, не настоящий клиент.']},
+    wa:{title:['Tikinti materialları · WhatsApp','Стройматериалы · WhatsApp'],sample:['Nümunə yazışma','Пример переписки'],
+      msgs:[[0,'Salam. 2000 ədəd blok lazımdır, çatdırılma var?','Здравствуйте. Нужно 2000 блоков, доставка есть?','07:05'],
+            [1,'Salam! Var. 2000 ədəd 20-lik blok — 1 200 AZN. Ünvanı yazın, çatdırılmanı hesablayım.','Здравствуйте! Есть. 2000 блоков 20 — 1 200 AZN. Напишите адрес, посчитаю доставку.','07:05 · AI'],
+            [0,'Masazır','Масазыр','07:06'],
+            [1,'Masazıra çatdırılma 40 AZN. Sifarişi qeyd edim? Menecer zəng edib təsdiqləyəcək.','Доставка в Масазыр — 40 AZN. Записать заказ? Менеджер позвонит и подтвердит.','07:06 · AI']],
+      did:[['Hesablayır','Считает'],['Sövdələşmə yaradır','Создаёт сделку'],['Menecerə tapşırıq','Задача менеджеру']],
+      foot:['Yazışma və qiymət nümunədir.','Переписка и цены — пример.']}
+  };
+  var CALLS={
+    aptek:{src:'/ai/audio/aptek.mp3',dur:36.1,title:['Aptek zəng edib sifariş verir','Аптека звонит и заказывает'],who:['Aptek','Аптека'],
+      env:[0,0,0,5,78,61,78,55,69,68,71,43,71,79,61,73,79,64,64,46,56,63,71,67,53,57,23,2,0,0,0,0,0,0,0,71,39,2,8,7,86,81,81,60,54,20,0,0,0,0,0,0,83,86,80,84,85,83,56,56,100,89,65,72,74,40,0,0,0,0,0,0,0,0,72,98,81,84,70,24,3,80,90,50,3,2,72,78,42,0,0,0,0,0,52,78,61,78,67,77,58,37,81,78,68,51,3,0],
+      lines:[{ai:1,a:1.3,b:8.8,az:'Dərman anbarı, satış şöbəsi, salam! Nömrəniz «Mərkəzi aptek» kimi qeydə alınıb. Düzdürsə, sifarişinizi deyin.',ru:'Аптечный склад, отдел продаж, здравствуйте! Ваш номер записан как «Mərkəzi aptek». Если верно — говорите заказ.'},
+        {ai:0,a:11.7,b:15.1,az:'Düzdür. Parasetamol beş yüz, on qutu.',ru:'Верно. Парацетамол 500, десять коробок.'},
+        {ai:1,a:17.4,b:21.8,az:'Parasetamol 500 hazırda tükənib. Başqa əvəzedicisini təklif edim?',ru:'Парацетамол 500 сейчас закончился. Предложить замену?'},
+        {ai:0,a:24.9,b:29.6,az:'Yox, əvəzedici lazım deyil. Gələndə xəbər verin, on qutu yazın.',ru:'Нет, замена не нужна. Сообщите, когда придёт, запишите десять коробок.'},
+        {ai:1,a:31.7,b:35.4,az:'Qeyd etdim, gələn kimi xəbər verəcəyik. Daha nə əlavə edək?',ru:'Записала, сообщим, как только поступит. Что ещё добавим?'}],
+      did:[['Apteki nömrədən tanıdı','Узнал аптеку по номеру'],['1C kataloqunda tapdı','Нашёл в каталоге 1С'],['Gözləmə siyahısına yazdı','Записал в лист ожидания']],
+      foot:['Test zəngi: danışan — LeadDrive AI operatoru, zəng edən — sınaq abonenti. Aptek adı şərtidir.','Тестовый звонок: говорит ИИ-оператор LeadDrive, звонящий — тестовый абонент. Название аптеки условное.']},
+    klinika:{src:'/ai/audio/klinika.mp3',dur:16.7,title:['Klinikaya sual','Вопрос в клинику'],who:['Müştəri','Клиент'],
+      env:[0,0,0,73,84,76,85,38,54,92,20,100,15,0,0,0,14,5,15,54,68,48,62,49,55,51,56,47,4,0,0,0,0,64,41,58,65,76,80,58,34,76,68,51,63,71,65,31,3,0],
+      lines:[{ai:1,a:1.1,b:4.1,az:'Klinikanın qeydiyyatı, salam! Buyurun.',ru:'Регистратура клиники, здравствуйте! Слушаю.'},
+        {ai:0,a:5.4,b:9.4,az:'Sabah stomatoloq işləyir? Müayinə neçəyədir?',ru:'Завтра стоматолог работает? Сколько стоит осмотр?'},
+        {ai:1,a:11.0,b:15.9,az:'Bəli, həkim stomatoloq sabah işləyir. Müayinənin qiyməti otuz manatdır.',ru:'Да, стоматолог завтра работает. Осмотр стоит тридцать манатов.'}],
+      did:[['Klinikanın məlumatından cavab','Ответ по сведениям клиники'],['2 saniyədən tez','Быстрее 2 секунд']],
+      foot:['Test zəngi: klinika şərtidir.','Тестовый звонок: клиника условная.']}
+  };
+
+  var chatPane=document.getElementById('chat-pane'), callPane=document.getElementById('call-pane'), chat=document.getElementById('chat');
+  var titleEl=document.getElementById('demo-title'), sampleEl=document.getElementById('demo-sample'), didEl=document.getElementById('did'), footEl=document.getElementById('demo-foot');
+  var audio=new Audio(); audio.preload='metadata'; var cur=null, timers=[];
+  var wave=document.getElementById('wave'), linesEl=document.getElementById('lines'), timeEl=document.getElementById('time'), icoPlay=document.getElementById('ico-play'), icoPause=document.getElementById('ico-pause');
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function fmt(s){s=Math.max(0,Math.floor(s));return Math.floor(s/60)+':'+String(s%60).padStart(2,'0')}
+  function setDid(list,foot){didEl.innerHTML=list.map(function(d){return '<span>'+both(d[0],d[1])+'</span>'}).join('');footEl.innerHTML=both(foot[0],foot[1])}
+  function selectTab(key){document.querySelectorAll('[data-tab]').forEach(function(b){b.setAttribute('aria-selected',b.dataset.tab===key)})}
+
+  function showChat(key){
+    timers.forEach(clearTimeout);timers=[];audio.pause();
+    var c=CHATS[key]; selectTab(key); chatPane.hidden=false; callPane.hidden=true;
+    titleEl.innerHTML=both(c.title[0],c.title[1]); sampleEl.innerHTML=both(c.sample[0],c.sample[1]); sampleEl.hidden=false;
+    chat.innerHTML=''; setDid(c.did,c.foot);
+    c.msgs.forEach(function(m,i){
+      var add=function(){var d=document.createElement('div');d.className='msg'+(m[0]?' ai':'')+(reduce?'':' in');d.innerHTML='<span class="az">'+esc(m[1])+'<span class="tr">'+esc(m[2])+'</span></span><span class="ru">'+esc(m[2])+'</span><span class="meta">'+esc(m[3])+'</span>';chat.appendChild(d)};
+      if(reduce||i===0){add()}else{timers.push(setTimeout(add,i*650))}
+    });
+  }
+  function isAi(c,t){return c.lines.some(function(l){return l.ai&&t>=l.a-.2&&t<=l.b+.2})}
+  function showCall(key,autoplay){
+    timers.forEach(clearTimeout);timers=[];
+    cur=CALLS[key]; selectTab('ph'); chatPane.hidden=true; callPane.hidden=false;
+    titleEl.innerHTML=both(cur.title[0],cur.title[1]); sampleEl.hidden=true;
+    audio.pause(); audio.src=cur.src; audio.currentTime=0;
+    var n=cur.env.length; wave.innerHTML=cur.env.map(function(v,i){var t=(i+.5)/n*cur.dur;return '<i class="'+(isAi(cur,t)?'ai':'')+'" style="height:'+Math.max(6,v)+'%"></i>'}).join('');
+    linesEl.innerHTML=cur.lines.map(function(l,i){return '<button type="button" class="line '+(l.ai?'ai':'')+'" data-i="'+i+'"><span class="who">'+(l.ai?both('AI','ИИ'):both(cur.who[0],cur.who[1]))+'</span><span><span class="az">'+esc(l.az)+'<span class="tr">'+esc(l.ru)+'</span></span><span class="ru">'+esc(l.ru)+'</span></span></button>'}).join('');
+    linesEl.querySelectorAll('.line').forEach(function(b){b.addEventListener('click',function(){audio.currentTime=cur.lines[+b.dataset.i].a;audio.play().catch(function(){})})});
+    setDid(cur.did,cur.foot); paint(0);
+    if(autoplay)audio.play().catch(function(){});
+  }
+  function paint(t){
+    if(!cur)return; var bars=wave.children,n=bars.length,k=Math.round(t/cur.dur*n);
+    for(var i=0;i<n;i++)bars[i].classList.toggle('done',i<k);
+    timeEl.textContent=fmt(t)+' / '+fmt(cur.dur);
+    linesEl.querySelectorAll('.line').forEach(function(el,i){var l=cur.lines[i],nx=cur.lines[i+1];el.classList.toggle('now',t>0&&t>=l.a-.15&&t<(nx?nx.a-.15:cur.dur+1));el.classList.toggle('past',t>l.b)});
+  }
+  audio.addEventListener('timeupdate',function(){paint(audio.currentTime)});
+  audio.addEventListener('play',function(){icoPlay.hidden=true;icoPause.hidden=false});
+  audio.addEventListener('pause',function(){icoPlay.hidden=false;icoPause.hidden=true});
+  audio.addEventListener('ended',function(){paint(cur.dur)});
+  document.getElementById('play').addEventListener('click',function(){if(audio.paused){audio.play().catch(function(){})}else{audio.pause()}});
+  wave.addEventListener('click',function(e){var r=wave.getBoundingClientRect();audio.currentTime=(e.clientX-r.left)/r.width*cur.dur;paint(audio.currentTime)});
+  document.querySelectorAll('[data-tab]').forEach(function(b){b.addEventListener('click',function(){var k=b.dataset.tab;if(k==='ph'){showCall('aptek')}else{showChat(k)}})});
+  document.querySelectorAll('[data-play-clinic]').forEach(function(b){b.addEventListener('click',function(){showCall('klinika',true);document.getElementById('demo').scrollIntoView({behavior:reduce?'auto':'smooth',block:'center'})})});
+  showChat('ig');
+})();
+</script>
+</body>
+</html>
