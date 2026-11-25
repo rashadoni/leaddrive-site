@@ -381,3 +381,5 @@ dialog.modal{position:relative;margin:0;border:0;max-width:none;inset:auto}
 .dash-side nav span{padding:.58cqw .7cqw;font-size:.92cqw;gap:.65cqw}
 .modal-modules{border:0;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:8px 16px}.modal-modules legend{font-size:13px;font-weight:700;color:#3d443f;margin-bottom:8px;padding:0}.modal-modules label{flex-direction:row;align-items:center;gap:8px;font-weight:500;font-size:14px;cursor:pointer}.modal-modules input{width:auto;padding:0}
 @media (max-width:640px){.modal-modules{grid-template-columns:1fr}}
+/* The header carries a seventh link (AI operator): below 1100px it needs a tighter gap to stay on one line. */
+@media (max-width:1100px){.desktop-nav{gap:14px}}
