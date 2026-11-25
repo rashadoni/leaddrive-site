@@ -1,26 +1,28 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { ArrowRight, Check, Pause, Phone, Play } from 'lucide-react';
+import { ArrowRight, Check, Pause, Play } from 'lucide-react';
 import type { Lang } from '@/lib/product-map';
 import { TypedText, useTypewriter } from './Typewriter';
 
 /*
  * The AI operator: one assistant answers Instagram, WhatsApp and phone calls and writes everything to the CRM.
- * The call comes first and opens by default: it is the one thing a visitor can hear, and the owner wanted the
- * play button to catch the eye (a breathing orb, as on syncallai.com). Chats follow in the order of the real share of
- * inbound requests across LeadDrive tenants (prod, 90 days to 2026-11-25): Instagram, then WhatsApp. TikTok is left out on purpose: replies there were not
- * reaching customers when this was written, so the page must not promise them.
- * The chats are samples and say so. The call is the dialogue of a real test-stand call (made-up pharmacy name),
- * voiced again at studio quality: the AI in the line's own voice (Sulafat, the line's speaking style), the
- * pharmacy in another female voice. The stand recording was 8 kHz phone audio with a male caller, and the
- * owner heard it as «our voice is not like that». Its words stay in Azerbaijani, translated for ru/en readers.
+ * The demo is a row of business directions, each with its own conversation. The directions are the ones that
+ * actually wrote to LeadDrive's own Instagram (Fanumsec inbox, November 2026): a flower shop that cannot keep
+ * up with order peaks, a car rental, a barbershop; the pharmacy is the live order line; the hotel was the
+ * owner's own ask. TikTok is left out on purpose: replies there were not reaching customers.
+ * The chats are samples and say so; prices in them are the business's, not LeadDrive's.
+ * The call opens first: it is the one thing a visitor can hear, behind a breathing orb (owner, after
+ * syncallai.com). It is the dialogue of a real test-stand call (made-up pharmacy name), voiced again at studio
+ * quality: the AI in the line's own voice (Sulafat), the pharmacy in another female voice. Its words stay in
+ * Azerbaijani, translated for ru/en readers.
  */
 
 type Msg = { ai?: boolean; text: string; at: string };
-type ChatTab = { kind: 'chat'; id: 'ig' | 'wa'; label: string; title: string; msgs: readonly Msg[]; did: readonly string[] };
+type Channel = 'call' | 'ig' | 'wa';
+type ChatTab = { kind: 'chat'; id: string; channel: Channel; label: string; title: string; msgs: readonly Msg[]; did: readonly string[] };
 type Line = { ai?: boolean; a: number; b: number; az: string; tr: string };
-type CallTab = { kind: 'call'; id: 'call'; label: string; title: string; who: string; lines: Line[]; did: readonly string[] };
+type CallTab = { kind: 'call'; id: string; channel: Channel; label: string; title: string; who: string; lines: Line[]; did: readonly string[] };
 
 const CALL_SRC = '/media/ai-calls/aptek-sulafat.mp3';
 const CALL_DUR = 28.9;
@@ -45,17 +47,27 @@ const COPY = {
     sub: 'Instagram, WhatsApp və telefon zəngləri — hamısına bir AI operator cavab verir, sifarişi və müraciəti CRM-ə yazır. Gecə də.',
     sample: 'nümunə', recording: 'nümunə', play: 'Zəngə qulaq asın', pause: 'Dayandır', listen: 'AI operator aptekdən sifariş qəbul edir', want: 'Biznesimə belə operator istəyirəm', ai: 'AI', review: 'Əmin olmadığı cavabı göndərmir — işçiyə qaralama kimi verir. Lazım olanda söhbəti menecerə ötürür.', cta: 'Demoda göstərək',
     tabs: [
-      { kind: 'chat', id: 'ig', label: 'Instagram', title: 'Dərman brendi · Direct', did: ['Şirkətin biliyindən cavab', 'Gecə, saniyələrdə', 'Söhbət CRM-də'], msgs: [
-        { text: 'Salam, bu krem hansı apteklərdə var?', at: '23:41' },
-        { ai: true, text: 'Salam! Krem Bakıdakı tərəfdaş apteklərdə satılır. Hansı rayondasınız — ən yaxınını deyim.', at: '23:41' },
-        { text: 'Nəsimi', at: '23:42' },
-        { ai: true, text: 'Nəsimidə iki aptekdə var. Ünvanları və iş saatlarını göndərirəm.', at: '23:42' }] },
-      { kind: 'chat', id: 'wa', label: 'WhatsApp', title: 'Tikinti materialları · WhatsApp', did: ['Hesablayır', 'Sövdələşmə yaradır', 'Menecerə tapşırıq'], msgs: [
-        { text: 'Salam. 2000 ədəd blok lazımdır, çatdırılma var?', at: '07:05' },
-        { ai: true, text: 'Salam! Var. 2000 ədəd 20-lik blok — 1 200 AZN. Ünvanı yazın, çatdırılmanı hesablayım.', at: '07:05' },
-        { text: 'Masazır', at: '07:06' },
-        { ai: true, text: 'Masazıra çatdırılma 40 AZN. Sifarişi qeyd edim? Menecer zəng edib təsdiqləyəcək.', at: '07:06' }] },
-      { kind: 'call', id: 'call', label: 'Zəng', title: 'Aptek zəng edib sifariş verir', who: 'Aptek', did: ['Apteki nömrədən tanıdı', '1C kataloqunda tapdı', 'Gözləmə siyahısına yazdı'] },
+      { kind: 'call', id: 'pharmacy', channel: 'call', label: 'Aptek', title: 'Aptek zəng edib sifariş verir', who: 'Aptek', did: ['Apteki nömrədən tanıdı', '1C kataloqunda tapdı', 'Gözləmə siyahısına yazdı'] },
+      { kind: 'chat', id: 'hotel', channel: 'wa', label: 'Otel', title: 'Otel · WhatsApp', did: ['Qiymət otelin məlumatından', 'Bron sorğusu CRM-də', 'Menecerə ötürdü'], msgs: [
+        { text: 'Salam, 12–14 dekabr üçün iki nəfərlik otaq var?', at: '22:14' },
+        { ai: true, text: 'Salam! Standart otaq gecəsi 90 AZN-dən, səhər yeməyi daxildir. Adınızı yazın — menecer boş otağı təsdiqləsin.', at: '22:14' },
+        { text: 'Elvin. Hava limanından transfer olar?', at: '22:15' },
+        { ai: true, text: 'Bəli, transfer 25 AZN. Sorğunuzu menecerə ötürdüm, sizə yazacaq.', at: '22:15' }] },
+      { kind: 'chat', id: 'car', channel: 'ig', label: 'Rent a car', title: 'Rent a car · Instagram', did: ['Boş maşını dedi', 'Bron sorğusu', 'Lid CRM-də'], msgs: [
+        { text: 'Salam, həftəsonu üçün Prado boşdur?', at: '08:30' },
+        { ai: true, text: 'Salam! Ağ Prado şənbə və bazar boşdur — gündəlik 120 AZN. Bron edək?', at: '08:30' },
+        { text: 'Bəli, hava limanında götürə bilərəm?', at: '08:31' },
+        { ai: true, text: 'Əlbəttə. Adınızı və reys nömrəsini yazın — sürücümüz sizi qarşılayacaq.', at: '08:31' }] },
+      { kind: 'chat', id: 'flowers', channel: 'ig', label: 'Gül mağazası', title: 'Gül mağazası · Instagram', did: ['Sifariş çoxluğunda da cavab', 'Sifariş CRM-də', 'Floristə tapşırıq'], msgs: [
+        { text: 'Salam, bu gün axşama 25 qızılgül çatdıra bilərsiniz?', at: '13:05' },
+        { ai: true, text: 'Salam! Bəli, 25 qırmızı qızılgül — 85 AZN, Bakı daxili çatdırılma 5 AZN. Ünvan və saatı yazın.', at: '13:05' },
+        { text: 'Nərimanov, saat 19:00', at: '13:06' },
+        { ai: true, text: 'Qeyd etdim: Nərimanov, 19:00. Floristimiz təsdiq üçün zəng edəcək.', at: '13:06' }] },
+      { kind: 'chat', id: 'barber', channel: 'wa', label: 'Bərbərxana', title: 'Bərbərxana · WhatsApp', did: ['Boş vaxtı dedi', 'Görüş təqvimdə', 'Xatırlatma'], msgs: [
+        { text: 'Salam, sabah saç kəsiminə yer var?', at: '21:40' },
+        { ai: true, text: 'Salam! Sabah 11:00 və 15:30 boşdur. Hansı saat uyğundur?', at: '21:40' },
+        { text: '11:00', at: '21:41' },
+        { ai: true, text: 'Yazdım: sabah 11:00, saç kəsimi. Bir gün əvvəl xatırladacağıq.', at: '21:41' }] },
     ],
   },
   ru: {
@@ -63,17 +75,27 @@ const COPY = {
     sub: 'Instagram, WhatsApp и телефонные звонки — на всё отвечает один ИИ-оператор и записывает заказ и обращение в CRM. Даже ночью.',
     sample: 'пример', recording: 'пример', play: 'Послушайте звонок', pause: 'Пауза', listen: 'ИИ-оператор принимает заказ у аптеки', want: 'Хочу такого оператора', ai: 'ИИ', review: 'Ответ, в котором не уверен, не отправляет — отдаёт сотруднику черновиком. Когда нужно, передаёт разговор менеджеру.', cta: 'Показать на демо',
     tabs: [
-      { kind: 'chat', id: 'ig', label: 'Instagram', title: 'Фарм-бренд · Direct', did: ['Ответ из знаний компании', 'Ночью, за секунды', 'Разговор в CRM'], msgs: [
-        { text: 'Здравствуйте, в каких аптеках есть этот крем?', at: '23:41' },
-        { ai: true, text: 'Здравствуйте! Крем продаётся в аптеках-партнёрах по Баку. В каком вы районе — подскажу ближайшую.', at: '23:41' },
-        { text: 'Насими', at: '23:42' },
-        { ai: true, text: 'В Насими есть в двух аптеках. Отправляю адреса и часы работы.', at: '23:42' }] },
-      { kind: 'chat', id: 'wa', label: 'WhatsApp', title: 'Стройматериалы · WhatsApp', did: ['Считает', 'Создаёт сделку', 'Задача менеджеру'], msgs: [
-        { text: 'Здравствуйте. Нужно 2000 блоков, доставка есть?', at: '07:05' },
-        { ai: true, text: 'Здравствуйте! Есть. 2000 блоков 20 — 1 200 AZN. Напишите адрес, посчитаю доставку.', at: '07:05' },
-        { text: 'Масазыр', at: '07:06' },
-        { ai: true, text: 'Доставка в Масазыр — 40 AZN. Записать заказ? Менеджер позвонит и подтвердит.', at: '07:06' }] },
-      { kind: 'call', id: 'call', label: 'Звонок', title: 'Аптека звонит и заказывает', who: 'Аптека', did: ['Узнал аптеку по номеру', 'Нашёл в каталоге 1С', 'Записал в лист ожидания'] },
+      { kind: 'call', id: 'pharmacy', channel: 'call', label: 'Аптека', title: 'Аптека звонит и заказывает', who: 'Аптека', did: ['Узнал аптеку по номеру', 'Нашёл в каталоге 1С', 'Записал в лист ожидания'] },
+      { kind: 'chat', id: 'hotel', channel: 'wa', label: 'Отель', title: 'Отель · WhatsApp', did: ['Цена из данных отеля', 'Заявка на бронь в CRM', 'Передал менеджеру'], msgs: [
+        { text: 'Здравствуйте, есть номер на двоих на 12–14 декабря?', at: '22:14' },
+        { ai: true, text: 'Здравствуйте! Стандартный номер — от 90 AZN за ночь, завтрак включён. Напишите имя — менеджер подтвердит свободный номер.', at: '22:14' },
+        { text: 'Эльвин. Трансфер из аэропорта есть?', at: '22:15' },
+        { ai: true, text: 'Да, трансфер 25 AZN. Передал заявку менеджеру, он вам напишет.', at: '22:15' }] },
+      { kind: 'chat', id: 'car', channel: 'ig', label: 'Прокат авто', title: 'Прокат авто · Instagram', did: ['Назвал свободную машину', 'Заявка на бронь', 'Лид в CRM'], msgs: [
+        { text: 'Здравствуйте, Прадо на выходные свободен?', at: '08:30' },
+        { ai: true, text: 'Здравствуйте! Белый Прадо свободен в субботу и воскресенье — 120 AZN в сутки. Бронируем?', at: '08:30' },
+        { text: 'Да, можно забрать в аэропорту?', at: '08:31' },
+        { ai: true, text: 'Конечно. Напишите имя и номер рейса — водитель вас встретит.', at: '08:31' }] },
+      { kind: 'chat', id: 'flowers', channel: 'ig', label: 'Цветы', title: 'Цветочный магазин · Instagram', did: ['Отвечает и в наплыв заказов', 'Заказ в CRM', 'Задача флористу'], msgs: [
+        { text: 'Здравствуйте, доставите сегодня к вечеру 25 роз?', at: '13:05' },
+        { ai: true, text: 'Здравствуйте! Да, 25 красных роз — 85 AZN, доставка по Баку 5 AZN. Напишите адрес и время.', at: '13:05' },
+        { text: 'Нариманов, 19:00', at: '13:06' },
+        { ai: true, text: 'Записал: Нариманов, 19:00. Флорист позвонит подтвердить.', at: '13:06' }] },
+      { kind: 'chat', id: 'barber', channel: 'wa', label: 'Барбершоп', title: 'Барбершоп · WhatsApp', did: ['Назвал свободное время', 'Запись в календаре', 'Напоминание'], msgs: [
+        { text: 'Здравствуйте, на завтра есть место на стрижку?', at: '21:40' },
+        { ai: true, text: 'Здравствуйте! Завтра свободно в 11:00 и 15:30. Какое время удобно?', at: '21:40' },
+        { text: '11:00', at: '21:41' },
+        { ai: true, text: 'Записал: завтра в 11:00, стрижка. За день напомним.', at: '21:41' }] },
     ],
   },
   en: {
@@ -81,17 +103,27 @@ const COPY = {
     sub: 'Instagram, WhatsApp and phone calls — one AI operator answers them all and writes every order and request to the CRM. At night too.',
     sample: 'sample', recording: 'sample', play: 'Listen to the call', pause: 'Pause', listen: 'The AI operator takes a pharmacy order', want: 'I want this operator', ai: 'AI', review: 'A reply it is not sure about is not sent — it goes to an employee as a draft. When needed, the conversation is handed to a manager.', cta: 'Show on a demo',
     tabs: [
-      { kind: 'chat', id: 'ig', label: 'Instagram', title: 'Pharma brand · Direct', did: ['Answers from company knowledge', 'At night, in seconds', 'Conversation in the CRM'], msgs: [
-        { text: 'Hi, which pharmacies have this cream?', at: '23:41' },
-        { ai: true, text: 'Hello! The cream is sold in partner pharmacies across Baku. Which district are you in? I will name the nearest one.', at: '23:41' },
-        { text: 'Nasimi', at: '23:42' },
-        { ai: true, text: 'Two pharmacies in Nasimi have it. Sending you the addresses and opening hours.', at: '23:42' }] },
-      { kind: 'chat', id: 'wa', label: 'WhatsApp', title: 'Building materials · WhatsApp', did: ['Calculates', 'Creates a deal', 'Task for a manager'], msgs: [
-        { text: 'Hello. I need 2000 blocks, do you deliver?', at: '07:05' },
-        { ai: true, text: 'Hello! Yes. 2000 blocks (20) — 1 200 AZN. Send the address and I will price the delivery.', at: '07:05' },
-        { text: 'Masazir', at: '07:06' },
-        { ai: true, text: 'Delivery to Masazir is 40 AZN. Shall I place the order? A manager will call to confirm.', at: '07:06' }] },
-      { kind: 'call', id: 'call', label: 'Call', title: 'A pharmacy calls in an order', who: 'Pharmacy', did: ['Knew the pharmacy by its number', 'Found it in the 1C catalogue', 'Put it on the waiting list'] },
+      { kind: 'call', id: 'pharmacy', channel: 'call', label: 'Pharmacy', title: 'A pharmacy calls in an order', who: 'Pharmacy', did: ['Knew the pharmacy by its number', 'Found it in the 1C catalogue', 'Put it on the waiting list'] },
+      { kind: 'chat', id: 'hotel', channel: 'wa', label: 'Hotel', title: 'Hotel · WhatsApp', did: ['Price from the hotel’s own data', 'Booking request in the CRM', 'Handed to a manager'], msgs: [
+        { text: 'Hi, do you have a double room for 12–14 December?', at: '22:14' },
+        { ai: true, text: 'Hello! A standard room is from 90 AZN a night, breakfast included. Send your name and a manager will confirm a free room.', at: '22:14' },
+        { text: 'Elvin. Is there an airport transfer?', at: '22:15' },
+        { ai: true, text: 'Yes, the transfer is 25 AZN. I have passed your request to a manager, who will write to you.', at: '22:15' }] },
+      { kind: 'chat', id: 'car', channel: 'ig', label: 'Car rental', title: 'Car rental · Instagram', did: ['Named a free car', 'Booking request', 'Lead in the CRM'], msgs: [
+        { text: 'Hi, is the Prado free this weekend?', at: '08:30' },
+        { ai: true, text: 'Hello! The white Prado is free on Saturday and Sunday — 120 AZN a day. Shall we book it?', at: '08:30' },
+        { text: 'Yes, can I pick it up at the airport?', at: '08:31' },
+        { ai: true, text: 'Of course. Send your name and flight number — our driver will meet you.', at: '08:31' }] },
+      { kind: 'chat', id: 'flowers', channel: 'ig', label: 'Flowers', title: 'Flower shop · Instagram', did: ['Answers during order rushes', 'Order in the CRM', 'Task for the florist'], msgs: [
+        { text: 'Hi, can you deliver 25 roses this evening?', at: '13:05' },
+        { ai: true, text: 'Hello! Yes, 25 red roses — 85 AZN, delivery in Baku 5 AZN. Send the address and time.', at: '13:05' },
+        { text: 'Narimanov, 7 pm', at: '13:06' },
+        { ai: true, text: 'Noted: Narimanov, 7 pm. Our florist will call to confirm.', at: '13:06' }] },
+      { kind: 'chat', id: 'barber', channel: 'wa', label: 'Barbershop', title: 'Barbershop · WhatsApp', did: ['Named free slots', 'Appointment in the calendar', 'Reminder'], msgs: [
+        { text: 'Hi, any slot for a haircut tomorrow?', at: '21:40' },
+        { ai: true, text: 'Hello! Tomorrow 11:00 and 15:30 are free. Which suits you?', at: '21:40' },
+        { text: '11:00', at: '21:41' },
+        { ai: true, text: 'Booked: tomorrow at 11:00, haircut. We will remind you the day before.', at: '21:41' }] },
     ],
   },
 } as const;
@@ -99,13 +131,6 @@ const COPY = {
 type Copy = (typeof COPY)[Lang];
 
 const fmt = (s: number) => { const v = Math.max(0, Math.floor(s)); return `${Math.floor(v / 60)}:${String(v % 60).padStart(2, '0')}`; };
-
-// Brand marks drawn inline: lucide no longer ships brand icons.
-function TabIcon({ id }: { id: 'ig' | 'wa' | 'call' }) {
-  if (id === 'call') return <Phone size={17} />;
-  if (id === 'ig') return <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" /></svg>;
-  return <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.4 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.5-3.9-4.7-4.1-.1-.2-1.1-1.5-1.1-2.8 0-1.3.7-2 1-2.3.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6-.4.4c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1.1c.2-.3.4-.2.7-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.3Z" /></svg>;
-}
 
 function Chat({ tab, c }: { tab: ChatTab; c: Copy }) {
   return (
@@ -181,7 +206,7 @@ function Call({ tab, lang, c, demoHref }: { tab: CallTab; lang: Lang; c: Copy; d
       <div className={`op-orb-row ${playing ? 'is-playing' : ''}`}>
         <button type="button" className="op-orb" onClick={toggle} aria-label={playing ? c.pause : c.play}>
           <span className="op-orb-halo" /><span className="op-orb-ring" /><span className="op-orb-ring op-orb-ring-2" />
-          <span className="op-orb-sphere" style={playing ? { transform: `scale(${(1 + 0.18 * level).toFixed(3)})` } : undefined}>{playing ? <Pause size={26} /> : <Play size={30} />}</span>
+          <span className="op-orb-sphere" style={playing ? { transform: `scale(${(1 + 0.18 * level).toFixed(3)})` } : undefined}>{playing ? <Pause size={22} /> : <Play size={24} />}</span>
         </button>
         <div className="op-orb-copy">
           <button type="button" className="op-orb-title" onClick={toggle}>{c.play}</button>
@@ -219,7 +244,7 @@ export function AiPresenter({ lang, demoHref }: { lang: Lang; demoHref: string }
   const video = useRef<HTMLVideoElement>(null);
   const [seen, setSeen] = useState(false);
   const [hasVideo, setHasVideo] = useState(true);
-  const [tabId, setTabId] = useState<'ig' | 'wa' | 'call'>('call');
+  const [tabId, setTabId] = useState('pharmacy');
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
@@ -230,7 +255,7 @@ export function AiPresenter({ lang, demoHref }: { lang: Lang; demoHref: string }
   const title = useTypewriter([c.h1, c.h2], { active: seen, speed: 55, startDelay: 300 });
   // The presenter's open-palm gesture lands as the conversation appears.
   useEffect(() => { if (title.done && video.current) video.current.play().catch(() => {}); }, [title.done]);
-  const tabs: (ChatTab | CallTab)[] = [...c.tabs].sort((x, y) => (x.kind === 'call' ? -1 : y.kind === 'call' ? 1 : 0)).map((tb) => (tb.kind === 'call'
+  const tabs: (ChatTab | CallTab)[] = c.tabs.map((tb) => (tb.kind === 'call'
     ? { ...tb, lines: CALL_AZ.map((l, i) => ({ ...l, tr: CALL_TR[lang][i] })) }
     : tb));
   const tab = tabs.find((tb) => tb.id === tabId) ?? tabs[0];
@@ -244,7 +269,7 @@ export function AiPresenter({ lang, demoHref }: { lang: Lang; demoHref: string }
           <div className="op-card" id="ai-operator">
             <div className="op-tabs" role="tablist" aria-label={c.eyebrow}>
               {tabs.map((tb) => (
-                <button type="button" role="tab" key={tb.id} aria-selected={tb.id === tab.id} onClick={() => setTabId(tb.id)}><TabIcon id={tb.id} />{tb.label}</button>
+                <button type="button" role="tab" key={tb.id} aria-selected={tb.id === tab.id} onClick={() => setTabId(tb.id)}>{tb.label}</button>
               ))}
             </div>
             {tab.kind === 'chat' ? <Chat key={tab.id} tab={tab} c={c} /> : <Call tab={tab} lang={lang} c={c} demoHref={demoHref} />}
