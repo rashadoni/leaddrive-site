@@ -158,6 +158,27 @@ h1 { font-size: 104px; line-height: 1.02; } h2 { font-size: 62px; line-height: 1
 .scene.in .chapter .line { animation: line 1.6s .3s ease-out both; }
 @keyframes line { 0% { transform: scaleX(0); opacity: 0; } 40% { opacity: .9; } 100% { transform: scaleX(1); opacity: 0; } }
 
+/* booking scene: reel clip in a phone + salon calendar */
+.waphone { position: absolute; width: 500px; height: 800px; border-radius: 56px 56px 0 0; background: #000; padding: 14px 14px 0; box-sizing: border-box; box-shadow: 0 0 0 2px #2b2b2b, 0 60px 140px rgba(0,0,0,.8), 0 0 120px rgba(37,211,102,.18); -webkit-mask-image: linear-gradient(#000 82%, transparent); mask-image: linear-gradient(#000 82%, transparent); }
+.waphone .scr { width: 100%; height: 100%; border-radius: 44px 44px 0 0; overflow: hidden; background: #EFEAE2; }
+.waphone video { display: block; width: 100%; }
+.wabadge { position: absolute; left: 1286px; top: 120px; z-index: 4; width: 58px; height: 58px; border-radius: 50%; background: #25D366; display: grid; place-items: center; box-shadow: 0 10px 30px rgba(37,211,102,.45); border: 4px solid #0b0b0b; }
+.bstep { margin-top: 36px; padding: 20px 24px; border-radius: 18px; background: rgba(37,211,102,.1); border: 1px solid rgba(37,211,102,.35); font: 700 26px/1.3 var(--text); color: #E9FBEF; min-height: 34px; }
+.bstep span { display: inline-block; transition: opacity .35s, transform .45s; }
+.bstep span.swap { opacity: 0; transform: translateY(10px); }
+.bchecks { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 26px; }
+.bc { display: inline-flex; align-items: center; gap: 10px; padding: 12px 18px; border-radius: 999px; background: var(--surface); border: 1px solid var(--line); font: 700 20px/1 var(--text); color: var(--muted); transition: background .4s, color .4s, border-color .4s, transform .4s; }
+.bc::before { content: ""; width: 18px; height: 18px; border-radius: 50%; border: 2px solid #444; transition: background .4s, border-color .4s; }
+.bc.on { background: rgba(37,211,102,.12); color: #7CE8A6; border-color: transparent; transform: scale(1.03); }
+.bc.on::before { background: #25D366 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 12.5l4 4L18 8'/%3E%3C/svg%3E") center / 12px no-repeat; border-color: #25D366; }
+.scal { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 18px; }
+.scol h4 { margin: 0 0 12px; display: flex; align-items: center; gap: 10px; font: 800 19px/1 var(--text); }
+.scol h4 i { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; font: 800 14px/1 var(--text); color: #fff; font-style: normal; }
+.scol { position: relative; min-height: 540px; background: repeating-linear-gradient(transparent 0 44px, #1b1b1b 44px 45px, transparent 45px 76px); border-radius: 12px; }
+.sb { position: absolute; left: 0; right: 0; margin-top: 44px; padding: 9px 10px; min-height: 40px; box-sizing: border-box; border-radius: 12px; background: var(--surface3); border-left: 4px solid #555; font: 700 15.5px/1.3 var(--text); color: #ddd; }
+.sb.new { background: #1a120c; border-left-color: var(--hot); color: #fff; opacity: 0; transform: translateY(-24px) scale(.94); transition: opacity .5s, transform .7s cubic-bezier(.2,1.4,.3,1), box-shadow .6s; }
+.sb.new.show { opacity: 1; transform: none; box-shadow: 0 0 0 2px var(--hot), 0 0 40px var(--glow); }
+.sb em { display: inline-block; margin-left: 8px; padding: 3px 8px; border-radius: 6px; background: var(--hot); font: 800 11px/1.2 var(--text); font-style: normal; letter-spacing: .05em; text-transform: uppercase; }
 /* panels / live widgets */
 .panel { position: absolute; border-radius: 26px; background: var(--surface); border: 1px solid var(--line); box-shadow: 0 50px 120px rgba(0,0,0,.6); overflow: hidden; }
 .ph { display: flex; align-items: center; gap: 12px; padding: 20px 26px; border-bottom: 1px solid var(--line); font: 700 21px/1 var(--text); color: var(--muted); }
@@ -439,27 +460,34 @@ h1 { font-size: 104px; line-height: 1.02; } h2 { font-size: 62px; line-height: 1
   <div class="cur" id="cur-lovhe"><svg viewBox="0 0 24 24" width="34" height="34"><path d="M4 2l16 9-7 2-3 7z" fill="#fff" stroke="#000" stroke-width="1.4" stroke-linejoin="round"/></svg></div>
 </section>
 
-<!-- 7 · booking -->
-<section class="scene" data-name="gorus" data-dur="12000" data-note="1 минута. На телефоне клиент пишет в WhatsApp, ИИ-администратор записывает его сам — и слот в календаре загорается.&#10;«Клиент записывается сам, ночью, по ссылке из Instagram или WhatsApp, видит только реально свободное время».&#10;Напоминания за сутки и за 2 часа, отмена одной кнопкой, предоплата картой.&#10;Бот в WhatsApp — с надстройкой Da Vinci AI.">
-  <div class="side" style="width:620px;">
+<!-- 7 · booking: the WhatsApp form from the salon reel, synced with the salon calendar -->
+<section class="scene" data-name="gorus" data-dur="26000" data-note="1,5 минуты. Это кадры из нашего ролика: клиент пишет салону в WhatsApp — и прямо в чате приходит форма: услуга, мастер, день.&#10;«Можно ответить голосом — форма заполнится сама». «Занятое время выбрать нельзя: 13:00 уже занято — система предложит 11:30 или 15:30».&#10;«Подтверждение приходит сразу, администратор не нужен — и запись уже в календаре салона», покажи справа.&#10;Напоминание с кнопками «Gələrəm / Vaxtı dəyişmək / Ləğv etmək» — клиент сам переносит время, не звонит.&#10;Бот в WhatsApp работает с надстройкой Da Vinci AI.">
+  <div class="side" style="width:640px; top:130px;">
     <p class="eyebrow" data-a="up">03 · Görüşlər</p>
-    <h2 style="--d:80">Müştəri <span class="acc">özü yazılır</span> — gecə də</h2>
-    <p class="lead" data-a="up" style="--d:300">WhatsApp-da AI administrator yazır, təqvim özü dolur, xatırlatma özü gedir.</p>
+    <h2 style="--d:80">Müştəri <span class="acc">WhatsApp-da</span> özü yazılır</h2>
+    <p class="lead" data-a="up" style="--d:300">Çatda forma gəlir: xidmət, usta, gün, saat. Mətnlə və ya səslə.</p>
+    <div class="bstep" data-a="up" style="--d:500"><span id="bstep">Müştəri yazır: «Yazılmaq istəyirəm»</span></div>
+    <div class="bchecks" data-a="up" style="--d:650">
+      <span class="bc" data-t="3000">WhatsApp-da forma</span><span class="bc" data-t="6500">Mətn və səs</span><span class="bc" data-t="14500">Dolu vaxt seçilmir</span><span class="bc" data-t="20200">Admin lazım deyil</span><span class="bc" data-t="22600">Vaxtı özü dəyişir</span>
+    </div>
   </div>
-  <div class="phone float" data-a="up" style="--d:300; left:820px; top:150px;"><div class="notch"></div><div class="scr"><div class="wa">
-    <div class="hd"><i>B</i><div>Beauty Studio<small>onlayn</small></div></div>
-    <div class="body" id="waBody">
-      <div class="msg in">Salam! Sabah manikür üçün yer var?</div>
-      <div class="msg out"><small>AI ADMİNİSTRATOR</small>Salam! Sabah 10:00, 11:00, 14:00 və 16:00 boşdur. Hansı uyğundur?</div>
-      <div class="msg in">11:00 olsun</div>
-      <div class="typing"><i></i><i></i><i></i></div>
-      <div class="msg out"><small>AI ADMİNİSTRATOR</small>Yazıldınız ✅ Sabah, 11:00. Bir gün və 2 saat əvvəl xatırladacağıq.</div>
-    </div></div></div></div>
-  <div class="panel" data-a="right" style="--d:500; left:1250px; top:170px; width:540px; height:640px;">
-    <div class="ph"><span class="dots"><i></i><i></i><i></i></span>Sabah · təqvim</div>
-    <div class="cal"><div class="slot busy">09:00</div><div class="slot free">10:00<em>boş</em></div><div class="slot free" id="s11">11:00<em id="s11t">boş</em></div><div class="slot busy">12:00</div><div class="slot busy">13:00</div><div class="slot free">14:00<em>boş</em></div><div class="slot busy">15:00</div><div class="slot free">16:00<em>boş</em></div></div>
+  <div class="waphone" data-a="up" style="--d:250; left:820px; top:90px;"><div class="scr"><video id="waVid" poster="/live/media/wa-booking-poster.jpg" muted playsinline preload="auto"><source src="/live/media/wa-booking.mp4" type="video/mp4"><source src="/live/media/wa-booking.webm" type="video/webm"></video></div></div><span class="wabadge" data-a="zoom" style="--d:700"><svg viewBox="0 0 24 24" width="30" height="30"><path fill="#fff" d="M12 2a10 10 0 0 0-8.7 14.9L2 22l5.2-1.3A10 10 0 1 0 12 2zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-1.7-.1a15 15 0 0 1-1.5-.6 12 12 0 0 1-4.6-4c-.4-.5-1.1-1.6-1.1-2.9 0-1.4.7-2 1-2.3.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.3 0 .5l-.4.5-.3.4c-.1.1-.2.3-.1.5.2.3.7 1.2 1.5 1.9 1 .9 1.9 1.2 2.2 1.3.2.1.4.1.5-.1l.7-.9c.2-.2.4-.2.6-.1l1.9.9c.2.1.4.2.4.3.1.1.1.6-.1 1.3z"/></svg></span>
+  <div class="panel" data-a="right" style="--d:500; left:1370px; top:130px; width:430px; height:650px;">
+    <div class="ph"><span class="dots"><i></i><i></i><i></i></span>Sizin kompüterdə · sabah</div>
+    <div class="scal">
+      <div class="scol"><h4><i style="background:#F2615B">A</i>Aysel</h4>
+        <div class="sb" style="top:0px;">10:00 · Kirpik · Günay</div>
+        <div class="sb new" id="sbNew" style="top:96px;">11:30 · Manikür · Leyla<em>Yeni</em></div>
+        <div class="sb" style="top:192px;">13:00 · Pedikür · Lalə</div>
+        <div class="sb" style="top:448px;">17:00 · Kirpik · Fidan</div>
+      </div>
+      <div class="scol"><h4><i style="background:#2F6FB5">N</i>Nigar</h4>
+        <div class="sb" style="top:32px;">10:30 · Saç kəsimi · Aytən</div>
+        <div class="sb" style="top:256px;">14:00 · Rəngləmə · Sabina</div>
+      </div>
+    </div>
   </div>
-  <div class="toast ok" id="tGorus" style="left:1250px; top:850px;"><span class="b"></span><div>Yeni lid və tapşırıq yaradıldı<small>Leyla · Manikür · sabah 11:00</small></div></div>
+  <div class="toast ok" id="tGorus" style="left:1370px; top:810px; width:430px; box-sizing:border-box;"><span class="b"></span><div>Xatırlatma: sabah 11:30-da sizi gözləyirik<small>Gələrəm · Vaxtı dəyişmək · Ləğv etmək</small></div></div>
 </section>
 
 <!-- 8 · finance -->
@@ -851,14 +879,28 @@ h1 { font-size: 104px; line-height: 1.02; } h2 { font-size: 62px; line-height: 1
     at(3600, function () { f.classList.remove('grab'); f.classList.add('done'); $('kIn').textContent = '1'; $('kDone').textContent = '2'; });
     at(4600, function () { cur.classList.remove('on'); });
   };
-  plays.gorus = function () {
-    var b = $('waBody').querySelectorAll('.msg'), ty = $('waBody').querySelector('.typing'), s = $('s11'), t = $('tGorus');
-    Array.prototype.forEach.call(b, function (x) { x.classList.remove('show'); }); ty.classList.remove('show'); s.classList.remove('mine'); $('s11t').textContent = 'boş'; t.classList.remove('show');
-    at(900, function () { b[0].classList.add('show'); }); at(1700, function () { ty.classList.add('show'); });
-    at(2900, function () { ty.classList.remove('show'); b[1].classList.add('show'); });
-    at(4400, function () { b[2].classList.add('show'); }); at(4900, function () { ty.classList.add('show'); });
-    at(6200, function () { ty.classList.remove('show'); b[3].classList.add('show'); s.classList.add('mine'); $('s11t').textContent = 'Leyla ✓'; });
-    at(7200, function () { t.classList.add('show'); });
+  var BSTEPS = [[0, 'Müştəri yazır: «Yazılmaq istəyirəm»'], [3000, 'Çatda forma gəlir: xidmət, usta, gün'], [6500, 'Səsli mesaj da olar'], [10000, 'Forma özü doldurulur'], [14500, '13:00 doludur — seçmək olmur'], [17800, 'Boş vaxt: 11:30 ✓'], [20200, 'Təsdiqləndi — admin lazım deyil'], [21600, 'Və artıq salonun təqvimindədir']];
+  plays.gorus = function (s) {
+    var v = $('waVid'), step = $('bstep'), checks = Array.prototype.slice.call(s.querySelectorAll('.bc')), nb = $('sbNew'), t = $('tGorus'), shown = -1;
+    nb.classList.remove('show'); t.classList.remove('show'); checks.forEach(function (c) { c.classList.remove('on'); });
+    function setStep(k) { if (k === shown) return; shown = k; if (k === 0) { step.textContent = BSTEPS[0][1]; return; } step.classList.add('swap'); setTimeout(function () { step.textContent = BSTEPS[k][1]; step.classList.remove('swap'); }, 250); }
+    function sync(ms) {
+      var k = 0; BSTEPS.forEach(function (b, i) { if (ms >= b[0]) k = i; }); setStep(k);
+      checks.forEach(function (c) { c.classList.toggle('on', ms >= +c.dataset.t); });
+      nb.classList.toggle('show', ms >= 21200); t.classList.toggle('show', ms >= 22600);
+    }
+    if (reduced) { try { v.currentTime = 21.4; } catch (e) {} sync(30000); return; }
+    try { v.pause(); v.currentTime = 0; } catch (e) {}
+    setStep(0);
+    var started = null;
+    at(700, function () { var pr = v.play(); if (pr && pr.catch) pr.catch(function () {}); });
+    function tick(ts) {
+      /* the clip's clock while it plays; after it ends, keep counting from its last frame */
+      if (!v.paused && !v.ended) { sync(v.currentTime * 1000); started = null; }
+      else if (v.ended || v.currentTime > 21) { if (started === null) started = ts - v.currentTime * 1000; sync(ts - started); }
+      rafs.push(requestAnimationFrame(tick));
+    }
+    rafs.push(requestAnimationFrame(tick));
   };
   plays.maliyye = function () {
     var bars = document.querySelectorAll('.ag .tr i'), cur = $('cur-maliyye'), btn = $('poBtn');
@@ -984,6 +1026,7 @@ h1 { font-size: 104px; line-height: 1.02; } h2 { font-size: 62px; line-height: 1
   function go(i, replay) {
     if (i < 0 || i >= scenes.length) return;
     clearAll(); stage.classList.remove('letterbox');
+    try { $('waVid').pause(); } catch (e) {}
     if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
     var prev = scenes[cur];
     if (prev !== scenes[i] && !reduced) { prev.classList.add('leaving'); setTimeout(function () { prev.classList.remove('leaving'); }, 950); }
