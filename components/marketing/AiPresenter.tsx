@@ -7,8 +7,9 @@ import { TypedText, useTypewriter } from './Typewriter';
 
 /*
  * The AI operator: one assistant answers Instagram, WhatsApp and phone calls and writes everything to the CRM.
- * Tabs follow the real share of inbound requests across LeadDrive tenants (prod, 90 days to 2026-11-25):
- * Instagram first, then WhatsApp, then calls. TikTok is left out on purpose: replies there were not
+ * The call comes first and opens by default: it is the one thing a visitor can hear, and the owner wanted the
+ * play button to catch the eye (a breathing orb, as on syncallai.com). Chats follow in the order of the real share of
+ * inbound requests across LeadDrive tenants (prod, 90 days to 2026-11-25): Instagram, then WhatsApp. TikTok is left out on purpose: replies there were not
  * reaching customers when this was written, so the page must not promise them.
  * The chats are samples and say so. The call is a real recording from the line's test stand with a
  * made-up pharmacy name; its words stay in Azerbaijani, with a translation for ru/en readers.
@@ -40,7 +41,7 @@ const COPY = {
   az: {
     eyebrow: 'AI operator · Azərbaycan dilində', h1: 'Müştəri yazır,', h2: 'AI cavab verir.',
     sub: 'Instagram, WhatsApp və telefon zəngləri — hamısına bir AI operator cavab verir, sifarişi və müraciəti CRM-ə yazır. Gecə də.',
-    sample: 'nümunə', recording: 'test zəngi', play: 'Zəngə qulaq asın', pause: 'Dayandır', ai: 'AI', review: 'Əmin olmadığı cavabı göndərmir — işçiyə qaralama kimi verir. Lazım olanda söhbəti menecerə ötürür.', cta: 'Demoda göstərək',
+    sample: 'nümunə', recording: 'test zəngi', play: 'Zəngə qulaq asın', pause: 'Dayandır', listen: 'AI operator aptekdən sifariş qəbul edir', want: 'Biznesimə belə operator istəyirəm', ai: 'AI', review: 'Əmin olmadığı cavabı göndərmir — işçiyə qaralama kimi verir. Lazım olanda söhbəti menecerə ötürür.', cta: 'Demoda göstərək',
     tabs: [
       { kind: 'chat', id: 'ig', label: 'Instagram', title: 'Dərman brendi · Direct', did: ['Şirkətin biliyindən cavab', 'Gecə, saniyələrdə', 'Söhbət CRM-də'], msgs: [
         { text: 'Salam, bu krem hansı apteklərdə var?', at: '23:41' },
@@ -58,7 +59,7 @@ const COPY = {
   ru: {
     eyebrow: 'ИИ-оператор · на азербайджанском', h1: 'Клиент пишет,', h2: 'ИИ отвечает.',
     sub: 'Instagram, WhatsApp и телефонные звонки — на всё отвечает один ИИ-оператор и записывает заказ и обращение в CRM. Даже ночью.',
-    sample: 'пример', recording: 'тестовый звонок', play: 'Послушать звонок', pause: 'Пауза', ai: 'ИИ', review: 'Ответ, в котором не уверен, не отправляет — отдаёт сотруднику черновиком. Когда нужно, передаёт разговор менеджеру.', cta: 'Показать на демо',
+    sample: 'пример', recording: 'тестовый звонок', play: 'Послушайте звонок', pause: 'Пауза', listen: 'ИИ-оператор принимает заказ у аптеки', want: 'Хочу такого оператора', ai: 'ИИ', review: 'Ответ, в котором не уверен, не отправляет — отдаёт сотруднику черновиком. Когда нужно, передаёт разговор менеджеру.', cta: 'Показать на демо',
     tabs: [
       { kind: 'chat', id: 'ig', label: 'Instagram', title: 'Фарм-бренд · Direct', did: ['Ответ из знаний компании', 'Ночью, за секунды', 'Разговор в CRM'], msgs: [
         { text: 'Здравствуйте, в каких аптеках есть этот крем?', at: '23:41' },
@@ -76,7 +77,7 @@ const COPY = {
   en: {
     eyebrow: 'AI operator · in Azerbaijani', h1: 'Customers write,', h2: 'AI answers.',
     sub: 'Instagram, WhatsApp and phone calls — one AI operator answers them all and writes every order and request to the CRM. At night too.',
-    sample: 'sample', recording: 'test call', play: 'Listen to the call', pause: 'Pause', ai: 'AI', review: 'A reply it is not sure about is not sent — it goes to an employee as a draft. When needed, the conversation is handed to a manager.', cta: 'Show on a demo',
+    sample: 'sample', recording: 'test call', play: 'Listen to the call', pause: 'Pause', listen: 'The AI operator takes a pharmacy order', want: 'I want this operator', ai: 'AI', review: 'A reply it is not sure about is not sent — it goes to an employee as a draft. When needed, the conversation is handed to a manager.', cta: 'Show on a demo',
     tabs: [
       { kind: 'chat', id: 'ig', label: 'Instagram', title: 'Pharma brand · Direct', did: ['Answers from company knowledge', 'At night, in seconds', 'Conversation in the CRM'], msgs: [
         { text: 'Hi, which pharmacies have this cream?', at: '23:41' },
@@ -119,26 +120,80 @@ function Chat({ tab, c }: { tab: ChatTab; c: Copy }) {
   );
 }
 
-function Call({ tab, lang, c }: { tab: CallTab; lang: Lang; c: Copy }) {
-  const audio = useRef<HTMLAudioElement>(null);
+/*
+ * The call plays through Web Audio, not an <audio> element. The site's static assets answer without byte
+ * ranges (no Accept-Ranges), so Chrome cannot seek an <audio> there: clicking a line or the waveform would do
+ * nothing. The file is 180 KB, so it is fetched once on the first click and decoded; a decoded buffer seeks
+ * anywhere. CSP allows this (connect-src 'self'); a blob: or data: media URL would be blocked by media-src 'self'.
+ * The analyser also gives the real loudness of the voice, which drives the orb.
+ */
+function useCallAudio(src: string, duration: number) {
+  const ctx = useRef<AudioContext | null>(null);
+  const buf = useRef<AudioBuffer | null>(null);
+  const node = useRef<AudioBufferSourceNode | null>(null);
+  const an = useRef<AnalyserNode | null>(null);
+  const startedAt = useRef(0);
+  const offset = useRef(0);
   const [t, setT] = useState(0);
+  const [level, setLevel] = useState(0);
   const [playing, setPlaying] = useState(false);
   const [started, setStarted] = useState(false);
-  const toggle = () => { const a = audio.current; if (!a) return; if (a.paused) a.play().catch(() => {}); else a.pause(); };
-  const seek = (s: number) => { const a = audio.current; if (!a) return; a.currentTime = s; setT(s); a.play().catch(() => {}); };
+  const [ended, setEnded] = useState(false);
+  useEffect(() => {
+    if (!playing) return;
+    const data = new Uint8Array(256);
+    const id = window.setInterval(() => {
+      const c = ctx.current;
+      if (!c) return;
+      setT(Math.min(duration, c.currentTime - startedAt.current));
+      if (an.current) { an.current.getByteTimeDomainData(data); let s = 0; for (const v of data) s += ((v - 128) / 128) ** 2; setLevel(Math.min(1, Math.sqrt(s / data.length) * 4)); }
+    }, 90);
+    return () => window.clearInterval(id);
+  }, [playing, duration]);
+  useEffect(() => () => { try { node.current?.stop(); } catch {} ctx.current?.close().catch(() => {}); }, []);
+  const stopNode = () => { const n = node.current; node.current = null; if (n) { n.onended = null; try { n.stop(); } catch {} } };
+  const playFrom = async (at: number) => {
+    if (!ctx.current) { const AC = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext; ctx.current = new AC(); an.current = ctx.current.createAnalyser(); an.current.fftSize = 256; an.current.connect(ctx.current.destination); }
+    const c = ctx.current;
+    if (c.state === 'suspended') await c.resume();
+    if (!buf.current) { const r = await fetch(src); buf.current = await c.decodeAudioData(await r.arrayBuffer()); }
+    stopNode();
+    const n = c.createBufferSource(); n.buffer = buf.current; n.connect(an.current!);
+    const from = Math.max(0, Math.min(at, buf.current.duration - 0.05));
+    n.onended = () => { if (node.current !== n) return; node.current = null; setPlaying(false); setEnded(true); setT(duration); offset.current = 0; setLevel(0); };
+    n.start(0, from); node.current = n; startedAt.current = c.currentTime - from;
+    setT(from); setPlaying(true); setStarted(true); setEnded(false);
+  };
+  const pause = () => { const c = ctx.current; if (!c || !node.current) return; offset.current = c.currentTime - startedAt.current; stopNode(); setPlaying(false); setLevel(0); };
+  const toggle = () => { if (playing) pause(); else playFrom(ended ? 0 : offset.current).catch(() => setPlaying(false)); };
+  const seek = (s: number) => { offset.current = s; playFrom(s).catch(() => setPlaying(false)); };
+  return { t, level, playing, started, ended, toggle, seek };
+}
+
+function Call({ tab, lang, c, demoHref }: { tab: CallTab; lang: Lang; c: Copy; demoHref: string }) {
+  const { t, level, playing, started, ended, toggle, seek } = useCallAudio(CALL_SRC, CALL_DUR);
   const isAi = (x: number) => tab.lines.some((l) => l.ai && x >= l.a - 0.2 && x <= l.b + 0.2);
   return (
     <div className="op-pane">
       <div className="op-pane-head"><b>{tab.title}</b><span className="op-tag">{c.recording}</span></div>
-      <audio ref={audio} src={CALL_SRC} preload="none" onTimeUpdate={(e) => setT(e.currentTarget.currentTime)} onPlay={() => { setPlaying(true); setStarted(true); }} onPause={() => setPlaying(false)} onEnded={() => { setPlaying(false); setT(CALL_DUR); }} />
-      <div className="op-player">
-        {started
-          ? <button type="button" className="op-play" onClick={toggle} aria-label={playing ? c.pause : c.play}>{playing ? <Pause size={20} /> : <Play size={20} />}</button>
-          : <button type="button" className="op-play-invite" onClick={toggle}><span className="op-play-dot"><Play size={18} /></span>{c.play}</button>}
-        <div className="op-wave" aria-hidden="true" onClick={(e) => { const r = e.currentTarget.getBoundingClientRect(); seek(((e.clientX - r.left) / r.width) * CALL_DUR); }}>
-          {ENV.map((v, i) => { const at = ((i + 0.5) / ENV.length) * CALL_DUR; return <i key={i} className={`${isAi(at) ? 'is-ai' : ''} ${at <= t ? 'is-done' : ''}`} style={{ height: `${Math.max(8, v)}%` }} />; })}
+      <div className={`op-orb-row ${playing ? 'is-playing' : ''}`}>
+        <button type="button" className="op-orb" onClick={toggle} aria-label={playing ? c.pause : c.play}>
+          <span className="op-orb-halo" /><span className="op-orb-ring" /><span className="op-orb-ring op-orb-ring-2" />
+          <span className="op-orb-sphere" style={playing ? { transform: `scale(${(1 + 0.18 * level).toFixed(3)})` } : undefined}>{playing ? <Pause size={26} /> : <Play size={30} />}</span>
+        </button>
+        <div className="op-orb-copy">
+          <button type="button" className="op-orb-title" onClick={toggle}>{c.play}</button>
+          <p>{c.listen} · {fmt(CALL_DUR)}</p>
+          {started && (
+            <div className="op-progress">
+              <div className="op-wave" aria-hidden="true" onClick={(e) => { const r = e.currentTarget.getBoundingClientRect(); seek(((e.clientX - r.left) / r.width) * CALL_DUR); }}>
+                {ENV.map((v, i) => { const at = ((i + 0.5) / ENV.length) * CALL_DUR; return <i key={i} className={`${isAi(at) ? 'is-ai' : ''} ${at <= t ? 'is-done' : ''}`} style={{ height: `${Math.max(10, v)}%` }} />; })}
+              </div>
+              <span className="op-time">{fmt(t)} / {fmt(CALL_DUR)}</span>
+            </div>
+          )}
+          {ended && <a className="op-want" href={demoHref} target="_blank" rel="noopener">{c.want}<ArrowRight size={16} /></a>}
         </div>
-        <span className="op-time">{fmt(t)} / {fmt(CALL_DUR)}</span>
       </div>
       <div className="op-lines">
         {tab.lines.map((l, i) => {
@@ -162,9 +217,7 @@ export function AiPresenter({ lang, demoHref }: { lang: Lang; demoHref: string }
   const video = useRef<HTMLVideoElement>(null);
   const [seen, setSeen] = useState(false);
   const [hasVideo, setHasVideo] = useState(true);
-  const [tabId, setTabId] = useState<'ig' | 'wa' | 'call'>('ig');
-  // The call is the strongest proof on the page, so its tab carries a pulsing badge until it is opened.
-  const [callSeen, setCallSeen] = useState(false);
+  const [tabId, setTabId] = useState<'ig' | 'wa' | 'call'>('call');
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
@@ -175,7 +228,7 @@ export function AiPresenter({ lang, demoHref }: { lang: Lang; demoHref: string }
   const title = useTypewriter([c.h1, c.h2], { active: seen, speed: 55, startDelay: 300 });
   // The presenter's open-palm gesture lands as the conversation appears.
   useEffect(() => { if (title.done && video.current) video.current.play().catch(() => {}); }, [title.done]);
-  const tabs: (ChatTab | CallTab)[] = c.tabs.map((tb) => (tb.kind === 'call'
+  const tabs: (ChatTab | CallTab)[] = [...c.tabs].sort((x, y) => (x.kind === 'call' ? -1 : y.kind === 'call' ? 1 : 0)).map((tb) => (tb.kind === 'call'
     ? { ...tb, lines: CALL_AZ.map((l, i) => ({ ...l, tr: CALL_TR[lang][i] })) }
     : tb));
   const tab = tabs.find((tb) => tb.id === tabId) ?? tabs[0];
@@ -189,10 +242,10 @@ export function AiPresenter({ lang, demoHref }: { lang: Lang; demoHref: string }
           <div className="op-card" id="ai-operator">
             <div className="op-tabs" role="tablist" aria-label={c.eyebrow}>
               {tabs.map((tb) => (
-                <button type="button" role="tab" key={tb.id} aria-selected={tb.id === tab.id} onClick={() => { setTabId(tb.id); if (tb.id === 'call') setCallSeen(true); }}><TabIcon id={tb.id} />{tb.label}{tb.id === 'call' && !callSeen && <span className="op-tab-badge"><Play size={9} /><span className="op-tab-time">{fmt(CALL_DUR)}</span></span>}</button>
+                <button type="button" role="tab" key={tb.id} aria-selected={tb.id === tab.id} onClick={() => setTabId(tb.id)}><TabIcon id={tb.id} />{tb.label}</button>
               ))}
             </div>
-            {tab.kind === 'chat' ? <Chat key={tab.id} tab={tab} c={c} /> : <Call tab={tab} lang={lang} c={c} />}
+            {tab.kind === 'chat' ? <Chat key={tab.id} tab={tab} c={c} /> : <Call tab={tab} lang={lang} c={c} demoHref={demoHref} />}
             <ul className="op-did">{tab.did.map((d) => <li key={d}><Check size={14} />{d}</li>)}</ul>
           </div>
           <p className="ai-review">{c.review}</p>
