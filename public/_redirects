@@ -1,3 +1,7 @@
+# The AI operator page (/ai) lived one evening (2026-11-25) and moved into the home page's AI section.
+# 302: a fallback, never cached for ever.
+/ai /#ai-operator 302
+/ai/ /#ai-operator 302
 # Old marketing pages of the previous site → new home
 /home / 301
 /demo / 301

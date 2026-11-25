@@ -381,5 +381,38 @@ dialog.modal{position:relative;margin:0;border:0;max-width:none;inset:auto}
 .dash-side nav span{padding:.58cqw .7cqw;font-size:.92cqw;gap:.65cqw}
 .modal-modules{border:0;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:8px 16px}.modal-modules legend{font-size:13px;font-weight:700;color:#3d443f;margin-bottom:8px;padding:0}.modal-modules label{flex-direction:row;align-items:center;gap:8px;font-weight:500;font-size:14px;cursor:pointer}.modal-modules input{width:auto;padding:0}
 @media (max-width:640px){.modal-modules{grid-template-columns:1fr}}
-/* The header carries a seventh link (AI operator): below 1100px it needs a tighter gap to stay on one line. */
-@media (max-width:1100px){.desktop-nav{gap:14px}}
+/* AI operator demo inside the AI section: channel tabs, a sample chat or the test-stand call. */
+.op-card{max-width:560px;background:#fff;border:1px solid #e1e5ec;border-radius:20px;box-shadow:0 8px 20px #27392d0d;padding:12px;display:grid;gap:12px}
+.op-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;background:#f4f5f7;border-radius:14px;padding:4px}
+.op-tabs button{display:flex;align-items:center;justify-content:center;gap:8px;height:40px;border-radius:10px;font-size:14px;font-weight:600;color:#5b6470;background:transparent}
+.op-tabs button[aria-selected=true]{background:#fff;color:var(--ink);box-shadow:0 1px 3px #14181f1f}
+.op-pane{display:grid;gap:10px;min-height:300px;align-content:start;padding:0 4px}
+.op-pane-head{display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:13px}
+.op-pane-head b{font-weight:700;color:var(--ink)}
+.op-tag{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#7c8274;border:1px dashed #d3d8e0;border-radius:999px;padding:2px 8px;white-space:nowrap}
+.op-chat{display:grid;gap:8px}
+.op-msg{max-width:86%;justify-self:start;padding:9px 13px;border-radius:16px 16px 16px 5px;background:#f4f5f7;color:var(--ink);font-size:14px;line-height:1.45;animation:op-in .4s both}
+.op-msg.is-ai{justify-self:end;background:var(--forest);color:#fff;border-radius:16px 16px 5px 16px}
+.op-msg small{display:block;margin-top:3px;font-size:11px;opacity:.65;text-align:right}
+@keyframes op-in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.op-player{display:flex;align-items:center;gap:12px}
+.op-play{width:46px;height:46px;border-radius:50%;background:var(--orange);color:#fff;display:grid;place-items:center;flex-shrink:0}
+.op-wave{flex:1;min-width:0;display:flex;align-items:center;gap:2px;height:44px;cursor:pointer}
+.op-wave i{flex:1;min-width:0;border-radius:2px;background:#d9dde3}
+.op-wave i.is-ai{background:#a9bdb2}
+.op-wave i.is-done{background:var(--orange)}
+.op-wave i.is-ai.is-done{background:var(--forest)}
+.op-time{font-size:12px;color:#7c8274;font-variant-numeric:tabular-nums;white-space:nowrap}
+.op-lines{display:grid;gap:2px}
+.op-line{display:grid;grid-template-columns:56px minmax(0,1fr);gap:8px;text-align:left;padding:6px 10px;border-radius:12px;font-size:13.5px;line-height:1.45;color:#4c5248;background:transparent}
+.op-line.is-now{background:#f4f5f7;color:var(--ink)}
+.op-line small{display:block;font-size:12px;color:#7c8274;margin-top:2px}
+.op-who{font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#7c8274;padding-top:2px}
+.op-line.is-ai .op-who{color:var(--orange)}
+.op-did{list-style:none;margin:0;padding:0 4px 4px;display:flex;flex-wrap:wrap;gap:6px}
+.op-did li{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;color:var(--forest);background:#d9ecdf99;border-radius:999px;padding:5px 10px}
+@media (max-width:1100px){.op-tabs button{font-size:13px;gap:6px;padding:0 6px}.ai-presenter-copy{position:relative;z-index:2}}
+/* On a phone the presenter goes under the demo: two columns left the chat 160px wide. */
+@media (max-width:760px){.ai-presenter-grid{grid-template-columns:minmax(0,1fr);gap:0}.ai-presenter-copy{padding-bottom:24px}.ai-presenter-media{min-height:0;height:320px;margin:0;justify-content:center}.ai-presenter-media video{height:320px;max-height:none;object-position:center bottom}.op-card{max-width:none}}
+@media (max-width:560px){.op-line{grid-template-columns:1fr;gap:2px}}
+@media (prefers-reduced-motion:reduce){.op-msg{animation:none}}
