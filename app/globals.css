@@ -381,19 +381,19 @@ dialog.modal{position:relative;margin:0;border:0;max-width:none;inset:auto}
 .dash-side nav span{padding:.58cqw .7cqw;font-size:.92cqw;gap:.65cqw}
 .modal-modules{border:0;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:8px 16px}.modal-modules legend{font-size:13px;font-weight:700;color:#3d443f;margin-bottom:8px;padding:0}.modal-modules label{flex-direction:row;align-items:center;gap:8px;font-weight:500;font-size:14px;cursor:pointer}.modal-modules input{width:auto;padding:0}
 @media (max-width:640px){.modal-modules{grid-template-columns:1fr}}
-/* AI operator demo inside the AI section: channel tabs, a sample chat or the test-stand call. */
-.op-card{max-width:560px;grid-template-columns:minmax(0,1fr);background:#fff;border:1px solid #e1e5ec;border-radius:20px;box-shadow:0 8px 20px #27392d0d;padding:12px;display:grid;gap:12px}
-.op-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;background:#f4f5f7;border-radius:14px;padding:4px}
-.op-tabs button{display:flex;align-items:center;justify-content:center;gap:8px;height:40px;border-radius:10px;font-size:14px;font-weight:600;color:#5b6470;background:transparent}
+/* AI operator demo inside the AI section: business directions, a sample chat or the voiced call. Compact on purpose. */
+.op-card{max-width:520px;grid-template-columns:minmax(0,1fr);background:#fff;border:1px solid #e1e5ec;border-radius:18px;box-shadow:0 8px 20px #27392d0d;padding:10px;display:grid;gap:8px}
+.op-tabs{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:3px;background:#f4f5f7;border-radius:12px;padding:3px}
+.op-tabs button{display:flex;align-items:center;justify-content:center;height:32px;padding:0 4px;min-width:0;overflow:hidden;text-overflow:ellipsis;border-radius:9px;font-size:13px;font-weight:600;color:#5b6470;background:transparent;white-space:nowrap}
 .op-tabs button[aria-selected=true]{background:#fff;color:var(--ink);box-shadow:0 1px 3px #14181f1f}
-.op-pane{display:grid;grid-template-columns:minmax(0,1fr);gap:10px;min-height:300px;align-content:start;padding:0 4px}
-.op-pane-head{display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:13px}
+.op-pane{display:grid;grid-template-columns:minmax(0,1fr);gap:7px;min-height:236px;align-content:start;padding:0 4px}
+.op-pane-head{display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:12.5px}
 .op-pane-head b{font-weight:700;color:var(--ink)}
-.op-tag{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#7c8274;border:1px dashed #d3d8e0;border-radius:999px;padding:2px 8px;white-space:nowrap}
-.op-chat{display:grid;gap:8px}
-.op-msg{max-width:86%;justify-self:start;padding:9px 13px;border-radius:16px 16px 16px 5px;background:#f4f5f7;color:var(--ink);font-size:14px;line-height:1.45;animation:op-in .4s both}
-.op-msg.is-ai{justify-self:end;background:var(--forest);color:#fff;border-radius:16px 16px 5px 16px}
-.op-msg small{display:block;margin-top:3px;font-size:11px;opacity:.65;text-align:right}
+.op-tag{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#7c8274;border:1px dashed #d3d8e0;border-radius:999px;padding:2px 8px;white-space:nowrap}
+.op-chat{display:grid;gap:6px}
+.op-msg{max-width:86%;justify-self:start;padding:7px 11px;border-radius:14px 14px 14px 4px;background:#f4f5f7;color:var(--ink);font-size:13px;line-height:1.42;animation:op-in .4s both}
+.op-msg.is-ai{justify-self:end;background:var(--forest);color:#fff;border-radius:14px 14px 4px 14px}
+.op-msg small{display:block;margin-top:2px;font-size:10px;opacity:.65;text-align:right}
 @keyframes op-in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 .op-wave{flex:1 1 160px;min-width:0;overflow:hidden;display:flex;align-items:center;gap:2px;height:44px;cursor:pointer}
 .op-wave i{flex:1;min-width:0;border-radius:2px;background:#d9dde3}
@@ -402,37 +402,37 @@ dialog.modal{position:relative;margin:0;border:0;max-width:none;inset:auto}
 .op-wave i.is-ai.is-done{background:var(--forest)}
 .op-time{font-size:12px;color:#7c8274;font-variant-numeric:tabular-nums;white-space:nowrap}
 .op-lines{display:grid;gap:2px}
-.op-line{display:grid;grid-template-columns:56px minmax(0,1fr);gap:8px;text-align:left;padding:6px 10px;border-radius:12px;font-size:13.5px;line-height:1.45;color:#4c5248;background:transparent}
+.op-line{display:grid;grid-template-columns:44px minmax(0,1fr);gap:6px;text-align:left;padding:4px 8px;border-radius:10px;font-size:12.5px;line-height:1.42;color:#4c5248;background:transparent}
 .op-line.is-now{background:#f4f5f7;color:var(--ink)}
-.op-line small{display:block;font-size:12px;color:#7c8274;margin-top:2px}
-.op-who{font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#7c8274;padding-top:2px}
+.op-line small{display:block;font-size:11px;color:#7c8274;margin-top:2px}
+.op-who{font-size:10px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#7c8274;padding-top:2px}
 .op-line.is-ai .op-who{color:var(--orange)}
-.op-did{list-style:none;margin:0;padding:0 4px 4px;display:flex;flex-wrap:wrap;gap:6px}
-.op-did li{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;color:var(--forest);background:#d9ecdf99;border-radius:999px;padding:5px 10px}
-.op-orb-row{display:flex;align-items:center;gap:24px;padding:12px 6px 8px}
-.op-orb{position:relative;width:108px;height:108px;flex-shrink:0;display:grid;place-items:center;background:none;border-radius:50%}
+.op-did{list-style:none;margin:0;padding:0 4px 2px;display:flex;flex-wrap:wrap;gap:5px}
+.op-did li{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:600;color:var(--forest);background:#d9ecdf99;border-radius:999px;padding:3px 9px}
+.op-orb-row{display:flex;align-items:center;gap:18px;padding:6px 4px 4px}
+.op-orb{position:relative;width:84px;height:84px;flex-shrink:0;display:grid;place-items:center;background:none;border-radius:50%}
 .op-orb-halo{position:absolute;inset:-24%;border-radius:50%;background:radial-gradient(circle,#ff8a5280 0%,#f6531633 40%,transparent 70%);filter:blur(14px);animation:op-halo 4.5s ease-in-out infinite;pointer-events:none}
-.op-orb-ring{position:absolute;inset:8px;border-radius:50%;border:1.5px solid #f6531680;animation:op-pulse 3.2s ease-out infinite;pointer-events:none}
+.op-orb-ring{position:absolute;inset:6px;border-radius:50%;border:1.5px solid #f6531680;animation:op-pulse 3.2s ease-out infinite;pointer-events:none}
 .op-orb-ring-2{animation-delay:1.6s}
-.op-orb-sphere{position:relative;width:88px;height:88px;border-radius:50%;display:grid;place-items:center;color:#fff;background:radial-gradient(circle at 35% 28%,#ffd9c7,#ff9a66 22%,#f65316 52%,#c93d0c 76%,#7d2205);box-shadow:inset 0 -10px 22px #5a180366,0 14px 30px #f6531659;animation:op-breathe 3.2s ease-in-out infinite;transition:transform .25s ease-out}
+.op-orb-sphere{position:relative;width:68px;height:68px;border-radius:50%;display:grid;place-items:center;color:#fff;background:radial-gradient(circle at 35% 28%,#ffd9c7,#ff9a66 22%,#f65316 52%,#c93d0c 76%,#7d2205);box-shadow:inset 0 -10px 22px #5a180366,0 14px 30px #f6531659;animation:op-breathe 3.2s ease-in-out infinite;transition:transform .25s ease-out}
 .op-orb-sphere svg{fill:currentColor;filter:drop-shadow(0 1px 2px #0000004d)}
-.op-orb-sphere svg[class*=play]{margin-left:4px}
+.op-orb-sphere svg[class*=play]{margin-left:3px}
 .op-orb-row.is-playing .op-orb-sphere{animation:none}
 .op-orb:hover .op-orb-sphere{filter:brightness(1.06)}
 @keyframes op-breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
 @keyframes op-halo{0%,100%{opacity:.6;transform:scale(.95)}50%{opacity:1;transform:scale(1.1)}}
 @keyframes op-pulse{0%{transform:scale(.85);opacity:.7}100%{transform:scale(1.75);opacity:0}}
 .op-orb-copy{display:grid;gap:4px;min-width:0;flex:1}
-.op-orb-title{font-size:21px;font-weight:800;letter-spacing:-.02em;line-height:1.2;color:var(--ink);text-align:left;background:none;padding:0}
+.op-orb-title{font-size:18px;font-weight:800;letter-spacing:-.02em;line-height:1.2;color:var(--ink);text-align:left;background:none;padding:0}
 .op-orb-title:hover{color:var(--orange)}
-.op-orb-copy p{font-size:13.5px;color:#5b6470;margin:0}
+.op-orb-copy p{font-size:12.5px;color:#5b6470;margin:0}
 .op-progress{display:flex;align-items:center;gap:10px;margin-top:6px}
-.op-progress .op-wave{height:30px}
-.op-want{display:inline-flex;align-items:center;gap:8px;justify-self:start;margin-top:8px;padding:8px 14px;border-radius:999px;background:var(--orange);color:#fff;font-size:13.5px;font-weight:700}
+.op-progress .op-wave{height:26px}
+.op-want{display:inline-flex;align-items:center;gap:8px;justify-self:start;margin-top:6px;padding:7px 13px;border-radius:999px;background:var(--orange);color:#fff;font-size:13px;font-weight:700}
 .op-want:hover{background:var(--orange-dark)}
 @media (prefers-reduced-motion:reduce){.op-orb-halo,.op-orb-ring,.op-orb-sphere{animation:none}}
-@media (max-width:560px){.op-progress{flex-wrap:wrap;gap:4px}.op-progress .op-wave{flex-basis:100%}.op-orb-row{gap:16px}.op-orb{width:92px;height:92px}.op-orb-sphere{width:74px;height:74px}.op-orb-title{font-size:18px}}
-@media (max-width:1100px){.op-tabs button{font-size:13px;gap:6px;padding:0 6px}.ai-presenter-copy{position:relative;z-index:2}}
+@media (max-width:560px){.op-progress{flex-wrap:wrap;gap:4px}.op-progress .op-wave{flex-basis:100%}.op-orb-row{gap:14px}.op-orb{width:76px;height:76px}.op-orb-sphere{width:60px;height:60px}.op-orb-title{font-size:16px}.op-tabs{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:1100px){.op-tabs button{font-size:12.5px}.ai-presenter-copy{position:relative;z-index:2}}
 /* On a phone the presenter goes under the demo: two columns left the chat 160px wide. */
 @media (max-width:760px){.ai-presenter-grid{grid-template-columns:minmax(0,1fr);gap:0}.ai-presenter-copy{padding-bottom:24px}.ai-presenter-media{min-height:0;height:320px;margin:0;justify-content:center}.ai-presenter-media video{height:320px;max-height:none;object-position:center bottom}.op-card{max-width:none}}
 @media (max-width:560px){.op-line{grid-template-columns:1fr;gap:2px}.op-wave{gap:1px}}
