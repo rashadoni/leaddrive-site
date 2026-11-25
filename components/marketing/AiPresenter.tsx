@@ -11,8 +11,10 @@ import { TypedText, useTypewriter } from './Typewriter';
  * play button to catch the eye (a breathing orb, as on syncallai.com). Chats follow in the order of the real share of
  * inbound requests across LeadDrive tenants (prod, 90 days to 2026-11-25): Instagram, then WhatsApp. TikTok is left out on purpose: replies there were not
  * reaching customers when this was written, so the page must not promise them.
- * The chats are samples and say so. The call is a real recording from the line's test stand with a
- * made-up pharmacy name; its words stay in Azerbaijani, with a translation for ru/en readers.
+ * The chats are samples and say so. The call is the dialogue of a real test-stand call (made-up pharmacy name),
+ * voiced again at studio quality: the AI in the line's own voice (Sulafat, the line's speaking style), the
+ * pharmacy in another female voice. The stand recording was 8 kHz phone audio with a male caller, and the
+ * owner heard it as «our voice is not like that». Its words stay in Azerbaijani, translated for ru/en readers.
  */
 
 type Msg = { ai?: boolean; text: string; at: string };
@@ -20,16 +22,16 @@ type ChatTab = { kind: 'chat'; id: 'ig' | 'wa'; label: string; title: string; ms
 type Line = { ai?: boolean; a: number; b: number; az: string; tr: string };
 type CallTab = { kind: 'call'; id: 'call'; label: string; title: string; who: string; lines: Line[]; did: readonly string[] };
 
-const CALL_SRC = '/media/ai-calls/aptek.mp3';
-const CALL_DUR = 36.1;
+const CALL_SRC = '/media/ai-calls/aptek-sulafat.mp3';
+const CALL_DUR = 28.9;
 // Loudness of the recording, three bars per second (measured from the file), to draw its real waveform.
-const ENV = [0,0,0,5,78,61,78,55,69,68,71,43,71,79,61,73,79,64,64,46,56,63,71,67,53,57,23,2,0,0,0,0,0,0,0,71,39,2,8,7,86,81,81,60,54,20,0,0,0,0,0,0,83,86,80,84,85,83,56,56,100,89,65,72,74,40,0,0,0,0,0,0,0,0,72,98,81,84,70,24,3,80,90,50,3,2,72,78,42,0,0,0,0,0,52,78,61,78,67,77,58,37,81,78,68,51,3,0];
+const ENV = [0,91,83,75,70,57,43,73,14,82,82,73,9,41,79,74,52,56,46,6,70,73,58,32,0,0,51,41,14,86,83,75,68,66,61,71,60,4,76,39,0,0,66,92,81,84,100,75,69,63,17,74,83,74,84,55,67,19,0,5,91,85,80,77,52,85,68,72,76,59,1,0,8,85,39,57,93,82,58,52,4,64,84,76,65,0];
 const CALL_AZ = [
-  { ai: true, a: 1.3, b: 8.8, az: 'Dərman anbarı, satış şöbəsi, salam! Nömrəniz «Mərkəzi aptek» kimi qeydə alınıb. Düzdürsə, sifarişinizi deyin.' },
-  { ai: false, a: 11.7, b: 15.1, az: 'Düzdür. Parasetamol beş yüz, on qutu.' },
-  { ai: true, a: 17.4, b: 21.8, az: 'Parasetamol 500 hazırda tükənib. Başqa əvəzedicisini təklif edim?' },
-  { ai: false, a: 24.9, b: 29.6, az: 'Yox, əvəzedici lazım deyil. Gələndə xəbər verin, on qutu yazın.' },
-  { ai: true, a: 31.7, b: 35.4, az: 'Qeyd etdim, gələn kimi xəbər verəcəyik. Daha nə əlavə edək?' },
+  { ai: true, a: 0.35, b: 8.04, az: 'Dərman anbarı, satış şöbəsi, salam! Nömrəniz «Mərkəzi aptek» kimi qeydə alınıb. Düzdürsə, sifarişinizi deyin.' },
+  { ai: false, a: 8.74, b: 13.35, az: 'Düzdür. Parasetamol beş yüz, on qutu.' },
+  { ai: true, a: 14.25, b: 19.24, az: 'Parasetamol 500 hazırda tükənib. Başqa əvəzedicisini təklif edim?' },
+  { ai: false, a: 19.94, b: 23.51, az: 'Yox, əvəzedici lazım deyil. Gələndə xəbər verin, on qutu yazın.' },
+  { ai: true, a: 24.41, b: 28.47, az: 'Qeyd etdim, gələn kimi xəbər verəcəyik. Daha nə əlavə edək?' },
 ];
 const CALL_TR: Record<Lang, string[]> = {
   az: ['', '', '', '', ''],
@@ -41,7 +43,7 @@ const COPY = {
   az: {
     eyebrow: 'AI operator · Azərbaycan dilində', h1: 'Müştəri yazır,', h2: 'AI cavab verir.',
     sub: 'Instagram, WhatsApp və telefon zəngləri — hamısına bir AI operator cavab verir, sifarişi və müraciəti CRM-ə yazır. Gecə də.',
-    sample: 'nümunə', recording: 'test zəngi', play: 'Zəngə qulaq asın', pause: 'Dayandır', listen: 'AI operator aptekdən sifariş qəbul edir', want: 'Biznesimə belə operator istəyirəm', ai: 'AI', review: 'Əmin olmadığı cavabı göndərmir — işçiyə qaralama kimi verir. Lazım olanda söhbəti menecerə ötürür.', cta: 'Demoda göstərək',
+    sample: 'nümunə', recording: 'nümunə', play: 'Zəngə qulaq asın', pause: 'Dayandır', listen: 'AI operator aptekdən sifariş qəbul edir', want: 'Biznesimə belə operator istəyirəm', ai: 'AI', review: 'Əmin olmadığı cavabı göndərmir — işçiyə qaralama kimi verir. Lazım olanda söhbəti menecerə ötürür.', cta: 'Demoda göstərək',
     tabs: [
       { kind: 'chat', id: 'ig', label: 'Instagram', title: 'Dərman brendi · Direct', did: ['Şirkətin biliyindən cavab', 'Gecə, saniyələrdə', 'Söhbət CRM-də'], msgs: [
         { text: 'Salam, bu krem hansı apteklərdə var?', at: '23:41' },
@@ -59,7 +61,7 @@ const COPY = {
   ru: {
     eyebrow: 'ИИ-оператор · на азербайджанском', h1: 'Клиент пишет,', h2: 'ИИ отвечает.',
     sub: 'Instagram, WhatsApp и телефонные звонки — на всё отвечает один ИИ-оператор и записывает заказ и обращение в CRM. Даже ночью.',
-    sample: 'пример', recording: 'тестовый звонок', play: 'Послушайте звонок', pause: 'Пауза', listen: 'ИИ-оператор принимает заказ у аптеки', want: 'Хочу такого оператора', ai: 'ИИ', review: 'Ответ, в котором не уверен, не отправляет — отдаёт сотруднику черновиком. Когда нужно, передаёт разговор менеджеру.', cta: 'Показать на демо',
+    sample: 'пример', recording: 'пример', play: 'Послушайте звонок', pause: 'Пауза', listen: 'ИИ-оператор принимает заказ у аптеки', want: 'Хочу такого оператора', ai: 'ИИ', review: 'Ответ, в котором не уверен, не отправляет — отдаёт сотруднику черновиком. Когда нужно, передаёт разговор менеджеру.', cta: 'Показать на демо',
     tabs: [
       { kind: 'chat', id: 'ig', label: 'Instagram', title: 'Фарм-бренд · Direct', did: ['Ответ из знаний компании', 'Ночью, за секунды', 'Разговор в CRM'], msgs: [
         { text: 'Здравствуйте, в каких аптеках есть этот крем?', at: '23:41' },
@@ -77,7 +79,7 @@ const COPY = {
   en: {
     eyebrow: 'AI operator · in Azerbaijani', h1: 'Customers write,', h2: 'AI answers.',
     sub: 'Instagram, WhatsApp and phone calls — one AI operator answers them all and writes every order and request to the CRM. At night too.',
-    sample: 'sample', recording: 'test call', play: 'Listen to the call', pause: 'Pause', listen: 'The AI operator takes a pharmacy order', want: 'I want this operator', ai: 'AI', review: 'A reply it is not sure about is not sent — it goes to an employee as a draft. When needed, the conversation is handed to a manager.', cta: 'Show on a demo',
+    sample: 'sample', recording: 'sample', play: 'Listen to the call', pause: 'Pause', listen: 'The AI operator takes a pharmacy order', want: 'I want this operator', ai: 'AI', review: 'A reply it is not sure about is not sent — it goes to an employee as a draft. When needed, the conversation is handed to a manager.', cta: 'Show on a demo',
     tabs: [
       { kind: 'chat', id: 'ig', label: 'Instagram', title: 'Pharma brand · Direct', did: ['Answers from company knowledge', 'At night, in seconds', 'Conversation in the CRM'], msgs: [
         { text: 'Hi, which pharmacies have this cream?', at: '23:41' },
