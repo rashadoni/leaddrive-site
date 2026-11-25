@@ -179,6 +179,36 @@ h1 { font-size: 104px; line-height: 1.02; } h2 { font-size: 62px; line-height: 1
 .sb.new { background: #1a120c; border-left-color: var(--hot); color: #fff; opacity: 0; transform: translateY(-24px) scale(.94); transition: opacity .5s, transform .7s cubic-bezier(.2,1.4,.3,1), box-shadow .6s; }
 .sb.new.show { opacity: 1; transform: none; box-shadow: 0 0 0 2px var(--hot), 0 0 40px var(--glow); }
 .sb em { display: inline-block; margin-left: 8px; padding: 3px 8px; border-radius: 6px; background: var(--hot); font: 800 11px/1.2 var(--text); font-style: normal; letter-spacing: .05em; text-transform: uppercase; }
+/* strengths */
+.strong { margin-top: 34px; }
+.strong h5, .sh5 { margin: 0 0 16px; font: 800 17px/1 var(--text); letter-spacing: .18em; text-transform: uppercase; color: var(--muted); }
+.sh5 { margin-top: 30px; }
+.strong ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 14px; }
+.strong li { display: grid; grid-template-columns: 34px 1fr; gap: 14px; align-items: start; font: 700 23px/1.35 var(--text); color: var(--ink); opacity: 0; transform: translateX(-24px); transition: opacity .6s, transform .7s cubic-bezier(.2,.8,.2,1); }
+.strong li::before { content: ""; width: 34px; height: 34px; border-radius: 50%; background: var(--soft) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FF8A3D' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 12.5l4 4L18 8'/%3E%3C/svg%3E") center / 20px no-repeat; }
+.scene.in .strong li { opacity: 1; transform: none; }
+.scene.in .strong li:nth-child(1) { transition-delay: .9s; } .scene.in .strong li:nth-child(2) { transition-delay: 1.15s; } .scene.in .strong li:nth-child(3) { transition-delay: 1.4s; }
+.strongrow { margin-top: 26px; width: 1080px; } .strongrow .chip { font-size: 19px; padding: 11px 16px; }
+.camnum { position: absolute; right: 34px; top: 24px; text-align: right; }
+.camnum .bignum { font-size: 96px; } .camnum span { display: block; font: 700 18px/1 var(--text); color: var(--muted); margin-top: 6px; }
+/* contracts */
+.doc { position: relative; padding: 26px 30px; font: 600 22px/1.6 var(--text); }
+.doc p { margin: 0 0 10px; }
+.doc v { display: inline-block; padding: 0 10px; border-radius: 8px; background: var(--surface3); color: var(--muted); font-family: ui-monospace, Menlo, monospace; font-size: 19px; transition: background .4s, color .4s; }
+.doc v.on { background: var(--soft); color: var(--hot-ink); font-family: var(--text); font-size: 22px; font-weight: 800; }
+.cond { margin: 8px 0 14px; padding: 10px 14px; border-radius: 10px; border: 1px dashed var(--hot); color: var(--hot-ink); font: 700 18px/1.3 var(--text); opacity: 0; transform: translateY(8px); transition: opacity .5s, transform .5s; }
+.cond.show { opacity: 1; transform: none; }
+.skel { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; } .skel i { display: block; height: 12px; border-radius: 6px; background: var(--surface3); }
+.appr { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
+.ap { padding: 10px 16px; border-radius: 12px; background: var(--surface2); border: 1px solid var(--line); font: 700 18px/1 var(--text); color: var(--muted); transition: background .4s, color .4s, border-color .4s; }
+.ap.on { background: var(--ok-soft); color: var(--ok); border-color: transparent; } .ap.on::before { content: "✓ "; }
+.ar { color: #555; font-weight: 800; }
+.sign { display: flex; align-items: flex-end; gap: 20px; padding: 16px 18px; border-radius: 16px; background: var(--surface2); }
+.sign > div { flex: 1; } .sign small { display: block; font: 600 15px/1 var(--text); color: var(--muted); margin-bottom: 6px; }
+.sign svg { width: 100%; height: 80px; display: block; border-bottom: 2px dashed #3a3a3a; }
+.sign path { fill: none; stroke: #fff; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 900; stroke-dashoffset: 900; }
+.sign path.draw { transition: stroke-dashoffset 1.5s ease-in-out; stroke-dashoffset: 0; }
+#cStamp { position: absolute; right: 40px; top: 282px; font-size: 30px; }
 /* panels / live widgets */
 .panel { position: absolute; border-radius: 26px; background: var(--surface); border: 1px solid var(--line); box-shadow: 0 50px 120px rgba(0,0,0,.6); overflow: hidden; }
 .ph { display: flex; align-items: center; gap: 12px; padding: 20px 26px; border-bottom: 1px solid var(--line); font: 700 21px/1 var(--text); color: var(--muted); }
@@ -395,7 +425,7 @@ h1 { font-size: 104px; line-height: 1.02; } h2 { font-size: 62px; line-height: 1
   <div style="position:absolute; left:128px; top:300px; width:1100px;">
     <p class="eyebrow" data-a="up" style="--d:900">LeadDrive</p>
     <h1 style="--d:1100">Bütün biznesiniz.<br><span class="acc">Bir platformada.</span></h1>
-    <p class="lead" data-a="up" style="--d:1900">13 modul. Lazım olandan başlayırsınız.</p>
+    <p class="lead" data-a="up" style="--d:1900">14 modul. Lazım olandan başlayırsınız.</p>
   </div>
   <div class="mark" data-a="zoom" style="--d:600"><div class="ring"></div><div class="ring"></div><div class="ring"></div>
     <div class="core"><svg viewBox="0 0 1024 1024"><g transform="translate(512 512) scale(0.78) translate(-512 -512) translate(278.5 0)"><polygon fill="#FF6D00" points="-206,418.5 160,418.5 241,337.5 -125,337.5"/><polygon fill="#FFA45C" points="-256,552.5 26,552.5 107,471.5 -175,471.5"/><polygon fill="#FFCFA8" points="-305,686.5 -108,686.5 -27,605.5 -224,605.5"/><path fill="#FFFFFF" fill-rule="evenodd" d="M 370 160 L 420 160 A 352 352 0 0 1 420 864 L 220 864 L 220 440 Z M 420 292 A 220 220 0 0 1 420 732 L 420 732 Z"/></g></svg></div>
@@ -415,14 +445,14 @@ h1 { font-size: 104px; line-height: 1.02; } h2 { font-size: 62px; line-height: 1
 <!-- 3 · map -->
 <section class="scene" data-name="xerite" data-dur="10000" data-note="1 минута. Карта всех модулей. На любую плитку можно нажать — сразу перейдёшь в её демо.&#10;Спроси зал: «Что из этого у вас сейчас в Excel или в WhatsApp?» — и иди туда.&#10;Пунктирные — отдельные продукты со своим кабинетом.">
   <p class="eyebrow" data-a="up">Platforma</p>
-  <h2 style="--d:80">13 modul — <span class="acc">bir baxışda</span></h2>
+  <h2 style="--d:80">14 modul — <span class="acc">bir baxışda</span></h2>
   <div class="groups" id="groups"></div>
 </section>
 
 <!-- 4 · chapter 1 -->
 <section class="scene chapter" data-name="c1" data-dur="5000" data-note="Глава 1. Пауза 2 секунды, потом дальше.">
   <div class="big chapter-num">01</div><div class="line"></div>
-  <div class="ct"><h2>Satış və müştəri</h2><p data-a="up" style="--d:700">Satış · Tapşırıqlar · Görüşlər · Maliyyə</p></div>
+  <div class="ct"><h2>Satış və müştəri</h2><p data-a="up" style="--d:700">Satış · Müqavilələr · Tapşırıqlar · Görüşlər · Maliyyə</p></div>
 </section>
 
 <!-- 5 · sales -->
@@ -431,7 +461,7 @@ h1 { font-size: 104px; line-height: 1.02; } h2 { font-size: 62px; line-height: 1
     <p class="eyebrow" data-a="up">01 · Satış</p>
     <h2 style="--d:80">Müraciətdən <span class="acc">ödənişə</span> qədər</h2>
     <p class="lead" data-a="up" style="--d:300">Lid, təklif, elektron imzalı müqavilə, hesab — bir zəncirdə.</p>
-    <div class="row" data-a="up" style="--d:500"><span class="chip on">VÖEN reyestrdən</span><span class="chip">ƏDV 18%</span><span class="chip">Kapital Bank</span></div>
+    <div class="strong" data-a="up" style="--d:500"><h5>Güclü tərəflər</h5><ul><li>Lid → təklif → müqavilə → hesab — bir kartda</li><li>Şərt yerinə yetirilmədən mərhələ keçilmir</li><li>VÖEN reyestrdən, ƏDV 18%, Kapital Bank ilə ödəniş</li></ul></div>
   </div>
   <div class="browser sweep" data-a="tilt" style="--d:200; left:930px; top:120px; width:860px;"><div class="top"><i></i><i></i><i></i><span>app.leaddrivecrm.org/deals</span></div><div class="shot kb" style="--kz:1.06"><img src="/live/img/deals_az.jpg" alt="LeadDrive: satış boru xətti"></div></div>
   <div class="panel" data-a="up" style="--d:600; left:930px; top:400px; width:860px; height:470px;" id="pipeP">
@@ -442,12 +472,38 @@ h1 { font-size: 104px; line-height: 1.02; } h2 { font-size: 62px; line-height: 1
   <div class="cur" id="cur-satis"><svg viewBox="0 0 24 24" width="34" height="34"><path d="M4 2l16 9-7 2-3 7z" fill="#fff" stroke="#000" stroke-width="1.4" stroke-linejoin="round"/></svg></div>
 </section>
 
+<!-- 6b · contracts -->
+<section class="scene" data-name="muqavile" data-dur="12000" data-note="1 минута. Договор собирается из шаблона: данные подставляются сами, условные пункты добавляются по правилу.&#10;Согласование по правилам — юрист, финансы, руководитель, с делегатами и эскалацией просрочек. Курсор подписывает: электронная подпись на отдельной странице, подписанту приходят напоминания.&#10;Потом: оповещение о продлении за 90/60/30/14/7 дней, счёт из договора одной кнопкой, аналитика — MRR, время цикла, % продления. Импорт .docx, PDF, версии.&#10;ИИ (оценка рисков, правки, извлечение данных) — с надстройкой Da Vinci AI.">
+  <div class="side">
+    <p class="eyebrow" data-a="up">02 · Müqavilələr</p>
+    <h2 style="--d:80">Müqavilə — <span class="acc">şablondan imzaya</span></h2>
+    <p class="lead" data-a="up" style="--d:300">Şablon, təsdiq, elektron imza və yeniləmə — bir yerdə.</p>
+    <div class="strong" data-a="up" style="--d:550"><h5>Güclü tərəflər</h5><ul><li>Şablondan bir dəqiqəyə: məlumat özü dolur, .docx idxalı</li><li>Qaydalarla təsdiq və elektron imza — çap etmədən</li><li>Bitməzdən 90 / 30 / 7 gün əvvəl xatırladır; hesab müqavilədən</li></ul></div>
+  </div>
+  <div class="panel" data-a="tilt" style="--d:250; left:930px; top:120px; width:860px; height:640px;">
+    <div class="ph"><span class="dots"><i></i><i></i><i></i></span>Xidmət müqaviləsi № 2026-031<em>v2</em></div>
+    <div class="doc">
+      <p>Bu müqavilə <v data-v="Nova MMC">{{Müştəri}}</v> ilə <v data-v="LeadDrive">{{İcraçı}}</v> arasında bağlanır.</p>
+      <p>Xidmətin dəyəri <v data-v="12 400 ₼">{{Məbləğ}}</v>, müddəti <v data-v="12 ay">{{Müddət}}</v>.</p>
+      <div class="cond" id="cond">+ Şərti bənd 3.2 · ödəniş hissə-hissə</div>
+      <div class="skel"><i style="width:92%"></i><i style="width:84%"></i><i style="width:66%"></i></div>
+      <div class="appr"><span class="ap" id="ap1">Hüquqşünas</span><span class="ar">→</span><span class="ap" id="ap2">Maliyyə</span><span class="ar">→</span><span class="ap" id="ap3">Rəhbər</span></div>
+      <div class="sign"><div><small>Müştərinin imzası · Nova MMC</small><svg viewBox="0 0 420 90" preserveAspectRatio="none"><path id="sigPath" d="M10 62 C 40 20, 60 20, 70 55 S 100 80, 120 40 S 150 15, 165 50 S 190 75, 215 38 C 230 20, 250 22, 255 48 S 280 70, 300 46 S 340 30, 410 44"/></svg></div><span class="btn" id="signBtn">İmzala</span></div>
+      <span class="stamp" id="cStamp">İmzalandı ✓</span>
+    </div>
+  </div>
+  <div class="toast" id="tRen" style="left:930px; top:790px;"><span class="b"></span><div>Müqavilə 30 gün sonra bitir<small>Yeniləmə xatırlatması menecerə getdi</small></div></div>
+  <div class="toast ok" id="tInv" style="left:1400px; top:790px;"><span class="b"></span><div>Hesab müqavilədən yaradıldı<small>12 400 ₼ · INV-2026-118</small></div></div>
+  <div class="cur" id="cur-muqavile"><svg viewBox="0 0 24 24" width="34" height="34"><path d="M4 2l16 9-7 2-3 7z" fill="#fff" stroke="#000" stroke-width="1.4" stroke-linejoin="round"/></svg></div>
+</section>
+
 <!-- 6 · boards -->
 <section class="scene" data-name="lovhe" data-dur="11000" data-note="40 секунд. «Привычные доски задач, но связанные с CRM: перезвон лиду появляется на доске сам».&#10;Курсор переносит задачу в «Hazır». Руководитель видит, кто сколько сделал, отчёт на планёрку — PowerPoint.">
   <div class="side">
-    <p class="eyebrow" data-a="up">02 · Tapşırıqlar</p>
+    <p class="eyebrow" data-a="up">03 · Tapşırıqlar</p>
     <h2 style="--d:80">Komandanın işi — <span class="acc">bir lövhədə</span></h2>
-    <p class="lead" data-a="up" style="--d:300">Çatdan gələn lid, geri zəng, görüş — hamısı eyni lövhədə. Vaxt uçotu, təkrarlanan tapşırıqlar.</p>
+    <p class="lead" data-a="up" style="--d:300">Çatdan gələn lid, geri zəng, görüş — hamısı eyni lövhədə.</p>
+    <div class="strong" data-a="up" style="--d:550"><h5>Güclü tərəflər</h5><ul><li>CRM ilə bağlı: tapşırıq özü yaranır</li><li>Vaxt uçotu, təkrarlanan tapşırıqlar, şablonlar</li><li>Rəhbər görür: kim nə qədər etdi — PowerPoint hesabatı</li></ul></div>
   </div>
   <div class="browser" data-a="right" style="--d:200; left:1010px; top:110px; width:800px; opacity:.55"><div class="top"><i></i><i></i><i></i><span>app.leaddrivecrm.org/boards</span></div><div class="shot kb"><img src="/live/img/board_list.jpg" alt="LeadDrive: tapşırıq lövhəsi"></div></div>
   <div class="panel" data-a="up" style="--d:500; left:880px; top:330px; width:840px; height:560px;" id="kanP">
@@ -465,11 +521,11 @@ h1 { font-size: 104px; line-height: 1.02; } h2 { font-size: 62px; line-height: 1
 <!-- 7 · booking: the WhatsApp form from the salon reel, synced with the salon calendar -->
 <section class="scene" data-name="gorus" data-dur="26000" data-note="1,5 минуты. Это кадры из нашего ролика: клиент пишет салону в WhatsApp — и прямо в чате приходит форма: услуга, мастер, день.&#10;«Можно ответить голосом — форма заполнится сама». «Занятое время выбрать нельзя: 13:00 уже занято — система предложит 11:30 или 15:30».&#10;«Подтверждение приходит сразу, администратор не нужен — и запись уже в календаре салона», покажи справа.&#10;Напоминание с кнопками «Gələrəm / Vaxtı dəyişmək / Ləğv etmək» — клиент сам переносит время, не звонит.&#10;Бот в WhatsApp работает с надстройкой Da Vinci AI.">
   <div class="side" style="width:640px; top:130px;">
-    <p class="eyebrow" data-a="up">03 · Görüşlər</p>
+    <p class="eyebrow" data-a="up">04 · Görüşlər</p>
     <h2 style="--d:80">Müştəri <span class="acc">WhatsApp-da</span> özü yazılır</h2>
     <p class="lead" data-a="up" style="--d:300">Çatda forma gəlir: xidmət, usta, gün, saat. Mətnlə və ya səslə.</p>
     <div class="bstep" data-a="up" style="--d:500"><span id="bstep">Müştəri yazır: «Yazılmaq istəyirəm»</span></div>
-    <div class="bchecks" data-a="up" style="--d:650">
+    <h5 class="sh5" data-a="up" style="--d:600">Güclü tərəflər</h5><div class="bchecks" data-a="up" style="--d:650">
       <span class="bc" data-t="3000">WhatsApp-da forma</span><span class="bc" data-t="6500">Mətn və səs</span><span class="bc" data-t="14500">Dolu vaxt seçilmir</span><span class="bc" data-t="20200">Admin lazım deyil</span><span class="bc" data-t="22600">Vaxtı özü dəyişir</span>
     </div>
   </div>
@@ -495,9 +551,10 @@ h1 { font-size: 104px; line-height: 1.02; } h2 { font-size: 62px; line-height: 1
 <!-- 8 · finance -->
 <section class="scene" data-name="maliyye" data-dur="11000" data-note="40 секунд. Курсор согласует платёжное поручение — и уведомление уходит в Telegram-бот компании.&#10;«Дебиторка по возрасту, поручения с цепочкой согласования, фонды, реестр платежей, e-qaimə».">
   <div class="side">
-    <p class="eyebrow" data-a="up">04 · Maliyyə</p>
+    <p class="eyebrow" data-a="up">05 · Maliyyə</p>
     <h2 style="--d:80">Pul hərəkəti <span class="acc">nəzarətdə</span></h2>
-    <p class="lead" data-a="up" style="--d:300">Borcun yaşı, ödəniş tapşırıqları təsdiq zənciri ilə, e-qaimə və gəlirlilik.</p>
+    <p class="lead" data-a="up" style="--d:300">Debitor borc, ödəniş tapşırıqları, e-qaimə və gəlirlilik.</p>
+    <div class="strong" data-a="up" style="--d:550"><h5>Güclü tərəflər</h5><ul><li>Borcun yaşı bir baxışda: 1–30 … 90+ gün</li><li>Ödəniş yalnız təsdiq zənciri ilə gedir</li><li>Bildiriş şirkətin öz Telegram botuna</li></ul></div>
   </div>
   <div class="panel" data-a="tilt" style="--d:250; left:930px; top:170px; width:860px; height:620px;">
     <div class="ph"><span class="dots"><i></i><i></i><i></i></span>Debitor borc<em id="arSum">0 ₼</em></div>
@@ -522,10 +579,11 @@ h1 { font-size: 104px; line-height: 1.02; } h2 { font-size: 62px; line-height: 1
 <!-- 10 · omni -->
 <section class="scene" data-name="omni" data-dur="13000" data-note="1,5 минуты. Это настоящий экран инбокса LeadDrive. Сообщения прилетают из разных каналов — все в одну ленту.&#10;Потом ИИ пишет черновик ответа — «он сначала учится на ответах ваших сотрудников, потом предлагает черновик, потом отвечает сам; процент готовности виден».&#10;Цены не выдумывает. Сотрудник ушёл — переписка осталась в компании.&#10;Правило Meta: в WhatsApp свободно писать 24 часа после сообщения клиента, дальше — шаблоном.">
   <div class="side" style="top:120px; width:760px;">
-    <p class="eyebrow" data-a="up">05 · Omni-Channel</p>
+    <p class="eyebrow" data-a="up">06 · Omni-Channel</p>
     <h2 style="--d:80">Bütün kanallar — <span class="acc">bir lentdə</span></h2>
+    <div class="row strongrow" data-a="up" style="--d:400"><span class="chip on">6 kanal — bir müştəri tarixçəsi</span><span class="chip on">AI öyrənir → qaralama → özü cavab verir</span><span class="chip on">Əməkdaş gedir — yazışma qalır</span></div>
   </div>
-  <div class="browser sweep" data-a="zoom" style="--d:300; left:128px; top:330px; width:1080px;"><div class="top"><i></i><i></i><i></i><span>app.leaddrivecrm.org/inbox</span></div><div class="shot kb" style="--ox:30%; --oy:40%; --kz:1.18"><img src="/live/img/inbox_rauf.jpg" alt="LeadDrive: Omni-Channel gələnlər"></div></div>
+  <div class="browser sweep" data-a="zoom" style="--d:300; left:128px; top:440px; width:1040px;"><div class="top"><i></i><i></i><i></i><span>app.leaddrivecrm.org/inbox</span></div><div class="shot kb" style="--ox:30%; --oy:40%; --kz:1.18"><img src="/live/img/inbox_rauf.jpg" alt="LeadDrive: Omni-Channel gələnlər"></div></div>
   <div class="toasts" id="omniT" style="left:1290px; top:150px;"></div>
   <div class="draft" id="omniD" style="left:1290px; top:690px; width:500px;"><h5><span>AI qaralama</span><span>hazırlıq 92%</span></h5><p id="omniDt"></p></div>
 </section>
@@ -533,9 +591,10 @@ h1 { font-size: 104px; line-height: 1.02; } h2 { font-size: 62px; line-height: 1
 <!-- 11 · AI call centre -->
 <section class="scene" data-name="zeng" data-dur="14000" data-note="1,5 минуты. САМЫЙ СИЛЬНЫЙ МОМЕНТ. Звонок, менеджеры заняты — трубку берёт ИИ-оператор, по-азербайджански, принимает заказ по каталогу и отправляет в 1С.&#10;«Это работает у аптечного дистрибьютора: аптеки звонят, ИИ принимает заказ, менеджер жмёт “Подтвердить”».&#10;Подключается к Twilio, 3CX, Asterisk, SIP. ИИ-оператор — через Asterisk и нашу голосовую станцию.">
   <div class="side" style="width:640px;">
-    <p class="eyebrow" data-a="up">06 · AI Zəng Mərkəzi</p>
+    <p class="eyebrow" data-a="up">07 · AI Zəng Mərkəzi</p>
     <h2 style="--d:80">Menecerlər məşğuldur — <span class="acc">AI cavab verir</span></h2>
     <p class="lead" data-a="up" style="--d:300">Azərbaycanca danışır, kataloqdan sifariş qəbul edir və 1C-yə ötürür.</p>
+    <div class="strong" data-a="up" style="--d:550"><h5>Güclü tərəflər</h5><ul><li>Mövcud telefoniya ilə: Twilio, 3CX, Asterisk, SIP</li><li>Zəng itmir: menecer məşğuldursa, AI cavab verir</li><li>Hər zəngin AI təhlili: ton, mövzu, tapşırıq</li></ul></div>
   </div>
   <div class="panel" data-a="up" style="--d:300; left:860px; top:150px; width:930px; height:560px; padding:26px; box-sizing:border-box;">
     <div class="ringer" id="ringer" style="position:relative;"><div class="rb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></div><div><b>Aptek № 92 · Yasamal</b><span id="callSt">Zəng gəlir…</span></div><div class="wave" id="wave"></div></div>
@@ -549,9 +608,10 @@ h1 { font-size: 104px; line-height: 1.02; } h2 { font-size: 62px; line-height: 1
 <!-- 12 · help desk -->
 <section class="scene" data-name="destek" data-dur="12000" data-note="1 минута. Таймер SLA бежит — система сама поднимает приоритет и зовёт руководителя, курсор отвечает.&#10;«Ни одно обращение не теряется: WhatsApp, почта, чат сайта, портал — всё тикетом с SLA».&#10;Реестр жалоб с Excel и ИИ-оценкой риска.">
   <div class="side">
-    <p class="eyebrow" data-a="up">07 · AI Help Desk</p>
+    <p class="eyebrow" data-a="up">08 · AI Help Desk</p>
     <h2 style="--d:80">Heç bir müraciət <span class="acc">itmir</span></h2>
-    <p class="lead" data-a="up" style="--d:300">SLA vaxtı keçməmiş sistem özü xəbər verir və prioriteti qaldırır.</p>
+    <p class="lead" data-a="up" style="--d:300">WhatsApp, e-poçt, sayt çatı və portaldan hər müraciət tiketə çevrilir.</p>
+    <div class="strong" data-a="up" style="--d:550"><h5>Güclü tərəflər</h5><ul><li>SLA bitməmiş prioritet özü qalxır</li><li>Şikayət reyestri: Excel və AI risk qiyməti</li><li>Müştəri portalı: AI çat və bilik bazası</li></ul></div>
   </div>
   <div class="panel" data-a="tilt" style="--d:250; left:930px; top:150px; width:860px; height:700px;">
     <div class="ticket"><div class="tp">TK-0142 <em>WhatsApp</em><em>Şikayət</em><span class="btn" id="tkBtn" style="font-size:17px;">Cavab ver</span></div>
@@ -565,9 +625,10 @@ h1 { font-size: 104px; line-height: 1.02; } h2 { font-size: 62px; line-height: 1
 <!-- 13 · brand -->
 <section class="scene" data-name="brend" data-dur="10000" data-note="40 секунд. Лента упоминаний идёт вживую. Говори скромно: сейчас собираются YouTube (комментарии и речь в видео) и Google Alerts, с тональностью, юридическими кейсами и PDF-отчётами.">
   <div class="side">
-    <p class="eyebrow" data-a="up">08 · Brend monitorinqi</p>
+    <p class="eyebrow" data-a="up">09 · Brend monitorinqi</p>
     <h2 style="--d:80">Haqqınızda <span class="acc">nə danışırlar</span></h2>
-    <p class="lead" data-a="up" style="--d:300">YouTube şərhləri və videolardakı danışıq, Google Alerts — tonallıqla.</p>
+    <p class="lead" data-a="up" style="--d:300">İnternetdə brendiniz haqqında yazılanlar bir lentdə.</p>
+    <div class="strong" data-a="up" style="--d:550"><h5>Güclü tərəflər</h5><ul><li>YouTube şərhləri və videolardakı danışıq</li><li>Google Alerts qeydləri</li><li>Tonallıq, hüquqi işlər və PDF hesabatlar</li></ul></div>
   </div>
   <div class="panel" data-a="right" style="--d:250; left:930px; top:150px; width:860px; height:720px;">
     <div class="ph"><span class="dots"><i></i><i></i><i></i></span>Tapıntılar · canlı</div>
@@ -585,9 +646,10 @@ h1 { font-size: 104px; line-height: 1.02; } h2 { font-size: 62px; line-height: 1
 <!-- 15 · field -->
 <section class="scene" data-name="sahe" data-dur="13000" data-note="1 минута. Агент едет по маршруту, каждая точка подтверждается GPS и зоной клиента.&#10;«Перерыв — личное время: координаты не пишутся». Совместный визит руководителя с оценкой; клиенту ссылка “агент едет к вам”, как в такси.&#10;Android, работает без интернета.">
   <div class="side" style="width:640px;">
-    <p class="eyebrow" data-a="up">09 · Sahə satışı</p>
+    <p class="eyebrow" data-a="up">10 · Sahə satışı</p>
     <h2 style="--d:80">Sahədəki komanda — <span class="acc">xəritədə</span></h2>
-    <p class="lead" data-a="up" style="--d:300">Hər vizit GPS və müştəri zonası ilə təsdiqlənir. Fasilə şəxsi vaxtdır.</p>
+    <p class="lead" data-a="up" style="--d:300">Marşrut, vizit və hesabat — Android tətbiqində.</p>
+    <div class="strong" data-a="up" style="--d:550"><h5>Güclü tərəflər</h5><ul><li>Hər vizit GPS və müştəri zonası ilə təsdiqlənir</li><li>İnternetsiz işləyir; fasilədə koordinat yazılmır</li><li>Müştəriyə «agent yoldadır» linki, 16 Excel hesabatı</li></ul></div>
   </div>
   <div class="panel" data-a="zoom" style="--d:250; left:860px; top:130px; width:930px; height:760px;">
     <div class="ph"><span class="dots"><i></i><i></i><i></i></span>Bugünkü marşrut · Rəşid M.<em id="visN">0/5</em></div>
@@ -604,9 +666,10 @@ h1 { font-size: 104px; line-height: 1.02; } h2 { font-size: 62px; line-height: 1
 <!-- 16 · timesheet -->
 <section class="scene" data-name="tabel" data-dur="11000" data-note="40 секунд. QR у входа меняется — отметить за коллегу нельзя. Сотрудники отмечаются один за другим, опоздание видно сразу.&#10;«Без биометрии и без слежки: место берётся только в момент прихода и ухода». Форма N-1t и 13 отчётов.">
   <div class="side">
-    <p class="eyebrow" data-a="up">10 · İş vaxtı uçotu</p>
+    <p class="eyebrow" data-a="up">11 · İş vaxtı uçotu</p>
     <h2 style="--d:80">Kim nə vaxt gəldi — <span class="acc">dəqiq</span></h2>
-    <p class="lead" data-a="up" style="--d:300">Biometriya yoxdur. QR kod dəyişir — başqasının yerinə qeyd olmur.</p>
+    <p class="lead" data-a="up" style="--d:300">Ofis və filiallarda gəliş-gediş — telefonla, QR ilə.</p>
+    <div class="strong" data-a="up" style="--d:550"><h5>Güclü tərəflər</h5><ul><li>Biometriya yoxdur — yalnız gəliş və gediş anı</li><li>QR hər dəqiqə dəyişir — başqasının yerinə qeyd olmur</li><li>N-1t forması və 13 hazır hesabat</li></ul></div>
   </div>
   <div data-a="zoom" style="--d:250; position:absolute; left:930px; top:170px; width:360px;"><div class="qr" id="qr"></div><div class="qrt"><div id="qrt"></div></div></div>
   <div id="ins" style="position:absolute; left:1330px; top:170px; width:460px; display:flex; flex-direction:column; gap:12px;">
@@ -618,29 +681,30 @@ h1 { font-size: 104px; line-height: 1.02; } h2 { font-size: 62px; line-height: 1
 </section>
 
 <!-- 17 · chapter 4 -->
-<section class="scene chapter" data-name="c4" data-dur="5000" data-note="Глава 4 — отдельные продукты со своим кабинетом.">
+<section class="scene chapter" data-name="c4" data-dur="6000" data-note="Глава 4 — три отдельных продукта со своим кабинетом: подсчёт посетителей в магазине, цены конкурентов, закупки. Их можно брать и без CRM.">
   <div class="big chapter-num">04</div><div class="line"></div>
-  <div class="ct"><h2>Ayrıca məhsullar</h2><p data-a="up" style="--d:700">Ziyarətçi analitikası · Qiymət monitorinqi · Satınalma</p></div>
+  <div class="ct"><h2>Pərakəndə və satınalma</h2><p data-a="up" style="--d:700">Öz kabineti olan 3 məhsul</p><p data-a="up" style="--d:1000; font-size:24px;">Mağazaya neçə nəfər girir · Rəqib eyni məhsulu neçəyə satır · Tender və təchizatçılar</p></div>
 </section>
 
 <!-- 18 · visitors -->
 <section class="scene" data-name="ziyaretci" data-dur="12000" data-note="1 минута. Люди проходят через линию входа — счётчик растёт вживую.&#10;«Камеры Hikvision, которые у вас уже стоят. Видео и лица никуда не уходят — на сервер идут только цифры».">
   <div class="side" style="width:620px;">
-    <p class="eyebrow" data-a="up">11 · Ziyarətçi analitikası</p>
+    <p class="eyebrow" data-a="up">12 · Ziyarətçi analitikası</p>
     <h2 style="--d:80">Mövcud kamera <span class="acc">sayır</span></h2>
-    <p class="lead" data-a="up" style="--d:300">Video və üzlər heç yerə getmir — yalnız rəqəmlər.</p>
-    <div style="margin-top:44px;" data-a="up" style="--d:500"><div class="bignum" id="vaN">247</div><p class="lead" style="margin-top:8px;">bu gün girdi</p></div>
+    <p class="lead" data-a="up" style="--d:300">Mağazanıza neçə nəfər girir — saat-saat. Mövcud kameralarla, öz kabinetində.</p>
+    <div class="strong" data-a="up" style="--d:550"><h5>Güclü tərəflər</h5><ul><li>Yeni kamera lazım deyil — Hikvision ilə işləyir</li><li>Video və üzlər heç yerə getmir — yalnız rəqəmlər</li><li>Pik saat, müqayisə, Excel; boşluq «məlumat yoxdur» kimi</li></ul></div>
   </div>
-  <div class="cam" data-a="zoom" style="--d:250; left:860px; top:130px; width:930px; height:430px;" id="cam"><div class="door"></div><div class="gate" style="top:260px;"></div><span class="rec">KAMERA 1 · GİRİŞ</span></div>
+  <div class="cam" data-a="zoom" style="--d:250; left:860px; top:130px; width:930px; height:430px;" id="cam"><div class="door"></div><div class="gate" style="top:260px;"></div><span class="rec">KAMERA 1 · GİRİŞ</span><div class="camnum"><div class="bignum" id="vaN">247</div><span>bu gün girdi</span></div></div>
   <div class="panel" data-a="up" style="--d:500; left:860px; top:590px; width:930px; height:300px; padding:24px 26px; box-sizing:border-box;"><div class="chart" id="chVA" style="height:250px;"></div></div>
 </section>
 
 <!-- 19 · prices -->
 <section class="scene" data-name="qiymet" data-dur="10000" data-note="40 секунд. Цены конкурентов меняются — таблица сама пересчитывает, кто дешевле.&#10;«Каждую ночь собираем цены и ассортимент с сайтов конкурентов, утром — письмо с Excel». Работает в аптечной рознице; для другой отрасли — настройка.">
   <div class="side">
-    <p class="eyebrow" data-a="up">12 · Qiymət monitorinqi</p>
+    <p class="eyebrow" data-a="up">13 · Qiymət monitorinqi</p>
     <h2 style="--d:80">Rəqib eyni məhsulu <span class="acc">neçəyə satır?</span></h2>
-    <p class="lead" data-a="up" style="--d:300">Hər gecə rəqib saytlarından qiymətlər toplanır və sizin məhsullarla tutuşdurulur. Səhər Excel ilə məktub gəlir.</p>
+    <p class="lead" data-a="up" style="--d:300">Rəqib saytlarındakı qiymətlər sizin məhsullarla tutuşdurulur — öz kabinetində.</p>
+    <div class="strong" data-a="up" style="--d:550"><h5>Güclü tərəflər</h5><ul><li>Hər gecə avtomatik toplanır</li><li>Kim ucuz, kim baha — rənglə, 30 günlük trend</li><li>Səhər Excel ilə məktub gəlir</li></ul></div>
   </div>
   <div class="panel" data-a="tilt" style="--d:250; left:930px; top:180px; width:860px; height:610px; padding:10px 24px; box-sizing:border-box;">
     <table class="ptab" id="ptab"><thead><tr><th>Məhsul</th><th>Sizin sayt</th><th>Rəqib A</th><th>Rəqib B</th></tr></thead><tbody></tbody></table>
@@ -651,9 +715,10 @@ h1 { font-size: 104px; line-height: 1.02; } h2 { font-size: 62px; line-height: 1
 <!-- 20 · procurement -->
 <section class="scene" data-name="satinalma" data-dur="12000" data-note="1 минута. Живой реверс-аукцион: поставщики снижают цену, последняя ставка продлевает время.&#10;«Закупка целиком: заявка, тендер или аукцион, договор, заказ, приёмка, сверка счёта, оплата; поставщики в своём кабинете». Отдельный продукт.">
   <div class="side">
-    <p class="eyebrow" data-a="up">13 · Satınalma</p>
+    <p class="eyebrow" data-a="up">14 · Satınalma</p>
     <h2 style="--d:80">Təchizatçılar <span class="acc">qiyməti endirir</span></h2>
-    <p class="lead" data-a="up" style="--d:300">Sorğu, tender, reverse auksion, müqavilə və ödəniş — bir platformada.</p>
+    <p class="lead" data-a="up" style="--d:300">Şirkətin satınalması sorğudan ödənişə qədər — təchizatçılar öz kabinetində.</p>
+    <div class="strong" data-a="up" style="--d:550"><h5>Güclü tərəflər</h5><ul><li>Reverse auksion: qiymət real vaxtda enir</li><li>Qapalı təkliflər: açılışa qədər qiymət görünmür</li><li>Müəllif öz sorğusunu təsdiqləyə bilməz</li></ul></div>
   </div>
   <div class="panel" data-a="tilt" style="--d:250; left:930px; top:160px; width:860px; height:650px;">
     <div class="ph"><span class="dots"><i></i><i></i><i></i></span>Reverse auksion · ofis kompüterləri, 40 ədəd</div>
@@ -702,7 +767,7 @@ h1 { font-size: 104px; line-height: 1.02; } h2 { font-size: 62px; line-height: 1
     <p class="eyebrow" data-a="up">Növbəti addım</p>
     <h1 style="--d:100">Bir moduldan<br><span class="acc">başlayın.</span></h1>
     <p class="lead" data-a="up" style="--d:500; max-width:1100px;">Ən çox ehtiyac olan yerdən, bir şöbədə. 2–4 həftəlik pilot — qərar sizindir.</p>
-    <div class="row" data-a="up" style="--d:800; margin-top:46px;"><span class="chip on">leaddrivecrm.org</span><span class="chip">az · ru · en</span><span class="chip">13 modul</span></div>
+    <div class="row" data-a="up" style="--d:800; margin-top:46px;"><span class="chip on">leaddrivecrm.org</span><span class="chip">az · ru · en</span><span class="chip">14 modul</span></div>
   </div>
 </section>
 
@@ -740,10 +805,10 @@ h1 { font-size: 104px; line-height: 1.02; } h2 { font-size: 62px; line-height: 1
   Array.prototype.forEach.call(document.querySelectorAll('[data-ico]'), function (el) { el.innerHTML = svg(el.getAttribute('data-ico')); });
 
   var MODS = [
-    ['Satış və müştəri', '', [['sales', 'Satış', 'lid, müqavilə, hesab', 'satis'], ['boards', 'Tapşırıqlar', 'lövhələr, vaxt uçotu', 'lovhe'], ['booking', 'Görüşlər', 'onlayn yazılış', 'gorus'], ['wallet', 'Maliyyə', 'borclar, ödənişlər', 'maliyye']]],
+    ['Satış və müştəri', '', [['sales', 'Satış', 'lid, təklif, hesab', 'satis'], ['log', 'Müqavilələr', 'şablon, təsdiq, e-imza', 'muqavile'], ['boards', 'Tapşırıqlar', 'lövhələr, vaxt uçotu', 'lovhe'], ['booking', 'Görüşlər', 'onlayn yazılış', 'gorus'], ['wallet', 'Maliyyə', 'borclar, ödənişlər', 'maliyye']]],
     ['Ünsiyyət', '', [['omni', 'Omni-Channel', 'bütün mesajlar bir lentdə', 'omni'], ['calls', 'AI Zəng Mərkəzi', 'AI operator', 'zeng'], ['help', 'AI Help Desk', 'tiketlər, SLA', 'destek'], ['brand', 'Brend monitorinqi', 'internetdə qeydlər', 'brend']]],
     ['Sahə və komanda', '', [['field', 'Sahə satışı', 'marşrut, vizit, GPS', 'sahe'], ['clock', 'İş vaxtı uçotu', 'gəliş-gediş', 'tabel']]],
-    ['Ayrıca məhsullar', 'sep', [['camera', 'Ziyarətçi analitikası', 'kamera ilə sayğac', 'ziyaretci'], ['tag', 'Qiymət monitorinqi', 'rəqib qiymətləri', 'qiymet'], ['cart', 'Satınalma', 'tender, auksion', 'satinalma']]]
+    ['Pərakəndə və satınalma', 'sep', [['camera', 'Ziyarətçi analitikası', 'mağazaya neçə nəfər girir', 'ziyaretci'], ['tag', 'Qiymət monitorinqi', 'rəqib neçəyə satır', 'qiymet'], ['cart', 'Satınalma', 'tender və təchizatçılar', 'satinalma']]]
   ];
 
   var stage = document.getElementById('stage');
@@ -871,6 +936,22 @@ h1 { font-size: 104px; line-height: 1.02; } h2 { font-size: 62px; line-height: 1
     });
     countTo(sum, 30840, 43240, 1000, 7400, ' ₼');
     at(8800, function () { cur.classList.remove('on'); });
+  };
+  plays.muqavile = function () {
+    var vs = document.querySelectorAll('.doc v'), cond = $('cond'), aps = [$('ap1'), $('ap2'), $('ap3')], btn = $('signBtn'), path = $('sigPath'), cur = $('cur-muqavile'), st = $('cStamp');
+    Array.prototype.forEach.call(vs, function (v) { v.classList.remove('on'); v.textContent = v.textContent.indexOf('{{') === 0 ? v.textContent : v.dataset.k || v.textContent; });
+    Array.prototype.forEach.call(vs, function (v) { if (!v.dataset.k) v.dataset.k = v.textContent; v.textContent = v.dataset.k; });
+    cond.classList.remove('show'); aps.forEach(function (a) { a.classList.remove('on'); }); btn.classList.remove('done', 'press'); btn.textContent = 'İmzala';
+    path.classList.remove('draw'); void path.getBoundingClientRect(); st.classList.remove('show'); $('tRen').classList.remove('show'); $('tInv').classList.remove('show');
+    cursorStart(cur, 1600, 1000);
+    Array.prototype.forEach.call(vs, function (v, k) { at(900 + k * 450, function () { v.textContent = v.dataset.v; v.classList.add('on'); }); });
+    at(2800, function () { cond.classList.add('show'); });
+    aps.forEach(function (a, k) { at(3300 + k * 600, function () { a.classList.add('on'); }); });
+    cursorTo(cur, btn, 5000); click(cur, 5950);
+    at(5950, function () { btn.classList.add('press'); }); at(6150, function () { btn.classList.remove('press'); btn.classList.add('done'); btn.textContent = '✓'; path.classList.add('draw'); });
+    at(6700, function () { cur.classList.remove('on'); });
+    at(7800, function () { st.classList.add('show'); });
+    at(8800, function () { $('tRen').classList.add('show'); }); at(9600, function () { $('tInv').classList.add('show'); });
   };
   plays.lovhe = function () {
     var f = $('kFly'), cols = f.parentNode.querySelector('.kan').children, cur = $('cur-lovhe');
