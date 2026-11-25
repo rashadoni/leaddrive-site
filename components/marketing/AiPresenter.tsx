@@ -40,7 +40,7 @@ const COPY = {
   az: {
     eyebrow: 'AI operator · Azərbaycan dilində', h1: 'Müştəri yazır,', h2: 'AI cavab verir.',
     sub: 'Instagram, WhatsApp və telefon zəngləri — hamısına bir AI operator cavab verir, sifarişi və müraciəti CRM-ə yazır. Gecə də.',
-    sample: 'nümunə', recording: 'test zəngi', play: 'Zəngi dinlə', pause: 'Dayandır', ai: 'AI', review: 'Əmin olmadığı cavabı göndərmir — işçiyə qaralama kimi verir. Lazım olanda söhbəti menecerə ötürür.', cta: 'Demoda göstərək',
+    sample: 'nümunə', recording: 'test zəngi', play: 'Zəngə qulaq asın', pause: 'Dayandır', ai: 'AI', review: 'Əmin olmadığı cavabı göndərmir — işçiyə qaralama kimi verir. Lazım olanda söhbəti menecerə ötürür.', cta: 'Demoda göstərək',
     tabs: [
       { kind: 'chat', id: 'ig', label: 'Instagram', title: 'Dərman brendi · Direct', did: ['Şirkətin biliyindən cavab', 'Gecə, saniyələrdə', 'Söhbət CRM-də'], msgs: [
         { text: 'Salam, bu krem hansı apteklərdə var?', at: '23:41' },
@@ -58,7 +58,7 @@ const COPY = {
   ru: {
     eyebrow: 'ИИ-оператор · на азербайджанском', h1: 'Клиент пишет,', h2: 'ИИ отвечает.',
     sub: 'Instagram, WhatsApp и телефонные звонки — на всё отвечает один ИИ-оператор и записывает заказ и обращение в CRM. Даже ночью.',
-    sample: 'пример', recording: 'тестовый звонок', play: 'Слушать звонок', pause: 'Пауза', ai: 'ИИ', review: 'Ответ, в котором не уверен, не отправляет — отдаёт сотруднику черновиком. Когда нужно, передаёт разговор менеджеру.', cta: 'Показать на демо',
+    sample: 'пример', recording: 'тестовый звонок', play: 'Послушать звонок', pause: 'Пауза', ai: 'ИИ', review: 'Ответ, в котором не уверен, не отправляет — отдаёт сотруднику черновиком. Когда нужно, передаёт разговор менеджеру.', cta: 'Показать на демо',
     tabs: [
       { kind: 'chat', id: 'ig', label: 'Instagram', title: 'Фарм-бренд · Direct', did: ['Ответ из знаний компании', 'Ночью, за секунды', 'Разговор в CRM'], msgs: [
         { text: 'Здравствуйте, в каких аптеках есть этот крем?', at: '23:41' },
@@ -76,7 +76,7 @@ const COPY = {
   en: {
     eyebrow: 'AI operator · in Azerbaijani', h1: 'Customers write,', h2: 'AI answers.',
     sub: 'Instagram, WhatsApp and phone calls — one AI operator answers them all and writes every order and request to the CRM. At night too.',
-    sample: 'sample', recording: 'test call', play: 'Play the call', pause: 'Pause', ai: 'AI', review: 'A reply it is not sure about is not sent — it goes to an employee as a draft. When needed, the conversation is handed to a manager.', cta: 'Show on a demo',
+    sample: 'sample', recording: 'test call', play: 'Listen to the call', pause: 'Pause', ai: 'AI', review: 'A reply it is not sure about is not sent — it goes to an employee as a draft. When needed, the conversation is handed to a manager.', cta: 'Show on a demo',
     tabs: [
       { kind: 'chat', id: 'ig', label: 'Instagram', title: 'Pharma brand · Direct', did: ['Answers from company knowledge', 'At night, in seconds', 'Conversation in the CRM'], msgs: [
         { text: 'Hi, which pharmacies have this cream?', at: '23:41' },
@@ -123,15 +123,18 @@ function Call({ tab, lang, c }: { tab: CallTab; lang: Lang; c: Copy }) {
   const audio = useRef<HTMLAudioElement>(null);
   const [t, setT] = useState(0);
   const [playing, setPlaying] = useState(false);
+  const [started, setStarted] = useState(false);
   const toggle = () => { const a = audio.current; if (!a) return; if (a.paused) a.play().catch(() => {}); else a.pause(); };
   const seek = (s: number) => { const a = audio.current; if (!a) return; a.currentTime = s; setT(s); a.play().catch(() => {}); };
   const isAi = (x: number) => tab.lines.some((l) => l.ai && x >= l.a - 0.2 && x <= l.b + 0.2);
   return (
     <div className="op-pane">
       <div className="op-pane-head"><b>{tab.title}</b><span className="op-tag">{c.recording}</span></div>
-      <audio ref={audio} src={CALL_SRC} preload="none" onTimeUpdate={(e) => setT(e.currentTarget.currentTime)} onPlay={() => setPlaying(true)} onPause={() => setPlaying(false)} onEnded={() => { setPlaying(false); setT(CALL_DUR); }} />
+      <audio ref={audio} src={CALL_SRC} preload="none" onTimeUpdate={(e) => setT(e.currentTarget.currentTime)} onPlay={() => { setPlaying(true); setStarted(true); }} onPause={() => setPlaying(false)} onEnded={() => { setPlaying(false); setT(CALL_DUR); }} />
       <div className="op-player">
-        <button type="button" className="op-play" onClick={toggle} aria-label={playing ? c.pause : c.play}>{playing ? <Pause size={20} /> : <Play size={20} />}</button>
+        {started
+          ? <button type="button" className="op-play" onClick={toggle} aria-label={playing ? c.pause : c.play}>{playing ? <Pause size={20} /> : <Play size={20} />}</button>
+          : <button type="button" className="op-play-invite" onClick={toggle}><span className="op-play-dot"><Play size={18} /></span>{c.play}</button>}
         <div className="op-wave" aria-hidden="true" onClick={(e) => { const r = e.currentTarget.getBoundingClientRect(); seek(((e.clientX - r.left) / r.width) * CALL_DUR); }}>
           {ENV.map((v, i) => { const at = ((i + 0.5) / ENV.length) * CALL_DUR; return <i key={i} className={`${isAi(at) ? 'is-ai' : ''} ${at <= t ? 'is-done' : ''}`} style={{ height: `${Math.max(8, v)}%` }} />; })}
         </div>
@@ -160,6 +163,8 @@ export function AiPresenter({ lang, demoHref }: { lang: Lang; demoHref: string }
   const [seen, setSeen] = useState(false);
   const [hasVideo, setHasVideo] = useState(true);
   const [tabId, setTabId] = useState<'ig' | 'wa' | 'call'>('ig');
+  // The call is the strongest proof on the page, so its tab carries a pulsing badge until it is opened.
+  const [callSeen, setCallSeen] = useState(false);
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
@@ -184,7 +189,7 @@ export function AiPresenter({ lang, demoHref }: { lang: Lang; demoHref: string }
           <div className="op-card" id="ai-operator">
             <div className="op-tabs" role="tablist" aria-label={c.eyebrow}>
               {tabs.map((tb) => (
-                <button type="button" role="tab" key={tb.id} aria-selected={tb.id === tab.id} onClick={() => setTabId(tb.id)}><TabIcon id={tb.id} />{tb.label}</button>
+                <button type="button" role="tab" key={tb.id} aria-selected={tb.id === tab.id} onClick={() => { setTabId(tb.id); if (tb.id === 'call') setCallSeen(true); }}><TabIcon id={tb.id} />{tb.label}{tb.id === 'call' && !callSeen && <span className="op-tab-badge"><Play size={9} /><span className="op-tab-time">{fmt(CALL_DUR)}</span></span>}</button>
               ))}
             </div>
             {tab.kind === 'chat' ? <Chat key={tab.id} tab={tab} c={c} /> : <Call tab={tab} lang={lang} c={c} />}
