@@ -347,6 +347,10 @@ h2 { font-size: 58px; line-height: 1.1; }
 .stamp { display: inline-block; padding: 12px 20px; border-radius: 12px; border: 3px solid var(--ok); color: var(--ok); font: 800 24px/1 var(--display); transform: rotate(-6deg) scale(2); opacity: 0; transition: transform .45s cubic-bezier(.2,1.4,.3,1), opacity .3s; }
 .stamp.show { transform: rotate(-6deg) scale(1); opacity: 1; }
 
+.docflow { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 26px; }
+.docflow .chip { opacity: 0; transform: translateY(10px); transition: opacity .4s, transform .5s; }
+.docflow .chip.show { opacity: 1; transform: none; }
+
 /* security rows */
 .rows { position: absolute; left: 128px; right: 128px; top: 330px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
 .row { display: flex; align-items: flex-start; gap: 22px; padding: 26px 30px; border-radius: 24px; background: var(--surface); border: 1px solid var(--line); }
@@ -425,28 +429,30 @@ h2 { font-size: 58px; line-height: 1.1; }
 </section>
 
 <!-- 3b Contracts -->
-<section class="scene" data-name="muqavile" data-note="1 минута. Договор собирается из шаблона: данные подставляются сами, условные пункты добавляются по правилу.&#10;Согласование по правилам — юрист, финансы, руководитель, с делегатами и эскалацией просрочек. Электронная подпись на отдельной странице, подписанту приходят напоминания.&#10;Потом: оповещение о продлении за 90/60/30/14/7 дней, счёт из договора одной кнопкой, аналитика — MRR, время цикла, % продления. Импорт .docx, PDF, версии.">
+<section class="scene" data-name="muqavile" data-note="1 минута. Договор собирается из шаблона: данные подставляются сами, условные пункты добавляются по правилу.&#10;Согласование по правилам — юрист, финансы, руководитель, с делегатами и эскалацией просрочек. Электронная подпись на отдельной странице, подписанту приходят напоминания.&#10;Потом: оповещение о продлении за 90/60/30/14/7 дней, счёт из договора одной кнопкой, аналитика — MRR, время цикла, % продления. Импорт .docx, PDF, версии.&#10;Новое: VÖEN → реквизиты стороны сами; протокол цены и акт как документы с подписью по ссылке; клиент видит свои документы в портале.&#10;Подпись сейчас простая, по ссылке; SİMA и ASAN İmza — в процессе подключения.">
   <div class="side">
     <p class="eyebrow num-badge" data-a="up"><span class="ico" data-ico="log"></span>02 · Müqavilələr</p>
     <h2 style="--d:80">Müqavilə — <span class="acc">şablondan imzaya</span></h2>
     <p class="lead" data-a="up" style="--d:300">Şablon, təsdiq, elektron imza və yeniləmə — bir yerdə.</p>
     <ul class="pts">
-      <li data-a="up" style="--d:500">Şablondan bir dəqiqəyə: məlumat özü dolur, .docx idxalı</li>
-      <li data-a="up" style="--d:650">Qaydalarla təsdiq: hüquqşünas, maliyyə, rəhbər</li>
-      <li data-a="up" style="--d:800">Elektron imza — çap etmədən</li>
-      <li data-a="up" style="--d:950">Bitməzdən 90 / 30 / 7 gün əvvəl xatırladır; hesab müqavilədən</li>
+      <li data-a="up" style="--d:500">VÖEN yazırsınız — tərəfin rekvizitləri özü dolur</li>
+      <li data-a="up" style="--d:620">Şablondan bir dəqiqəyə: şərti bəndlər qaydaya görə, .docx idxalı</li>
+      <li data-a="up" style="--d:740">Qaydalarla təsdiq və elektron imza — çap etmədən</li>
+      <li data-a="up" style="--d:860">Qiymət protokolu və akt — imza ilə; hesab müqavilədən</li>
+      <li data-a="up" style="--d:980">Müştəri sənədləri öz portalında görür<small>Bitməzdən 90 / 60 / 30 / 14 / 7 gün əvvəl xatırladır</small></li>
     </ul>
   </div>
   <div class="vis" data-a="tilt" style="--d:250; top:190px; height:640px;">
     <div class="panel" style="inset:0;">
       <div class="panel-h"><span class="dots"><i></i><i></i><i></i></span>Xidmət müqaviləsi № 2026-031</div>
       <div class="doc">
-        <p>Bu müqavilə <v data-v="Nova MMC">{{Müştəri}}</v> ilə <v data-v="LeadDrive">{{İcraçı}}</v> arasında bağlanır.</p>
+        <p>Bu müqavilə <v data-v="Nova MMC">{{Müştəri}}</v> (VÖEN <v data-v="1700012345">{{VÖEN}}</v>) ilə <v data-v="LeadDrive">{{İcraçı}}</v> arasında bağlanır.</p>
         <p>Xidmətin dəyəri <v data-v="12 400 ₼">{{Məbləğ}}</v>, müddəti <v data-v="12 ay">{{Müddət}}</v>.</p>
         <div class="cond" id="cond">+ Şərti bənd 3.2 · ödəniş hissə-hissə</div>
         <div class="skel"><i style="width:92%"></i><i style="width:84%"></i><i style="width:66%"></i></div>
         <div class="appr"><span class="ap" id="ap1">Hüquqşünas</span><span class="ar">→</span><span class="ap" id="ap2">Maliyyə</span><span class="ar">→</span><span class="ap" id="ap3">Rəhbər</span></div>
         <span class="stamp" id="cStamp">İmzalandı ✓</span>
+        <div class="docflow" id="docflow"><span class="chip sm">Qiymət protokolu</span><span class="chip sm">Hesab</span><span class="chip sm">Akt</span><span class="chip sm ok">Müştəri portalında ✓</span></div>
       </div>
     </div>
     <span class="sample">Nümunə</span>
@@ -1035,6 +1041,7 @@ h2 { font-size: 58px; line-height: 1.1; }
     at(2400, function () { cond.classList.add('show'); });
     aps.forEach(function (a, k) { at(3000 + k * 500, function () { a.classList.add('on'); }); });
     at(4700, function () { st.classList.add('show'); });
+    showSeq($('docflow').children, 5300, 450);
   };
   plays.lovhe = function () {
     var f = $('fly'), kan = f.parentNode.querySelector('.kan'), cols = kan.children;
