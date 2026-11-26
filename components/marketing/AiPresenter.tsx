@@ -264,6 +264,8 @@ export function AiPresenter({ lang, demoHref }: { lang: Lang; demoHref: string }
   const [hasVideo, setHasVideo] = useState(true);
   const [dirId, setDirId] = useState('pharmacy');
   const [mode, setMode] = useState<'call' | 'chat'>('call');
+  // Until a visitor has switched once, the other option carries a pulsing dot: the toggle must read as clickable.
+  const [switched, setSwitched] = useState(false);
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
@@ -295,8 +297,8 @@ export function AiPresenter({ lang, demoHref }: { lang: Lang; demoHref: string }
                 <b>{showChat ? dir.chatTitle : `${dir.label} · ${c.call.toLowerCase()}`}</b>
                 {dir.msgs ? (
                   <span className="op-mode" role="group" aria-label={`${c.call} / ${c.chat}`}>
-                    <button type="button" aria-pressed={!showChat} onClick={() => setMode('call')}><Phone size={13} />{c.call}</button>
-                    <button type="button" aria-pressed={showChat} onClick={() => setMode('chat')}><MessageCircle size={13} />{c.chat}</button>
+                    <button type="button" aria-pressed={!showChat} onClick={() => { setMode('call'); setSwitched(true); }}><Phone size={14} />{c.call}{showChat && !switched && <i className="op-mode-dot" />}</button>
+                    <button type="button" aria-pressed={showChat} onClick={() => { setMode('chat'); setSwitched(true); }}><MessageCircle size={14} />{c.chat}{!showChat && !switched && <i className="op-mode-dot" />}</button>
                   </span>
                 ) : null}
               </div>
