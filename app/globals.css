@@ -387,7 +387,7 @@ dialog.modal{position:relative;margin:0;border:0;max-width:none;inset:auto}
 .op-tabs button{display:flex;align-items:center;justify-content:center;height:32px;padding:0 4px;min-width:0;overflow:hidden;text-overflow:ellipsis;border-radius:9px;font-size:13px;font-weight:600;color:#5b6470;background:transparent;white-space:nowrap}
 .op-tabs button[aria-selected=true]{background:#fff;color:var(--ink);box-shadow:0 1px 3px #14181f1f}
 .op-pane{display:grid;grid-template-columns:minmax(0,1fr);gap:7px;min-height:236px;align-content:start;padding:0 4px}
-.op-pane-head{display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:12.5px}
+.op-pane-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px 10px;font-size:12.5px}
 .op-pane-head b{font-weight:700;color:var(--ink)}
 .op-tag{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#7c8274;border:1px dashed #d3d8e0;border-radius:999px;padding:2px 8px;white-space:nowrap}
 .op-chat{display:grid;gap:6px}
@@ -409,9 +409,13 @@ dialog.modal{position:relative;margin:0;border:0;max-width:none;inset:auto}
 .op-line.is-ai .op-who{color:var(--orange)}
 .op-did{list-style:none;margin:0;padding:0 4px 2px;display:flex;flex-wrap:wrap;gap:5px}
 .op-did li{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:600;color:var(--forest);background:#d9ecdf99;border-radius:999px;padding:3px 9px}
-.op-mode{display:inline-flex;gap:2px;background:#f4f5f7;border-radius:999px;padding:2px;flex-shrink:0}
-.op-mode button{display:inline-flex;align-items:center;gap:5px;height:26px;padding:0 10px;border-radius:999px;font-size:12px;font-weight:600;color:#5b6470;background:transparent}
-.op-mode button[aria-pressed=true]{background:#fff;color:var(--ink);box-shadow:0 1px 3px #14181f1f}
+.op-mode{display:inline-flex;gap:6px;flex-shrink:0}
+.op-mode button{position:relative;display:inline-flex;align-items:center;gap:6px;height:30px;padding:0 12px;border-radius:999px;font-size:12.5px;font-weight:700;color:var(--forest);background:#fff;border:1.5px solid #cfd8d2;box-shadow:0 2px 6px #14181f14;transition:border-color .2s,color .2s,transform .15s,box-shadow .2s}
+.op-mode button:hover{border-color:var(--orange);color:var(--orange);transform:translateY(-1px);box-shadow:0 4px 10px #f6531626}
+.op-mode button[aria-pressed=true]{background:var(--forest);border-color:var(--forest);color:#fff;box-shadow:none;transform:none}
+.op-mode-dot{position:absolute;top:-3px;right:-3px;width:9px;height:9px;border-radius:50%;background:var(--orange);box-shadow:0 0 0 0 #f6531699;animation:op-dot 1.6s ease-out infinite}
+@keyframes op-dot{0%{box-shadow:0 0 0 0 #f6531699}100%{box-shadow:0 0 0 8px #f6531600}}
+@media (prefers-reduced-motion:reduce){.op-mode-dot{animation:none}}
 .op-did li.op-did-note{background:none;color:#7c8274;font-weight:600;letter-spacing:.06em;text-transform:uppercase;font-size:10px;margin-left:auto;padding:3px 2px}
 .op-orb-row{display:flex;align-items:center;gap:18px;padding:6px 4px 4px}
 .op-orb{position:relative;width:84px;height:84px;flex-shrink:0;display:grid;place-items:center;background:none;border-radius:50%}
