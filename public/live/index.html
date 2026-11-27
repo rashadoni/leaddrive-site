@@ -429,15 +429,15 @@ h2 { font-size: 58px; line-height: 1.1; }
 </section>
 
 <!-- 3b Contracts -->
-<section class="scene" data-name="muqavile" data-note="1 минута. Договор собирается из шаблона: данные подставляются сами, условные пункты добавляются по правилу.&#10;Согласование по правилам — юрист, финансы, руководитель, с делегатами и эскалацией просрочек. Электронная подпись на отдельной странице, подписанту приходят напоминания.&#10;Потом: оповещение о продлении за 90/60/30/14/7 дней, счёт из договора одной кнопкой, аналитика — MRR, время цикла, % продления. Импорт .docx, PDF, версии.&#10;Новое: VÖEN → реквизиты стороны сами; протокол цены и акт как документы с подписью по ссылке; клиент видит свои документы в портале.&#10;Подпись сейчас простая, по ссылке; SİMA и ASAN İmza — в процессе подключения.">
+<section class="scene" data-name="muqavile" data-note="1 минута. Договор собирается из шаблона: данные подставляются сами, условные пункты добавляются по правилу.&#10;Согласование по правилам — юрист, финансы, руководитель, с делегатами и эскалацией просрочек. Электронная подпись на отдельной странице, подписанту приходят напоминания.&#10;Потом: оповещение о продлении за 90/60/30/14/7 дней, счёт из договора одной кнопкой, аналитика — MRR, время цикла, % продления. Импорт .docx, PDF, версии.&#10;Новое: VÖEN → реквизиты стороны сами; протокол цены и акт как документы с подписью по ссылке; клиент видит свои документы в портале.&#10;Подпись — SİMA: гражданина и компании (юрлица), VÖEN из сертификата сверяется с договором. Договор с SİMA заключается; простая подпись по ссылке тоже есть.">
   <div class="side">
     <p class="eyebrow num-badge" data-a="up"><span class="ico" data-ico="log"></span>02 · Müqavilələr</p>
     <h2 style="--d:80">Müqavilə — <span class="acc">şablondan imzaya</span></h2>
-    <p class="lead" data-a="up" style="--d:300">Şablon, təsdiq, elektron imza və yeniləmə — bir yerdə.</p>
+    <p class="lead" data-a="up" style="--d:300">Şablon, təsdiq, SİMA ilə elektron imza və yeniləmə — bir yerdə.</p>
     <ul class="pts">
       <li data-a="up" style="--d:500">VÖEN yazırsınız — tərəfin rekvizitləri özü dolur</li>
       <li data-a="up" style="--d:620">Şablondan bir dəqiqəyə: şərti bəndlər qaydaya görə, .docx idxalı</li>
-      <li data-a="up" style="--d:740">Qaydalarla təsdiq və elektron imza — çap etmədən</li>
+      <li data-a="up" style="--d:740">Qaydalarla təsdiq və SİMA elektron imzası — çap etmədən<small>Vətəndaş və şirkət (hüquqi şəxs) imzası, VÖEN sertifikatla yoxlanılır</small></li>
       <li data-a="up" style="--d:860">Qiymət protokolu və akt — imza ilə; hesab müqavilədən</li>
       <li data-a="up" style="--d:980">Müştəri sənədləri öz portalında görür<small>Bitməzdən 90 / 60 / 30 / 14 / 7 gün əvvəl xatırladır</small></li>
     </ul>
@@ -451,7 +451,7 @@ h2 { font-size: 58px; line-height: 1.1; }
         <div class="cond" id="cond">+ Şərti bənd 3.2 · ödəniş hissə-hissə</div>
         <div class="skel"><i style="width:92%"></i><i style="width:84%"></i><i style="width:66%"></i></div>
         <div class="appr"><span class="ap" id="ap1">Hüquqşünas</span><span class="ar">→</span><span class="ap" id="ap2">Maliyyə</span><span class="ar">→</span><span class="ap" id="ap3">Rəhbər</span></div>
-        <span class="stamp" id="cStamp">İmzalandı ✓</span>
+        <span class="stamp" id="cStamp">SİMA ilə imzalandı ✓</span>
         <div class="docflow" id="docflow"><span class="chip sm">Qiymət protokolu</span><span class="chip sm">Hesab</span><span class="chip sm">Akt</span><span class="chip sm ok">Müştəri portalında ✓</span></div>
       </div>
     </div>
@@ -888,7 +888,7 @@ h2 { font-size: 58px; line-height: 1.1; }
   Array.prototype.forEach.call(document.querySelectorAll('[data-ico]'), function (el) { el.innerHTML = svg(el.getAttribute('data-ico')); el.classList.add('ico'); });
 
   var MODS = [
-    ['Satış və müştəri', '', [['sales', 'Satış', 'lid, sövdələşmə, hesab', 'satis'], ['log', 'Müqavilələr', 'şablon, təsdiq, e-imza', 'muqavile'], ['boards', 'Tapşırıqlar', 'lövhələr və vaxt uçotu', 'lovhe'], ['booking', 'Görüşlər', 'onlayn yazılış, WhatsApp', 'gorus'], ['wallet', 'Maliyyə', 'borclar, ödənişlər, e-qaimə', 'maliyye']]],
+    ['Satış və müştəri', '', [['sales', 'Satış', 'lid, sövdələşmə, hesab', 'satis'], ['log', 'Müqavilələr', 'şablon, təsdiq, SİMA imza', 'muqavile'], ['boards', 'Tapşırıqlar', 'lövhələr və vaxt uçotu', 'lovhe'], ['booking', 'Görüşlər', 'onlayn yazılış, WhatsApp', 'gorus'], ['wallet', 'Maliyyə', 'borclar, ödənişlər, e-qaimə', 'maliyye']]],
     ['Ünsiyyət', '', [['omni', 'Omni-Channel', 'bütün mesajlar bir lentdə', 'omni'], ['calls', 'AI Zəng Mərkəzi', 'telefoniya və AI operator', 'zeng'], ['help', 'AI Help Desk', 'tiketlər, SLA, portal', 'destek'], ['brand', 'Brend monitorinqi', 'internetdə qeydlər', 'brend']]],
     ['Sahə və komanda', '', [['field', 'Sahə satışı', 'marşrut, vizit, GPS', 'sahe'], ['clock', 'İş vaxtı uçotu', 'gəliş-gediş, tabel', 'tabel']]],
     ['Ayrıca məhsullar', 'sep', [['camera', 'Ziyarətçi analitikası', 'kamera ilə giriş sayı', 'ziyaretci'], ['tag', 'Qiymət monitorinqi', 'rəqib qiymətləri hər gecə', 'qiymet'], ['cart', 'Satınalma', 'tender, auksion, təchizatçı', 'satinalma']]]
